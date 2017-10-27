@@ -39,8 +39,10 @@ public class Create extends javax.swing.JFrame {
     
     public int insert(String judul, int tahun, int durasi, String sutradara, String penulis, String produser, String deskripsi, String gambarLoc, String trailerLoc) throws Exception{
         //Ini Juga Beda tiap pengguna
-        String newTrailerLoc = "/Users/yongzari/Documents/MovieManager Project/Movie-manager/Video/";
-        
+        //ragil
+        //String newTrailerLoc = "/Users/yongzari/Documents/MovieManager Project/Movie-manager/Video/";
+        //Roni
+        String newTrailerLoc = "E:\\RPL\\Movie-manager\\Video";
         File fileImg = new File(gambarLoc);
         FileInputStream fisImg = new FileInputStream(fileImg);
         InputStream inStream = null;
@@ -126,6 +128,7 @@ public class Create extends javax.swing.JFrame {
         lblTrailer = new javax.swing.JLabel();
         txtJudul = new javax.swing.JTextField();
         lblShowGambar = new javax.swing.JLabel();
+        btnBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -202,6 +205,13 @@ public class Create extends javax.swing.JFrame {
         lblShowGambar.setText("Preview gambar");
         lblShowGambar.setToolTipText("");
 
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -259,6 +269,8 @@ public class Create extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(106, 106, 106)
                         .addComponent(btnTambah)))
                 .addContainerGap())
         );
@@ -322,7 +334,9 @@ public class Create extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblTrailer)
                         .addGap(18, 18, 18)
-                        .addComponent(btnTambah)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnTambah)
+                            .addComponent(btnBack))))
                 .addContainerGap())
         );
 
@@ -344,7 +358,7 @@ public class Create extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -423,6 +437,12 @@ public class Create extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnTrailerActionPerformed
 
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        // TODO add your handling code here:
+        new MovieManagerUI().show();
+        this.dispose();
+    }//GEN-LAST:event_btnBackActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -459,6 +479,7 @@ public class Create extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnGambar;
     private javax.swing.JButton btnTambah;
     private javax.swing.JButton btnTrailer;

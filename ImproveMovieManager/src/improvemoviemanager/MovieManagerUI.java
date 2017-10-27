@@ -42,7 +42,7 @@ public class MovieManagerUI extends javax.swing.JFrame {
            tblMovieManager2.setModel(DbUtils.resultSetToTableModel(rs));
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e);
-            JOptionPane.showMessageDialog(null,"erorr brooo!");
+            JOptionPane.showMessageDialog(null,"erorr MovieManagerUI showMovie() ");
         }
         
     }

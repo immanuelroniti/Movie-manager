@@ -19,8 +19,9 @@ public class Koneksi {
         try{
             //koneksi ini besa beda beda tiap pengguna 
             //Ragil
-            String url = "jdbc:sqlite:/Users/yongzari/Documents/MovieManager Project/Movie-manager/ImproveMovieManager/MovieManagerDB.db";
-            //String url = "jdbc:sqlite:E:\\RPL\\Movie-manager\\ImproveMovieManager\\MovieManagerDB.db";
+//            String url = "jdbc:sqlite:/Users/yongzari/Documents/MovieManager Project/Movie-manager/ImproveMovieManager/MovieManagerDB.db";
+            //roni
+            String url = "jdbc:sqlite:E:\\RPL\\Movie-manager\\ImproveMovieManager\\MovieManagerDB.db";
             conn = DriverManager.getConnection(url);
             //JOptionPane.showMessageDialog(null, "Berhasil koneksi database");
             //System.out.println("Success!");
