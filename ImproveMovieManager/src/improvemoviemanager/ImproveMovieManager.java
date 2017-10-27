@@ -32,8 +32,8 @@ public class ImproveMovieManager extends JApplet {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
+    //public static void main(String[] args) {
+        /*SwingUtilities.invokeLater(new Runnable() {
             
             @Override
             public void run() {
@@ -71,8 +71,9 @@ public class ImproveMovieManager extends JApplet {
             public void run() {
                 createScene();
             }
-        });
-    }
+        });*/
+        //Koneksi.connect();
+    //}
     
     private void createScene() {
         Button btn = new Button();
