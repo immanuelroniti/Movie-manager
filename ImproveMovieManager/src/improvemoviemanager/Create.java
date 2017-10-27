@@ -38,7 +38,9 @@ public class Create extends javax.swing.JFrame {
     }
     
     public int insert(String judul, int tahun, int durasi, String sutradara, String penulis, String produser, String deskripsi, String gambarLoc, String trailerLoc) throws Exception{
+        //Ini Juga Beda tiap pengguna
         String newTrailerLoc = "/Users/yongzari/Documents/MovieManager Project/Movie-manager/Video/";
+        
         File fileImg = new File(gambarLoc);
         FileInputStream fisImg = new FileInputStream(fileImg);
         InputStream inStream = null;
@@ -193,11 +195,12 @@ public class Create extends javax.swing.JFrame {
             }
         });
 
-        lblGambar.setText("blabla");
+        lblGambar.setText("File path:");
 
-        lblTrailer.setText("blabla");
+        lblTrailer.setText("File path:");
 
-        lblShowGambar.setText("blabla");
+        lblShowGambar.setText("Preview gambar");
+        lblShowGambar.setToolTipText("");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -275,10 +278,11 @@ public class Create extends javax.swing.JFrame {
                     .addComponent(jLabel10)
                     .addComponent(btnGambar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtTahun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblGambar))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblGambar)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(txtTahun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -422,9 +426,9 @@ public class Create extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-//    public static void main(String[] args) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+    public static void main(String[] args) {
+        /* Set the Nimbus look and feel */
+        //        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
 //        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
 //         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
 //         */
@@ -445,14 +449,14 @@ public class Create extends javax.swing.JFrame {
 //            java.util.logging.Logger.getLogger(Create.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        }
 //        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new Create().setVisible(true);
-//            }
-//        });
-//    }
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Create().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGambar;

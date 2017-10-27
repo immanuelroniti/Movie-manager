@@ -19,13 +19,14 @@ public class Koneksi {
         try{
             //koneksi ini besa beda beda tiap pengguna 
             //Ragil
-//            String url = "jdbc:sqlite:/Users/yongzari/Documents/MovieManager Project/Movie-manager/MovieManagerDB.db";
-            String url = "jdbc:sqlite:E:\\RPL\\Movie-manager\\ImproveMovieManager\\MovieManagerDB.db";
+            String url = "jdbc:sqlite:/Users/yongzari/Documents/MovieManager Project/Movie-manager/ImproveMovieManager/MovieManagerDB.db";
+            //String url = "jdbc:sqlite:E:\\RPL\\Movie-manager\\ImproveMovieManager\\MovieManagerDB.db";
             conn = DriverManager.getConnection(url);
-            JOptionPane.showMessageDialog(null, "Berhasil koneksi database");
+            //JOptionPane.showMessageDialog(null, "Berhasil koneksi database");
             //System.out.println("Success!");
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e);
+            //JOptionPane.showMessageDialog(null, e);
+            System.out.println(e.getMessage());
         }
         return conn;
     }

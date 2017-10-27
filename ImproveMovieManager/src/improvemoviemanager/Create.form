@@ -165,10 +165,12 @@
                       <Component id="btnGambar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtTahun" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="lblGambar" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtTahun" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -343,19 +345,20 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblGambar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="blabla"/>
+            <Property name="text" type="java.lang.String" value="File path:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblTrailer">
           <Properties>
-            <Property name="text" type="java.lang.String" value="blabla"/>
+            <Property name="text" type="java.lang.String" value="File path:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtJudul">
         </Component>
         <Component class="javax.swing.JLabel" name="lblShowGambar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="blabla"/>
+            <Property name="text" type="java.lang.String" value="Preview gambar"/>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
         </Component>
       </SubComponents>
