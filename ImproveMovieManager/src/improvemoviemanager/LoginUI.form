@@ -248,7 +248,7 @@
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="/home/ivana/Desktop/RPL/rsz_2logo.png"/>
+              <Image iconType="2" name="/home/ivana/Desktop/RPL/Movie-manager-master/Gambar/rsz_2logo.png"/>
             </Property>
             <Property name="horizontalTextPosition" type="int" value="0"/>
           </Properties>

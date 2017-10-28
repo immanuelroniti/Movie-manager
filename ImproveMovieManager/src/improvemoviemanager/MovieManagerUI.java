@@ -122,7 +122,7 @@ public class MovieManagerUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setIcon(new javax.swing.ImageIcon("/home/ivana/Desktop/RPL/rsz_rsz_2logo.png")); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon("/home/ivana/Desktop/RPL/Movie-manager-master/Gambar/rsz_rsz_2logo.png")); // NOI18N
 
         tblMovieManager2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

@@ -214,7 +214,7 @@
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="/home/ivana/Desktop/RPL/rsz_rsz_2logo.png"/>
+              <Image iconType="2" name="/home/ivana/Desktop/RPL/Movie-manager-master/Gambar/rsz_rsz_2logo.png"/>
             </Property>
           </Properties>
         </Component>

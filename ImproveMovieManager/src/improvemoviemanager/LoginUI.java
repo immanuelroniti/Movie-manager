@@ -145,7 +145,7 @@ public class LoginUI extends javax.swing.JFrame {
 
         jLabel3.setForeground(new java.awt.Color(254, 247, 247));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon("/home/ivana/Desktop/RPL/rsz_2logo.png")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon("/home/ivana/Desktop/RPL/Movie-manager-master/Gambar/rsz_2logo.png")); // NOI18N
         jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jLabel4.setFont(new java.awt.Font("Bitstream Charter", 0, 24)); // NOI18N
