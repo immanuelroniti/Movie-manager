@@ -22,6 +22,8 @@ public class LoginUI extends javax.swing.JFrame {
      * Creates new form LoginUI
      */
     public LoginUI() {
+        
+        
         con = Koneksi.connect();
         initComponents();
     }
@@ -37,7 +39,7 @@ public class LoginUI extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        bRemember = new javax.swing.JCheckBox();
         txtPassword = new javax.swing.JPasswordField();
         txtUsername = new javax.swing.JTextField();
         fldUsername = new javax.swing.JLabel();
@@ -58,10 +60,11 @@ public class LoginUI extends javax.swing.JFrame {
         jPanel1.setBorder(new javax.swing.border.MatteBorder(null));
         jPanel1.setPreferredSize(new java.awt.Dimension(1366, 768));
 
-        jCheckBox1.setText("Remember me");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        bRemember.setSelected(true);
+        bRemember.setText("Remember me");
+        bRemember.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                bRememberActionPerformed(evt);
             }
         });
 
@@ -92,7 +95,7 @@ public class LoginUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jCheckBox1)
+                        .addComponent(bRemember)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(fldPeringatan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
@@ -131,7 +134,7 @@ public class LoginUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(fldPeringatan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBox1, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(bRemember, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36))
@@ -153,7 +156,7 @@ public class LoginUI extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(254, 254, 254));
         jLabel5.setText("we build a great movie");
 
-        button2.setBackground(new java.awt.Color(67, 67, 67));
+        button2.setBackground(new java.awt.Color(100, 100, 100));
         button2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         button2.setForeground(new java.awt.Color(254, 254, 254));
         button2.setLabel("Register");
@@ -184,8 +187,8 @@ public class LoginUI extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(19, 19, 19)
-                        .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(69, 69, 69))
         );
@@ -196,9 +199,9 @@ public class LoginUI extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(button2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(button2, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -226,24 +229,24 @@ public class LoginUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+    private void bRememberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRememberActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    }//GEN-LAST:event_bRememberActionPerformed
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
         // TODO add your handling code here:
-         
+        
         String username = txtUsername.getText();
         String password = txtPassword.getText();
-
+        
         try{
             //sql
-            String query = "select username, password from user ";
+            String query = "select username, password from user";
             pst =con.prepareStatement(query);
-            JOptionPane.showMessageDialog(null, "Berhasil masuk redirected");
             rs = pst.executeQuery();
 
             //kondisi login
+            
             if(username.equals(rs.getString("username"))){
                 //jika username benar
 
@@ -252,6 +255,9 @@ public class LoginUI extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Berhasil masuk redirected");
                     new MovieManagerUI().show();
                     this.dispose();
+                    if(bRemember.isSelected()){
+                    JOptionPane.showMessageDialog(null, "Fitur ini belum di buat coy");
+                    }
                 }else{
                     JOptionPane.showMessageDialog(null, "password salah");
                 }
@@ -304,12 +310,12 @@ public class LoginUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox bRemember;
     private java.awt.Button button1;
     private java.awt.Button button2;
     private javax.swing.JLabel fldPassword;
     private javax.swing.JLabel fldPeringatan;
     private javax.swing.JLabel fldUsername;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
