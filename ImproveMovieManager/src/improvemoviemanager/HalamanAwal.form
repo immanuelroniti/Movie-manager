@@ -53,6 +53,9 @@
             <TitledBorder title="Daftar film"/>
           </Border>
         </Property>
+        <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[826, 557]"/>
+        </Property>
       </Properties>
 
       <Layout>

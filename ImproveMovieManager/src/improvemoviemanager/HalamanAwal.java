@@ -19,7 +19,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -53,6 +55,7 @@ public class HalamanAwal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Daftar film"));
+        jPanel2.setSize(new java.awt.Dimension(826, 557));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -126,9 +129,9 @@ public class HalamanAwal extends javax.swing.JFrame {
     
     public void showMovie(){
         String sql = "SELECT * FROM Movie";
-        List<JLabel> lblShowGambar = new ArrayList<JLabel>();
-        List<String> lblJudul = new ArrayList<String>();
-        jPanel2.setLayout(new GridLayout(1, 0));
+        
+        Map<Integer, JButton> btnGambar = new HashMap<Integer, JButton>();
+        jPanel2.setLayout(new GridLayout(0, 4));
         
         try{
             Connection conn = Koneksi.connect();
@@ -136,8 +139,10 @@ public class HalamanAwal extends javax.swing.JFrame {
             ResultSet rs = stmt.executeQuery(sql);
             
             while(rs.next()){
+                int id = rs.getInt("id");
                 String image = rs.getString("gambar");
                 String judul = rs.getString("judul");
+                String tahun = rs.getString("tahun");
                 
                 BufferedImage img = null;
                 try{
@@ -148,26 +153,33 @@ public class HalamanAwal extends javax.swing.JFrame {
                 Image newImg = img.getScaledInstance(145, 210, Image.SCALE_SMOOTH);
                 ImageIcon imgIcon = new ImageIcon(newImg);
                 
-                //lblShowGambar.add(new JLabel(imgIcon));
-                //jPanel2.add(new JLabel(imgIcon));
-                jPanel2.add(new JButton(imgIcon){
+                btnGambar.put(id, new JButton(judul + " (" + tahun + ")", imgIcon){
                     {
                         setSize(145, 210);
                         setMaximumSize(getSize());
+                        setMinimumSize(getSize());
                     }
                 });
-                
-                
             }
-        } catch(SQLException se){
-            System.out.println(se.getMessage());
+        } catch(SQLException e){
+            System.out.println(e.getMessage());
         }
         
-        /*for(JLabel lblImage:lblShowGambar){
-            jPanel2.add(lblImage);
-            jPanel2.validate();
-            jPanel2.repaint();
-        }*/
+        for(int key : btnGambar.keySet()){
+            btnGambar.get(key).setVerticalTextPosition(SwingConstants.BOTTOM);
+            btnGambar.get(key).setHorizontalTextPosition(SwingConstants.CENTER);
+            jPanel2.add(btnGambar.get(key));
+            btnGambar.get(key).addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnGambarActionPerformed(evt, key);
+                }
+            });
+        }
+    }
+    
+    private void btnGambarActionPerformed(java.awt.event.ActionEvent evt, int id){
+        new DetailFilm().showDetail(id);
+        this.dispose();
     }
     
     public static void main(String args[]) {
