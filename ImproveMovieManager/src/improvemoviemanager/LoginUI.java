@@ -56,7 +56,7 @@ public class LoginUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(66, 66, 66));
+        jPanel1.setBackground(new java.awt.Color(67, 67, 67));
         jPanel1.setBorder(new javax.swing.border.MatteBorder(null));
         jPanel1.setPreferredSize(new java.awt.Dimension(1366, 768));
 
@@ -156,7 +156,7 @@ public class LoginUI extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(254, 254, 254));
         jLabel5.setText("we build a great movie");
 
-        button2.setBackground(new java.awt.Color(100, 100, 100));
+        button2.setBackground(new java.awt.Color(84, 172, 1));
         button2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         button2.setForeground(new java.awt.Color(254, 254, 254));
         button2.setLabel("Register");
