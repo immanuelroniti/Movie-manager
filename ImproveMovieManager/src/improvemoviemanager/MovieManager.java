@@ -12,7 +12,8 @@ package improvemoviemanager;
 public class MovieManager {
     public static void main(String[] args){
         
-        new MovieManagerUI().show();
+        new HalamanAwal().setVisible(true);
+        //new MovieManagerUI().show();
 //        new Create().show();
     }
     

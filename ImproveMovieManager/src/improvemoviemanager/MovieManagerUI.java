@@ -235,9 +235,9 @@ public class MovieManagerUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
-        Create c = new Create();
-        c.setVisible(true);
-        this.setVisible(false);
+
+        new Create().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnTambahActionPerformed
 
     /**

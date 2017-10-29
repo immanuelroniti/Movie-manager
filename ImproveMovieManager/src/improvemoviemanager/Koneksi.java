@@ -17,11 +17,10 @@ public class Koneksi {
     public static Connection connect(){
         Connection conn = null;
         try{
-            //koneksi ini besa beda beda tiap pengguna 
-            //Ragil
-            //String url = "jdbc:sqlite:/Users/yongzari/Documents/MovieManager Project/Movie-manager/ImproveMovieManager/MovieManagerDB.db";
+            //koneksi ini besa beda beda tiap laptop
+            String url = "jdbc:sqlite:/Users/yongzari/Documents/MovieManager Project/Movie-manager/ImproveMovieManager/MovieManagerDB.db";
             //String url = "jdbc:sqlite:E:\\RPL\\Movie-manager\\ImproveMovieManager\\MovieManagerDB.db";
-            String url = "jdbc:sqlite:/home/ivana/Desktop/RPL/ImproveMovieManager/MovieManagerDB.db";
+            //String url = "jdbc:sqlite:/home/ivana/Desktop/RPL/ImproveMovieManager/MovieManagerDB.db";
             conn = DriverManager.getConnection(url);
             //System.out.println("Connect coy");
             //JOptionPane.showMessageDialog(null, "Berhasil koneksi database");
