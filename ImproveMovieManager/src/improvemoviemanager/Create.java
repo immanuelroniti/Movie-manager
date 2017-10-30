@@ -62,15 +62,12 @@ public class Create extends javax.swing.JFrame {
     
     public boolean insert(String judul, int tahun, String genre, int durasi, String sutradara, String penulis, String produser, int ratingUsia, String deskripsi, String gambarLoc, String trailerLoc) throws Exception{
         
-        //String newTrailerLoc = "E:\\RPL\\Movie-manager\\Video";
         File fileImg = new File(gambarLoc);
-        //ini yang beda
-        String newImageLoc = "/Users/yongzari/Documents/MovieManager Project/Movie-manager/Gambar/"+fileImg.getName();
+        String newImageLoc = Paths.getGambarPath()+fileImg.getName();
         File newFileImg = new File(newImageLoc);
         
         File fileVid = new File(trailerLoc);
-        //ini juga beda
-        String newTrailerLoc = "/Users/yongzari/Documents/MovieManager Project/Movie-manager/Video/"+fileVid.getName();
+        String newTrailerLoc = Paths.getVideoPath()+fileVid.getName();
         File newFileVid = new File(newTrailerLoc);
         
         InputStream inStream = null;
@@ -117,8 +114,8 @@ public class Create extends javax.swing.JFrame {
                 stmt.setString(7, produser);
                 stmt.setInt(8, ratingUsia);
                 stmt.setString(9, deskripsi);
-                stmt.setString(10, newImageLoc);
-                stmt.setString(11, newTrailerLoc);
+                stmt.setString(10, fileImg.getName());
+                stmt.setString(11, fileVid.getName());
                 stmt.executeUpdate();
                 return true;
             } catch (SQLException e) {

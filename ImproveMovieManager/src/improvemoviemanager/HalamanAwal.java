@@ -140,7 +140,7 @@ public class HalamanAwal extends javax.swing.JFrame {
             
             while(rs.next()){
                 int id = rs.getInt("id");
-                String image = rs.getString("gambar");
+                String image = Paths.getGambarPath()+rs.getString("gambar");
                 String judul = rs.getString("judul");
                 String tahun = rs.getString("tahun");
                 

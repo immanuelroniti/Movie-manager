@@ -114,7 +114,7 @@ public class DetailFilm extends javax.swing.JFrame {
                 String ratingUsia = getRatingUsia(rs.getInt("rating_usia"));
                 isiRatingUsia.setText(ratingUsia);
                 isiDeskripsi.setText(rs.getString("deskripsi"));
-                showImg(rs.getString("gambar"));
+                showImg(Paths.getGambarPath()+rs.getString("gambar"));
             }
         } catch (SQLException e){
             System.out.println(e.getMessage());

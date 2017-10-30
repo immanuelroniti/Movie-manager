@@ -357,8 +357,8 @@ public class Update extends javax.swing.JFrame {
                 produser = rs.getString("produser");
                 ratingUsia = rs.getInt("rating_usia");
                 deskripsi = rs.getString("deskripsi");
-                gambarLoc = rs.getString("gambar");
-                trailerLoc = rs.getString("trailer");
+                gambarLoc = Paths.getGambarPath()+rs.getString("gambar");
+                trailerLoc = Paths.getVideoPath()+rs.getString("trailer");
                 
                 txtJudul.setText(judul);
                 txtTahun.setText(Integer.toString(tahun));
@@ -373,8 +373,8 @@ public class Update extends javax.swing.JFrame {
                 cbRatingUsia.setSelectedIndex(ratingUsia);
                 txtDeskripsi.setText(deskripsi);
                 showImg(gambarLoc);
-                lblGambar.setText(gambarLoc);
-                lblTrailer.setText(trailerLoc);
+                lblGambar.setText("File path: "+gambarLoc);
+                lblTrailer.setText("File path: "+trailerLoc);
             }
         } catch (SQLException e){
             System.out.println(e.getMessage());
@@ -390,7 +390,7 @@ public class Update extends javax.swing.JFrame {
         //String newTrailerLoc = "E:\\RPL\\Movie-manager\\Video";
         File fileImg = new File(gambarLoc);
         //ini yang beda
-        String newImageLoc = "/Users/yongzari/Documents/MovieManager Project/Movie-manager/Gambar/"+fileImg.getName();
+        String newImageLoc = Paths.getGambarPath()+fileImg.getName();
         File newFileImg = new File(newImageLoc);
         if(gambarLoc.equals(newImageLoc)){
             newImageLoc = gambarLoc;
@@ -415,7 +415,7 @@ public class Update extends javax.swing.JFrame {
         
         File fileVid = new File(trailerLoc);
         //ini juga beda
-        String newTrailerLoc = "/Users/yongzari/Documents/MovieManager Project/Movie-manager/Video/"+fileVid.getName();
+        String newTrailerLoc = Paths.getVideoPath()+fileVid.getName();
         File newFileVid = new File(newTrailerLoc);
         if(trailerLoc.equals(newTrailerLoc)){
             newTrailerLoc = trailerLoc;
@@ -452,8 +452,8 @@ public class Update extends javax.swing.JFrame {
                 stmt.setString(7, produser);
                 stmt.setInt(8, ratingUsia);
                 stmt.setString(9, deskripsi);
-                stmt.setString(10, newImageLoc);
-                stmt.setString(11, newTrailerLoc);
+                stmt.setString(10, fileImg.getName());
+                stmt.setString(11, fileVid.getName());
                 stmt.setInt(12, id);
                 stmt.executeUpdate();
                 return true;

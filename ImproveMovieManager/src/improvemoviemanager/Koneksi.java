@@ -17,16 +17,9 @@ public class Koneksi {
     public static Connection connect(){
         Connection conn = null;
         try{
-            //koneksi ini besa beda beda tiap laptop
-            String url = "jdbc:sqlite:/Users/yongzari/Documents/MovieManager Project/Movie-manager/ImproveMovieManager/MovieManagerDB.db";
-            //String url = "jdbc:sqlite:E:\\RPL\\Movie-manager\\ImproveMovieManager\\MovieManagerDB.db";
-            //String url = "jdbc:sqlite:/home/ivana/Desktop/RPL/ImproveMovieManager/MovieManagerDB.db";
+            String url = Paths.getPathDB();
             conn = DriverManager.getConnection(url);
-            //System.out.println("Connect coy");
-            //JOptionPane.showMessageDialog(null, "Berhasil koneksi database");
-            //System.out.println("Success!");
         } catch (SQLException e) {
-            //JOptionPane.showMessageDialog(null, e);
             System.out.println(e.getMessage());
         }
         return conn;
