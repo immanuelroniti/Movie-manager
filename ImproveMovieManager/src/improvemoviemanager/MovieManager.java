@@ -13,8 +13,6 @@ public class MovieManager {
     public static void main(String[] args){
         
         new HalamanAwal().setVisible(true);
-        //new MovieManagerUI().show();
-//        new Create().show();
     }
     
 }

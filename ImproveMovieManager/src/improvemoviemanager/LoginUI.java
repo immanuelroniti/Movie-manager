@@ -253,7 +253,7 @@ public class LoginUI extends javax.swing.JFrame {
                 if(password.equals(rs.getString("password"))){
                     //jika password benar
                     JOptionPane.showMessageDialog(null, "Berhasil masuk redirected");
-                    new MovieManagerUI().show();
+                    new HalamanAwal().setVisible(true);
                     this.dispose();
                     if(bRemember.isSelected()){
                     JOptionPane.showMessageDialog(null, "Fitur ini belum di buat coy");

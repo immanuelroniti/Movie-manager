@@ -10,22 +10,27 @@ package improvemoviemanager;
  * @author yongzari
  */
 public class Paths {
+    //Ragil:
     private static String pathDB = "jdbc:sqlite:/Users/yongzari/Documents/MovieManager Project/Movie-manager/ImproveMovieManager/MovieManagerDB.db";
     private static String gambarPath = "/Users/yongzari/Documents/MovieManager Project/Movie-manager/Gambar/";
     private static String videoPath = "/Users/yongzari/Documents/MovieManager Project/Movie-manager/Video/";
+    
+    //Roni:
+    //private static String pathDB = "";
+    //private static String gambarPath = "";
+    //private static String videoPath = "";
+    
+    //Dody:
+    //private static String pathDB = "";
+    //private static String gambarPath = "";
+    //private static String videoPath = "";
+    
 
     /**
      * @return the pathDB
      */
     public static String getPathDB() {
         return pathDB;
-    }
-
-    /**
-     * @param aPathDB the pathDB to set
-     */
-    public static void setPathDB(String aPathDB) {
-        pathDB = aPathDB;
     }
 
     /**
@@ -36,23 +41,10 @@ public class Paths {
     }
 
     /**
-     * @param aGambarPath the gambarPath to set
-     */
-    public static void setGambarPath(String aGambarPath) {
-        gambarPath = aGambarPath;
-    }
-
-    /**
      * @return the videoPath
      */
     public static String getVideoPath() {
         return videoPath;
     }
 
-    /**
-     * @param aVideoPath the videoPath to set
-     */
-    public static void setVideoPath(String aVideoPath) {
-        videoPath = aVideoPath;
-    }
 }
