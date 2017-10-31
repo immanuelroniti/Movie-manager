@@ -54,8 +54,6 @@ public class Register extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(67, 67, 67));
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-        jLabel13.setIcon(new javax.swing.ImageIcon("/home/ivana/Desktop/RPL/Movie-manager-master/ImproveMovieManager/src/Gambar/rsz_rsz_2logo.png")); // NOI18N
-
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(254, 254, 254));
         jLabel5.setText("Pendaftaran");
@@ -64,6 +62,11 @@ public class Register extends javax.swing.JFrame {
         jLabel6.setText("Sudah terdaftar?");
 
         btnLogin.setText("Login");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Username");
 
@@ -240,6 +243,12 @@ public class Register extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_btnDaftarActionPerformed
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        // TODO add your handling code here:
+        new LoginUI().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnLoginActionPerformed
     public void pengecekkanPendaftaran(String username,String password){
         Connection conn = Koneksi.connect();                
         try{
