@@ -5,6 +5,10 @@
  */
 package improvemoviemanager;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 /**
  *
  * @author Roni
@@ -212,8 +216,90 @@ public class Register extends javax.swing.JFrame {
 
     private void btnDaftarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDaftarActionPerformed
         // TODO add your handling code here:
+        try{
+            if(txtUsername.getText().equals("")||txtPassword.getText().equals("")||txtRetypePassword.getText().equals("")){
+                System.out.println("belum lengkap");
+            }else{
+                if(cbKebijakan.isSelected()){
+                    //System.out.println("");
+                    if(txtPassword.getText().equals(txtRetypePassword.getText())){
+                        pengecekkanPendaftaran(txtUsername.getText(),txtPassword.getText());
+                    }else{
+                        System.out.println("password dan retype tidak sama");
+                        
+                    }
+                    
+                }else{
+                    System.out.println("anda belum menyetujui");
+                }
+                
+            }
+            
+            
+        }catch(Exception e){
+            
+        }
     }//GEN-LAST:event_btnDaftarActionPerformed
-
+    public void pengecekkanPendaftaran(String username,String password){
+        Connection conn = Koneksi.connect();                
+        try{
+            String sql = "select username from User";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            
+            int a=1;
+            while(rs.next()){
+                // a untuk cekking apakah terdapat username yang sama.
+               if(username.equals(rs.getString("username"))){
+                    a=a*0;
+                }else{               
+                    a=a*1;
+                }            
+            }
+            //cekking... terdapat username sama atau tidak?
+            if (a==0){
+                System.out.println("nama sudah terpakai");
+            }else if(a==1){
+                insertUserToDatabase(username,password);
+            }
+            System.out.println(a);
+            
+        }catch(Exception e){
+            System.out.println(e);
+            
+        }
+            
+    }
+    public void insertUserToDatabase(String username, String password){
+        password =MD5(password);
+        try{
+            Connection conn = Koneksi.connect();
+            String sql = "INSERT INTO User(username,password) VALUES(?,?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1,username);
+            stmt.setString(2,password);
+            System.out.println("berhasil terdaftar");
+            stmt.executeUpdate();
+            conn.close();
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        
+    }
+    
+    public String MD5(String md5) {
+        try {
+            java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
+            byte[] array = md.digest(md5.getBytes());
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < array.length; ++i) {
+                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1,3));
+            }
+            return sb.toString();
+        }catch(java.security.NoSuchAlgorithmException e){
+        }
+        return null;
+    }
     /**
      * @param args the command line arguments
      */
