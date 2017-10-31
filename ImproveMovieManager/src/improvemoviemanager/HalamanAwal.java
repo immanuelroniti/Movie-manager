@@ -37,12 +37,16 @@ public class HalamanAwal extends javax.swing.JFrame {
     public HalamanAwal() {
         initComponents();
         if(Session.isStatus()){
+            lblUsername.setText("Selamat datang, " + Session.getUsername());
             btnLogin.setVisible(false);
+            btnLogout.setVisible(true);
             if(Session.getRole()==1){
                 btnTambah.setVisible(true);
             }
         } else {
             btnTambah.setVisible(false);
+            btnLogout.setVisible(false);
+            btnLogin.setVisible(true);
         }
         showMovie();
     }
@@ -60,6 +64,8 @@ public class HalamanAwal extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         btnTambah = new javax.swing.JButton();
         btnLogin = new javax.swing.JButton();
+        btnLogout = new javax.swing.JButton();
+        lblUsername = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -93,12 +99,25 @@ public class HalamanAwal extends javax.swing.JFrame {
             }
         });
 
+        btnLogout.setText("Logout");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
+
+        lblUsername.setText("Selamat datang, Guest");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnLogout)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnLogin)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnTambah)
@@ -110,7 +129,9 @@ public class HalamanAwal extends javax.swing.JFrame {
                 .addGap(0, 6, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTambah)
-                    .addComponent(btnLogin)))
+                    .addComponent(btnLogin)
+                    .addComponent(btnLogout)
+                    .addComponent(lblUsername)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -148,6 +169,13 @@ public class HalamanAwal extends javax.swing.JFrame {
         new LoginUI().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "Anda berhasil Logout");
+        Logout.keluar();
+        this.dispose();
+    }//GEN-LAST:event_btnLogoutActionPerformed
 
     /**
      * @param args the command line arguments
@@ -243,8 +271,10 @@ public class HalamanAwal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnTambah;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lblUsername;
     // End of variables declaration//GEN-END:variables
 }

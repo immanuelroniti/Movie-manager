@@ -35,6 +35,12 @@ public class Create extends javax.swing.JFrame {
      */
     public Create() {
         initComponents();
+        if(Session.isStatus()){
+            lblUsername.setText("Selamat datang, " + Session.getUsername());
+            btnLogout.setVisible(true);
+        } else {
+            btnLogout.setVisible(false);
+        }
     }
     
     public boolean insertCheck(String judul, int tahun, int durasi){
@@ -175,6 +181,8 @@ public class Create extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
+        btnLogout = new javax.swing.JButton();
+        lblUsername = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -287,11 +295,14 @@ public class Create extends javax.swing.JFrame {
         jLabel12.setForeground(new java.awt.Color(254, 254, 254));
         jLabel12.setText("Admin Zone");
 
-        jLabel13.setIcon(new javax.swing.ImageIcon("/home/ivana/Desktop/RPL/Movie-manager-master/Gambar/rsz_rsz_2logo.png")); // NOI18N
-
         jLabel14.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(254, 254, 254));
         jLabel14.setText("Tambah Film");
+
+        btnLogout.setText("Logout");
+
+        lblUsername.setForeground(new java.awt.Color(255, 255, 255));
+        lblUsername.setText("Selamat datang, Guest");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -307,9 +318,17 @@ public class Create extends javax.swing.JFrame {
                                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(29, 29, 29)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel12)
-                                    .addComponent(jLabel14)
-                                    .addComponent(jSeparator2)))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel14)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(jSeparator2)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel12)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnLogout)
+                                        .addGap(76, 76, 76))))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -370,7 +389,10 @@ public class Create extends javax.swing.JFrame {
                 .addGap(6, 6, 6)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel12)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel12)
+                            .addComponent(btnLogout)
+                            .addComponent(lblUsername))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -580,6 +602,7 @@ public class Create extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGambar;
+    private javax.swing.JButton btnLogout;
     private java.awt.Button btnTambah;
     private javax.swing.JButton btnTrailer;
     private java.awt.Button button1;
@@ -609,6 +632,7 @@ public class Create extends javax.swing.JFrame {
     private javax.swing.JLabel lblGambar;
     private javax.swing.JLabel lblShowGambar;
     private javax.swing.JLabel lblTrailer;
+    private javax.swing.JLabel lblUsername;
     private javax.swing.JTextArea txtDeskripsi;
     private javax.swing.JTextField txtDurasi;
     private javax.swing.JTextField txtJudul;

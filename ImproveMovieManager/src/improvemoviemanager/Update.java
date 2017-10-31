@@ -36,6 +36,12 @@ public class Update extends javax.swing.JFrame {
      */
     public Update() {
         initComponents();
+        if(Session.isStatus()){
+            lblUsername.setText("Selamat datang, " + Session.getUsername());
+            btnLogout.setVisible(true);
+        } else {
+            btnLogout.setVisible(false);
+        }
     }
 
     /**
@@ -79,6 +85,8 @@ public class Update extends javax.swing.JFrame {
         cbGenre3 = new javax.swing.JComboBox<>();
         cbRatingUsia = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
+        btnLogout = new javax.swing.JButton();
+        lblUsername = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -288,15 +296,27 @@ public class Update extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        btnLogout.setText("Logout");
+
+        lblUsername.setText("Selamat datang, Guest");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnLogout))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 35, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 6, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLogout)
+                    .addComponent(lblUsername)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -582,6 +602,7 @@ public class Update extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnGambar;
+    private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnSimpan;
     private javax.swing.JButton btnTrailer;
     private javax.swing.JComboBox<String> cbGenre1;
@@ -605,6 +626,7 @@ public class Update extends javax.swing.JFrame {
     private javax.swing.JLabel lblGambar;
     private javax.swing.JLabel lblShowGambar;
     private javax.swing.JLabel lblTrailer;
+    private javax.swing.JLabel lblUsername;
     private javax.swing.JTextArea txtDeskripsi;
     private javax.swing.JTextField txtDurasi;
     private javax.swing.JTextField txtJudul;
