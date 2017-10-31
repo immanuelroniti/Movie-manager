@@ -133,6 +133,11 @@ public class LoginUI extends javax.swing.JFrame {
         button2.setForeground(new java.awt.Color(254, 254, 254));
         button2.setLabel("Register");
         button2.setName("btnRegister"); // NOI18N
+        button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -230,6 +235,12 @@ public class LoginUI extends javax.swing.JFrame {
             //JOptionPane.showMessageDialog(null, "eror");
         }
     }//GEN-LAST:event_button1ActionPerformed
+
+    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
+        // TODO add your handling code here:
+        new Register().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_button2ActionPerformed
 
     /**
      * @param args the command line arguments

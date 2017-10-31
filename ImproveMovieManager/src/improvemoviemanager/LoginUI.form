@@ -243,6 +243,9 @@
             <Property name="label" type="java.lang.String" value="Register"/>
             <Property name="name" type="java.lang.String" value="btnRegister" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button2ActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel7">
         </Component>
