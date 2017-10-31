@@ -30,6 +30,7 @@ public class Create extends javax.swing.JFrame {
 
     private String judul, genre, sutradara, penulis, produser, deskripsi, gambarLoc = null, trailerLoc = null;
     private int tahun, durasi, ratingUsia;
+    
     /**
      * Creates new form Create
      */
@@ -46,8 +47,8 @@ public class Create extends javax.swing.JFrame {
     public boolean insertCheck(String judul, int tahun, int durasi){
         String sql = "SELECT * " + "FROM Movie WHERE judul = ? AND tahun = ? AND durasi = ?";
         int count = 0;
+        Connection conn = Koneksi.getConnect();
         try{
-           Connection conn = Koneksi.connect();
            PreparedStatement stmt = conn.prepareStatement(sql);
            stmt.setString(1, judul);
            stmt.setInt(2, tahun);
@@ -58,7 +59,9 @@ public class Create extends javax.swing.JFrame {
            }
            if(count == 0){
                return true;
-           } else return false;
+           } else {
+               return false;
+           }
         } catch(SQLException e){
             System.out.println(e.getMessage());
         }
@@ -66,7 +69,7 @@ public class Create extends javax.swing.JFrame {
         return false;
     }
     
-    public boolean insert(String judul, int tahun, String genre, int durasi, String sutradara, String penulis, String produser, int ratingUsia, String deskripsi, String gambarLoc, String trailerLoc) throws Exception{
+    public void insert(String judul, int tahun, String genre, int durasi, String sutradara, String penulis, String produser, int ratingUsia, String deskripsi, String gambarLoc, String trailerLoc) throws Exception{
         
         File fileImg = new File(gambarLoc);
         String newImageLoc = Paths.getGambarPath()+fileImg.getName();
@@ -80,8 +83,6 @@ public class Create extends javax.swing.JFrame {
         OutputStream outStream = null;
         boolean result = false;
         
-        result = insertCheck(judul, tahun, durasi);
-        if(result){
             try{
                 byte[] buffer = new byte[1024];
                 int length;
@@ -107,9 +108,9 @@ public class Create extends javax.swing.JFrame {
             }
         
             String sql = "INSERT INTO Movie(judul, tahun, genre, durasi, sutradara, penulis, produser, rating_usia, deskripsi, gambar, trailer) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        
+            
+            Connection conn = Koneksi.getConnect();
             try {
-                Connection conn = Koneksi.connect();
                 PreparedStatement stmt = conn.prepareStatement(sql);
                 stmt.setString(1, judul);
                 stmt.setInt(2, tahun);
@@ -123,16 +124,12 @@ public class Create extends javax.swing.JFrame {
                 stmt.setString(10, fileImg.getName());
                 stmt.setString(11, fileVid.getName());
                 stmt.executeUpdate();
-                return true;
+                JOptionPane.showMessageDialog(jPanel2, "Film berhasil ditambahkan");
+                new HalamanAwal().setVisible(true);
+                this.dispose();
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
-            return false;
-        }
-        else{
-            JOptionPane.showMessageDialog(jPanel2, "Film sudah ada!");
-        }
-        return false;
     }
 
     /**
@@ -162,8 +159,6 @@ public class Create extends javax.swing.JFrame {
         txtSutradara = new javax.swing.JTextField();
         txtPenulis = new javax.swing.JTextField();
         txtProduser = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtDeskripsi = new javax.swing.JTextArea();
         btnGambar = new javax.swing.JButton();
         btnTrailer = new javax.swing.JButton();
         lblGambar = new javax.swing.JLabel();
@@ -183,6 +178,8 @@ public class Create extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         btnLogout = new javax.swing.JButton();
         lblUsername = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtDeskripsi = new javax.swing.JTextArea();
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -233,10 +230,6 @@ public class Create extends javax.swing.JFrame {
 
         jLabel11.setForeground(new java.awt.Color(254, 254, 254));
         jLabel11.setText("Trailer");
-
-        txtDeskripsi.setColumns(20);
-        txtDeskripsi.setRows(5);
-        jScrollPane1.setViewportView(txtDeskripsi);
 
         btnGambar.setText("Pilih Gambar");
         btnGambar.addActionListener(new java.awt.event.ActionListener() {
@@ -295,16 +288,25 @@ public class Create extends javax.swing.JFrame {
         jLabel12.setForeground(new java.awt.Color(254, 254, 254));
         jLabel12.setText("Admin Zone");
 
-        jLabel13.setIcon(new javax.swing.ImageIcon("/home/ivana/Desktop/RPL/Movie-manager-master/ImproveMovieManager/src/Gambar/rsz_rsz_2logo.png")); // NOI18N
-
         jLabel14.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(254, 254, 254));
         jLabel14.setText("Tambah Film");
 
         btnLogout.setText("Logout");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
 
         lblUsername.setForeground(new java.awt.Color(255, 255, 255));
         lblUsername.setText("Selamat datang, Guest");
+
+        txtDeskripsi.setColumns(20);
+        txtDeskripsi.setLineWrap(true);
+        txtDeskripsi.setRows(5);
+        txtDeskripsi.setWrapStyleWord(true);
+        jScrollPane2.setViewportView(txtDeskripsi);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -345,22 +347,21 @@ public class Create extends javax.swing.JFrame {
                                                 .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
                                                 .addComponent(jLabel9)))
                                         .addGap(18, 18, 18)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(cbRatingUsia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                .addComponent(txtProduser, javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(txtPenulis, javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(txtSutradara, javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(txtDurasi, javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(txtTahun, javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(txtJudul, javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                                    .addComponent(cbGenre1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                    .addComponent(cbGenre2, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                    .addComponent(cbGenre3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                            .addComponent(txtProduser)
+                                            .addComponent(txtPenulis)
+                                            .addComponent(txtSutradara)
+                                            .addComponent(txtDurasi)
+                                            .addComponent(txtTahun)
+                                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addComponent(cbGenre1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(cbGenre2, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(cbGenre3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(txtJudul)
+                                            .addComponent(jScrollPane2)))
                                     .addComponent(jLabel3))
                                 .addGap(18, 18, Short.MAX_VALUE)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -441,9 +442,11 @@ public class Create extends javax.swing.JFrame {
                             .addComponent(jLabel8)
                             .addComponent(cbRatingUsia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addGap(146, 146, 146))
+                            .addComponent(jScrollPane2)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(lblGambar)
                         .addGap(18, 18, 18)
@@ -498,16 +501,18 @@ public class Create extends javax.swing.JFrame {
             ratingUsia = cbRatingUsia.getSelectedIndex();
 
             try{
-                result = insert(judul, tahun, genre, durasi, sutradara, penulis, produser, ratingUsia, deskripsi, gambarLoc, trailerLoc);
+                result = insertCheck(judul, tahun, durasi);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
             if(result){
-                JOptionPane.showMessageDialog(jPanel2, "Film berhasil ditambahkan");
-                new HalamanAwal().setVisible(true);
-                this.dispose();
+                try{
+                    insert(judul, tahun, genre, durasi, sutradara, penulis, produser, ratingUsia, deskripsi, gambarLoc, trailerLoc);
+                } catch(Exception e){
+                    System.out.println(e.getMessage());
+                }
             } else {
-                JOptionPane.showMessageDialog(jPanel2, "Film gagal ditambahkan");
+                JOptionPane.showMessageDialog(jPanel2, "Film sudah ada!");
             }
         }
     }//GEN-LAST:event_btnTambahActionPerformed
@@ -554,6 +559,15 @@ public class Create extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnGambarActionPerformed
+
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        // TODO add your handling code here:
+        int confirm = JOptionPane.showConfirmDialog(null, "Apakah anda yakin?", "Confirm logout", JOptionPane.OK_CANCEL_OPTION);
+        if(confirm == 0){
+            Logout.keluar();
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnLogoutActionPerformed
     
     public void showImg(String imageLoc){
         BufferedImage img = null;
@@ -628,7 +642,7 @@ public class Create extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblGambar;

@@ -5,6 +5,8 @@
  */
 package improvemoviemanager;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author yongzari
@@ -15,6 +17,7 @@ public class Logout {
         Session.setUsername(null);
         Session.setRole(0);
         Session.setStatus(false);
+        JOptionPane.showMessageDialog(null, "Anda berhasil Logout");
         new HalamanAwal().setVisible(true);
     }
     

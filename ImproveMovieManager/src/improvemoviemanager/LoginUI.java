@@ -122,7 +122,7 @@ public class LoginUI extends javax.swing.JFrame {
         );
 
         jLabel1.setForeground(new java.awt.Color(254, 254, 254));
-        jLabel1.setText("Not Register yet?");
+        jLabel1.setText("Belum terdaftar?");
 
         jLabel3.setForeground(new java.awt.Color(254, 247, 247));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -208,7 +208,7 @@ public class LoginUI extends javax.swing.JFrame {
     }//GEN-LAST:event_button1ActionPerformed
     
     public void pengecekkanDatabase(String username,String password){
-        Connection conn = Koneksi.connect();                
+        Connection conn = Koneksi.getConnect();                
         try{
             String sql = "select * from User";
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -220,46 +220,43 @@ public class LoginUI extends javax.swing.JFrame {
                 // a untuk cekking apakah terdapat username yang sama.
                if(username.equals(rs.getString("username"))){
                     a=a*0;
-                    System.out.println("id yang ditemukan: "+rs.getString("id"));
                     id = rs.getString("id");
                 }else{               
                     a=a*1;
-                    System.out.println("username yang tidak cocok :"+rs.getString("username"));
                 }            
             }
             //cekking... terdapat username sama atau tidak?
             //conn.close();
             if (a==0){//terdapat data
-                System.out.println("id user siap dikirim: "+id);
                 doLogin(username,password,id);
             }else if(a==1){//tidak terdapat data
                 
             }
-            System.out.println(a);
             
         }catch(Exception e){
-            System.out.println(e);
+            System.out.println(e.getMessage());
             
         }
             
     }
     
     public void doLogin(String username,String password,String id){
+        String newPass;
         try{
             //sql
-            Connection conn = Koneksi.connect();
+            Connection conn = Koneksi.getConnect();
             String query = "select * from user where id = ?";
             PreparedStatement stmt =conn.prepareStatement(query);
             stmt.setString(1, id);
             ResultSet rs = stmt.executeQuery();
             
-            password = MD5(password);
-            System.out.println(id+" ini yang diterima doLogin");
-            System.out.println(rs.getString("password"));            
+            
+            newPass = MD5(password);
+                        
             //kondisi login
             if(username.equals(rs.getString("username"))){
                 //jika username benar
-                if(password.equals(rs.getString("password"))){
+                if(newPass.equals(rs.getString("password")) || password.equals(rs.getString("password"))){
                     //jika password benar
                     Session.setId(rs.getInt("id"));
                     Session.setUsername(rs.getString("username"));
@@ -295,6 +292,7 @@ public class LoginUI extends javax.swing.JFrame {
             }
             return sb.toString();
         }catch(java.security.NoSuchAlgorithmException e){
+            System.out.println(e.getMessage());
         }
         return null;
     }

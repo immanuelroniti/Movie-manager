@@ -261,9 +261,6 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Anda setuju dengan Kebijakan kami"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbKebijakanActionPerformed"/>
-              </Events>
             </Component>
           </SubComponents>
         </Container>
