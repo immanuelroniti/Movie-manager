@@ -24,6 +24,7 @@ import javax.swing.JOptionPane;
 public class DetailFilm extends javax.swing.JFrame {
 
     int id;
+    String fileGambar, fileVideo;
     
     /**
      * Creates new form DetailFilm
@@ -129,7 +130,10 @@ public class DetailFilm extends javax.swing.JFrame {
                 String ratingUsia = getRatingUsia(rs.getInt("rating_usia"));
                 isiRatingUsia.setText(ratingUsia);
                 isiDeskripsi.setText(rs.getString("deskripsi"));
+                fileGambar=Paths.getGambarPath()+rs.getString("gambar");
+                fileVideo=Paths.getVideoPath()+rs.getString("trailer");
                 showImg(Paths.getGambarPath()+rs.getString("gambar"));
+                
             }
         } catch (SQLException e){
             System.out.println(e.getMessage());
@@ -146,9 +150,14 @@ public class DetailFilm extends javax.swing.JFrame {
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, id);
             stmt.executeUpdate();
+            File img = new File(fileGambar);
+            File vid = new File(fileVideo);
+            img.delete();
+            vid.delete();
+            
             JOptionPane.showMessageDialog(null, "Film berhasil dihapus");
-            this.dispose();
             new HalamanAwal().setVisible(true);
+            this.dispose();
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
