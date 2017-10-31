@@ -31,6 +31,15 @@ public class DetailFilm extends javax.swing.JFrame {
     
     public DetailFilm() {
         initComponents();
+        if(Session.isStatus()){
+            if(Session.getRole()==1){
+                btnEdit.setVisible(true);
+                btnDelete.setVisible(true);
+            }
+        } else {
+            btnEdit.setVisible(false);
+            btnDelete.setVisible(false);
+        }
     }
     
     public String getGenre(String genre){
@@ -127,17 +136,16 @@ public class DetailFilm extends javax.swing.JFrame {
         String sql = "DELETE FROM Movie WHERE id = ?";
         try{
             //debuging
-            System.out.println(id);
             
             Connection conn = Koneksi.connect();
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, id);
             stmt.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Berhasil delete FIlm");
+            JOptionPane.showMessageDialog(null, "Film berhasil dihapus");
             this.dispose();
             new HalamanAwal().setVisible(true);
-        }catch(Exception id){
-            System.out.println("erorr deleteMovie!");
+        }catch(Exception e){
+            System.out.println(e.getMessage());
         }
         
         
@@ -412,11 +420,11 @@ public class DetailFilm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 767, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();

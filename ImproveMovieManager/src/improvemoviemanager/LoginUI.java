@@ -213,7 +213,7 @@ public class LoginUI extends javax.swing.JFrame {
 
         try{
             //sql
-            String query = "select username, password from user";
+            String query = "select * from user ";
             pst =con.prepareStatement(query);
             rs = pst.executeQuery();
 
@@ -224,15 +224,18 @@ public class LoginUI extends javax.swing.JFrame {
 
                 if(password.equals(rs.getString("password"))){
                     //jika password benar
-                    JOptionPane.showMessageDialog(null, "Berhasil masuk redirected");
+                    Session.setId(rs.getInt("id"));
+                    Session.setUsername(rs.getString("username"));
+                    Session.setRole(rs.getInt("role"));
+                    Session.setStatus(true);
                     new HalamanAwal().setVisible(true);
                     this.dispose();
                 }else{
-                    JOptionPane.showMessageDialog(null, "password salah");
+                    JOptionPane.showMessageDialog(null, "Password salah");
                 }
 
             }else{
-                JOptionPane.showMessageDialog(null, "username salah");
+                JOptionPane.showMessageDialog(null, "Username salah");
             }
         }catch(Exception e){
             //JOptionPane.showMessageDialog(null, "eror");
