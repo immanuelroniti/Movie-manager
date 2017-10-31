@@ -295,6 +295,8 @@ public class Create extends javax.swing.JFrame {
         jLabel12.setForeground(new java.awt.Color(254, 254, 254));
         jLabel12.setText("Admin Zone");
 
+        jLabel13.setIcon(new javax.swing.ImageIcon("/home/ivana/Desktop/RPL/Movie-manager-master/ImproveMovieManager/src/Gambar/rsz_rsz_2logo.png")); // NOI18N
+
         jLabel14.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(254, 254, 254));
         jLabel14.setText("Tambah Film");
@@ -406,7 +408,7 @@ public class Create extends javax.swing.JFrame {
                     .addComponent(txtJudul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
                     .addComponent(btnGambar))
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)

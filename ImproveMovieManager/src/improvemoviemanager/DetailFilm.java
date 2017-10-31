@@ -297,6 +297,8 @@ public class DetailFilm extends javax.swing.JFrame {
             }
         });
 
+        jLabel13.setIcon(new javax.swing.ImageIcon("/home/ivana/Desktop/RPL/Movie-manager-master/ImproveMovieManager/src/Gambar/rsz_rsz_2logo.png")); // NOI18N
+
         jLabel12.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(254, 254, 254));
         jLabel12.setText("Admin Zone");
