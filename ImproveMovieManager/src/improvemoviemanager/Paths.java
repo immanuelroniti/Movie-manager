@@ -11,14 +11,14 @@ package improvemoviemanager;
  */
 public class Paths {
     //Ragil:
-    private static String pathDB = "jdbc:sqlite:/Users/yongzari/Documents/MovieManager Project/Movie-manager/ImproveMovieManager/MovieManagerDB.db";
-    private static String gambarPath = "/Users/yongzari/Documents/MovieManager Project/Movie-manager/Gambar/";
-    private static String videoPath = "/Users/yongzari/Documents/MovieManager Project/Movie-manager/Video/";
+    //private static String pathDB = "jdbc:sqlite:/Users/yongzari/Documents/MovieManager Project/Movie-manager/ImproveMovieManager/MovieManagerDB.db";
+    //private static String gambarPath = "/Users/yongzari/Documents/MovieManager Project/Movie-manager/Gambar/";
+    //private static String videoPath = "/Users/yongzari/Documents/MovieManager Project/Movie-manager/Video/";
     
     //Roni:
-    //private static String pathDB = "";
-    //private static String gambarPath = "";
-    //private static String videoPath = "";
+    private static String pathDB = "jdbc:sqlite:E:\\RPL\\Movie-manager\\ImproveMovieManager\\MovieManagerDB.db";
+    private static String gambarPath = "E:\\RPL\\Movie-manager\\Gambar\\";
+    private static String videoPath = "E:\\RPL\\Movie-manager\\Video\\";
     
     //Dody:
     //private static String pathDB = "";
