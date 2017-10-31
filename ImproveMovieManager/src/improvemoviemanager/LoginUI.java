@@ -133,13 +133,6 @@ public class LoginUI extends javax.swing.JFrame {
         button2.setForeground(new java.awt.Color(254, 254, 254));
         button2.setLabel("Register");
         button2.setName("btnRegister"); // NOI18N
-        button2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button2ActionPerformed(evt);
-            }
-        });
-
-        jLabel7.setIcon(new javax.swing.ImageIcon("/home/ivana/Desktop/RPL/Movie-manager-master/Gambar/rsz_2logo.png")); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -200,10 +193,6 @@ public class LoginUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_button2ActionPerformed
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
         // TODO add your handling code here:
