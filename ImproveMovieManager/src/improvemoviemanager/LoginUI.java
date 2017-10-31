@@ -15,16 +15,16 @@ import javax.swing.JOptionPane;
  * @author Roni
  */
 public class LoginUI extends javax.swing.JFrame {
-    Connection con =null;
-    ResultSet rs = null;
-    PreparedStatement pst = null;
+    //Connection con =null;
+    //ResultSet rs = null;
+    //PreparedStatement pst = null;
     /**
      * Creates new form LoginUI
      */
     public LoginUI() {
         
         
-        con = Koneksi.connect();
+       // con = Koneksi.connect();
         initComponents();
     }
 
@@ -204,18 +204,61 @@ public class LoginUI extends javax.swing.JFrame {
 
         String username = txtUsername.getText();
         String password = txtPassword.getText();
-
+        pengecekkanDatabase(username,password);
+    }//GEN-LAST:event_button1ActionPerformed
+    
+    public void pengecekkanDatabase(String username,String password){
+        Connection conn = Koneksi.connect();                
+        try{
+            String sql = "select * from User";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            
+            int a = 1;
+            String id = null;
+            while(rs.next()){
+                // a untuk cekking apakah terdapat username yang sama.
+               if(username.equals(rs.getString("username"))){
+                    a=a*0;
+                    System.out.println("id yang ditemukan: "+rs.getString("id"));
+                    id = rs.getString("id");
+                }else{               
+                    a=a*1;
+                    System.out.println("username yang tidak cocok :"+rs.getString("username"));
+                }            
+            }
+            //cekking... terdapat username sama atau tidak?
+            //conn.close();
+            if (a==0){//terdapat data
+                System.out.println("id user siap dikirim: "+id);
+                doLogin(username,password,id);
+            }else if(a==1){//tidak terdapat data
+                
+            }
+            System.out.println(a);
+            
+        }catch(Exception e){
+            System.out.println(e);
+            
+        }
+            
+    }
+    
+    public void doLogin(String username,String password,String id){
         try{
             //sql
-            String query = "select * from user ";
-            pst =con.prepareStatement(query);
-            rs = pst.executeQuery();
-
+            Connection conn = Koneksi.connect();
+            String query = "select * from user where id = ?";
+            PreparedStatement stmt =conn.prepareStatement(query);
+            stmt.setString(1, id);
+            ResultSet rs = stmt.executeQuery();
+            
+            password = MD5(password);
+            System.out.println(id+" ini yang diterima doLogin");
+            System.out.println(rs.getString("password"));            
             //kondisi login
-
             if(username.equals(rs.getString("username"))){
                 //jika username benar
-
                 if(password.equals(rs.getString("password"))){
                     //jika password benar
                     Session.setId(rs.getInt("id"));
@@ -232,16 +275,29 @@ public class LoginUI extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Username salah");
             }
         }catch(Exception e){
-            //JOptionPane.showMessageDialog(null, "eror");
-        }
-    }//GEN-LAST:event_button1ActionPerformed
-
+            JOptionPane.showMessageDialog(null, "jooss");
+        }    
+    }
+    
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
         // TODO add your handling code here:
         new Register().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_button2ActionPerformed
-
+    
+    public String MD5(String md5) {
+        try {
+            java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
+            byte[] array = md.digest(md5.getBytes());
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < array.length; ++i) {
+                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1,3));
+            }
+            return sb.toString();
+        }catch(java.security.NoSuchAlgorithmException e){
+        }
+        return null;
+    }
     /**
      * @param args the command line arguments
      */

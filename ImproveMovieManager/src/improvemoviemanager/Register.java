@@ -283,10 +283,11 @@ public class Register extends javax.swing.JFrame {
         password =MD5(password);
         try{
             Connection conn = Koneksi.connect();
-            String sql = "INSERT INTO User(username,password) VALUES(?,?)";
+            String sql = "INSERT INTO User(username,password,role) VALUES(?,?,?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1,username);
             stmt.setString(2,password);
+            stmt.setInt(3,1);
             System.out.println("berhasil terdaftar");
             stmt.executeUpdate();
             conn.close();
