@@ -22,7 +22,7 @@ public class Paths {
     
     //Dody:
     //private static String pathDB = "";
-    //private static String gambarPath = "";
+    //private static String gambarPath ="";
     //private static String videoPath = "";
     
 
