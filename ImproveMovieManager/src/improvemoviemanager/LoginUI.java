@@ -68,7 +68,7 @@ public class LoginUI extends javax.swing.JFrame {
 
         button1.setBackground(new java.awt.Color(67, 67, 67));
         button1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        button1.setForeground(new java.awt.Color(254, 254, 254));
+        button1.setForeground(new java.awt.Color(0, 0, 0));
         button1.setLabel("Login");
         button1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -130,7 +130,7 @@ public class LoginUI extends javax.swing.JFrame {
 
         button2.setBackground(new java.awt.Color(84, 172, 1));
         button2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        button2.setForeground(new java.awt.Color(254, 254, 254));
+        button2.setForeground(new java.awt.Color(0, 0, 0));
         button2.setLabel("Register");
         button2.setName("btnRegister"); // NOI18N
         button2.addActionListener(new java.awt.event.ActionListener() {
@@ -139,7 +139,7 @@ public class LoginUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel7.setIcon(new javax.swing.ImageIcon("/home/ivana/Desktop/RPL/Movie-manager-master/ImproveMovieManager/src/Gambar/rsz_2logo.png")); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/rsz_2logo.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

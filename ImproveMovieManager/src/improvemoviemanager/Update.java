@@ -180,7 +180,7 @@ public class Update extends javax.swing.JFrame {
         cbRatingUsia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MPAA Age Rating", "G", "PG", "PG-13", "R", "NC-17" }));
 
         btnSimpan.setBackground(new java.awt.Color(38, 1, 242));
-        btnSimpan.setForeground(new java.awt.Color(254, 254, 254));
+        btnSimpan.setForeground(new java.awt.Color(0, 0, 0));
         btnSimpan.setLabel("Simpan");
         btnSimpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -189,7 +189,7 @@ public class Update extends javax.swing.JFrame {
         });
 
         button1.setBackground(new java.awt.Color(199, 27, 27));
-        button1.setForeground(new java.awt.Color(254, 254, 254));
+        button1.setForeground(new java.awt.Color(0, 0, 0));
         button1.setLabel("Cancel");
         button1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

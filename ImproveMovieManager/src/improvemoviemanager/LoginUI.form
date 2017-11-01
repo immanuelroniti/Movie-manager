@@ -200,7 +200,7 @@
                   <Font name="Dialog" size="14" style="0"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="fe" green="fe" red="fe" type="rgb"/>
+                  <Color blue="0" green="0" red="0" type="rgb"/>
                 </Property>
                 <Property name="label" type="java.lang.String" value="Login"/>
               </Properties>
@@ -238,7 +238,7 @@
               <Font name="Dialog" size="14" style="0"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="fe" green="fe" red="fe" type="rgb"/>
+              <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
             <Property name="label" type="java.lang.String" value="Register"/>
             <Property name="name" type="java.lang.String" value="btnRegister" noResource="true"/>
@@ -250,7 +250,7 @@
         <Component class="javax.swing.JLabel" name="jLabel7">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="/home/ivana/Desktop/RPL/Movie-manager-master/ImproveMovieManager/src/Gambar/rsz_2logo.png"/>
+              <Image iconType="3" name="/Gambar/rsz_2logo.png"/>
             </Property>
           </Properties>
         </Component>

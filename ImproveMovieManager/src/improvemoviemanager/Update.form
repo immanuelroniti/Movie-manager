@@ -520,7 +520,7 @@
               <Color blue="f2" green="1" red="26" type="rgb"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="fe" green="fe" red="fe" type="rgb"/>
+              <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
             <Property name="label" type="java.lang.String" value="Simpan"/>
           </Properties>
@@ -534,7 +534,7 @@
               <Color blue="1b" green="1b" red="c7" type="rgb"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="fe" green="fe" red="fe" type="rgb"/>
+              <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
             <Property name="label" type="java.lang.String" value="Cancel"/>
           </Properties>

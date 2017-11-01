@@ -266,7 +266,7 @@ public class Create extends javax.swing.JFrame {
 
         btnTambah.setBackground(new java.awt.Color(13, 1, 180));
         btnTambah.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        btnTambah.setForeground(new java.awt.Color(254, 254, 254));
+        btnTambah.setForeground(new java.awt.Color(0, 0, 0));
         btnTambah.setLabel("Tambah");
         btnTambah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -276,7 +276,7 @@ public class Create extends javax.swing.JFrame {
 
         button1.setBackground(new java.awt.Color(174, 28, 28));
         button1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        button1.setForeground(new java.awt.Color(254, 254, 254));
+        button1.setForeground(new java.awt.Color(0, 0, 0));
         button1.setLabel("Cancel");
         button1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -288,7 +288,7 @@ public class Create extends javax.swing.JFrame {
         jLabel12.setForeground(new java.awt.Color(254, 254, 254));
         jLabel12.setText("Admin Zone");
 
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/improvemoviemanager/rsz_rsz_2logo.png"))); // NOI18N
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/rsz_rsz_2logo.png"))); // NOI18N
 
         jLabel14.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(254, 254, 254));
