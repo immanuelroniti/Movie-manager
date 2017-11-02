@@ -141,7 +141,9 @@ public class Update extends javax.swing.JFrame {
         jLabel11.setText("Trailer");
 
         txtDeskripsi.setColumns(20);
+        txtDeskripsi.setLineWrap(true);
         txtDeskripsi.setRows(5);
+        txtDeskripsi.setWrapStyleWord(true);
         jScrollPane1.setViewportView(txtDeskripsi);
 
         btnGambar.setText("Pilih Gambar");
@@ -178,7 +180,7 @@ public class Update extends javax.swing.JFrame {
         cbRatingUsia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MPAA Age Rating", "G", "PG", "PG-13", "R", "NC-17" }));
 
         btnSimpan.setBackground(new java.awt.Color(38, 1, 242));
-        btnSimpan.setForeground(new java.awt.Color(254, 254, 254));
+        btnSimpan.setForeground(new java.awt.Color(0, 0, 0));
         btnSimpan.setLabel("Simpan");
         btnSimpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -187,7 +189,7 @@ public class Update extends javax.swing.JFrame {
         });
 
         button1.setBackground(new java.awt.Color(199, 27, 27));
-        button1.setForeground(new java.awt.Color(254, 254, 254));
+        button1.setForeground(new java.awt.Color(0, 0, 0));
         button1.setLabel("Cancel");
         button1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -326,11 +328,16 @@ public class Update extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         btnLogout.setText("Logout");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
 
         lblUsername.setForeground(new java.awt.Color(254, 254, 254));
         lblUsername.setText("Selamat datang, Guest");
 
-        jLabel13.setIcon(new javax.swing.ImageIcon("/home/ivana/Desktop/RPL/Movie-manager-master/ImproveMovieManager/src/Gambar/rsz_rsz_2logo.png")); // NOI18N
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/rsz_rsz_2logo.png"))); // NOI18N
 
         jLabel12.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(254, 254, 254));
@@ -338,7 +345,7 @@ public class Update extends javax.swing.JFrame {
 
         jLabel14.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(254, 254, 254));
-        jLabel14.setText("Tambah Film");
+        jLabel14.setText("Edit Film");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -421,7 +428,7 @@ public class Update extends javax.swing.JFrame {
         String sql = "SELECT * FROM Movie WHERE id = ?";
         
         try{
-            Connection conn = Koneksi.connect();
+            Connection conn = Koneksi.getConnect();
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -520,7 +527,7 @@ public class Update extends javax.swing.JFrame {
             String sql = "UPDATE Movie SET judul = ?, tahun = ?, genre = ?, durasi = ?, sutradara = ?, penulis = ?, produser = ?, rating_usia = ?, deskripsi = ?, gambar = ?, trailer = ? WHERE id = ?";
         
             try {
-                Connection conn = Koneksi.connect();
+                Connection conn = Koneksi.getConnect();
                 PreparedStatement stmt = conn.prepareStatement(sql);
                 stmt.setString(1, judul);
                 stmt.setInt(2, tahun);
@@ -621,6 +628,15 @@ public class Update extends javax.swing.JFrame {
         new DetailFilm().showDetail(id);
         this.dispose();
     }//GEN-LAST:event_button1ActionPerformed
+
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        // TODO add your handling code here:
+        int confirm = JOptionPane.showConfirmDialog(null, "Apakah anda yakin?", "Confirm logout", JOptionPane.OK_CANCEL_OPTION);
+        if(confirm == 0){
+            Logout.keluar();
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnLogoutActionPerformed
 
     /**
      * @param args the command line arguments

@@ -39,6 +39,9 @@ public class DetailFilm extends javax.swing.JFrame {
             if(Session.getRole()==1){
                 btnEdit.setVisible(true);
                 btnDelete.setVisible(true);
+            } else {
+                btnEdit.setVisible(false);
+                btnDelete.setVisible(false);
             }
         } else {
             btnEdit.setVisible(false);
@@ -56,7 +59,7 @@ public class DetailFilm extends javax.swing.JFrame {
         int genre1 = Integer.parseInt(split[0]), genre2 = Integer.parseInt(split[1]), genre3 = Integer.parseInt(split[2]);
         String sql = "SELECT * FROM Genre WHERE id = ? OR id = ? OR id = ?";
         try{
-            Connection conn = Koneksi.connect();
+            Connection conn = Koneksi.getConnect();
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, genre1);
             stmt.setInt(2, genre2);
@@ -79,7 +82,7 @@ public class DetailFilm extends javax.swing.JFrame {
         String ratingComplete = "";
         String sql = "SELECT * FROM RatingUsia WHERE id = ?";
         try{
-            Connection conn = Koneksi.connect();
+            Connection conn = Koneksi.getConnect();
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, ratingUsia);
             ResultSet rs = stmt.executeQuery();
@@ -113,7 +116,7 @@ public class DetailFilm extends javax.swing.JFrame {
         String sql = "SELECT * FROM Movie WHERE id = ?";
         
         try{
-            Connection conn = Koneksi.connect();
+            Connection conn = Koneksi.getConnect();
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -129,7 +132,7 @@ public class DetailFilm extends javax.swing.JFrame {
                 isiProduser.setText(rs.getString("produser"));
                 String ratingUsia = getRatingUsia(rs.getInt("rating_usia"));
                 isiRatingUsia.setText(ratingUsia);
-                isiDeskripsi.setText(rs.getString("deskripsi"));
+                isiDeskripsi.setText("<html>"+rs.getString("deskripsi")+"</html>");
                 fileGambar=Paths.getGambarPath()+rs.getString("gambar");
                 fileVideo=Paths.getVideoPath()+rs.getString("trailer");
                 showImg(Paths.getGambarPath()+rs.getString("gambar"));
@@ -141,30 +144,26 @@ public class DetailFilm extends javax.swing.JFrame {
     }
     
     public void deleteMovie(){
-        
-        String sql = "DELETE FROM Movie WHERE id = ?";
-        try{
-            //debuging
+        int confirm = JOptionPane.showConfirmDialog(this, "Apakah anda yakin?", "Confirm delete", JOptionPane.OK_CANCEL_OPTION);
+        if(confirm == 0){
+            String sql = "DELETE FROM Movie WHERE id = ?";
+            try{
+                Connection conn = Koneksi.getConnect();
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                stmt.setInt(1, id);
+                stmt.executeUpdate();
+                File img = new File(fileGambar);
+                File vid = new File(fileVideo);
+                img.delete();
+                vid.delete();
             
-            Connection conn = Koneksi.connect();
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, id);
-            stmt.executeUpdate();
-            File img = new File(fileGambar);
-            File vid = new File(fileVideo);
-            img.delete();
-            vid.delete();
-            
-            JOptionPane.showMessageDialog(null, "Film berhasil dihapus");
-            new HalamanAwal().setVisible(true);
-            this.dispose();
-        }catch(Exception e){
-            System.out.println(e.getMessage());
+                JOptionPane.showMessageDialog(null, "Film berhasil dihapus");
+                new HalamanAwal().setVisible(true);
+                this.dispose();
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+            }
         }
-        
-        
-        
-        
     }
 
     /**
@@ -199,7 +198,6 @@ public class DetailFilm extends javax.swing.JFrame {
         btnback = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
@@ -297,11 +295,7 @@ public class DetailFilm extends javax.swing.JFrame {
             }
         });
 
-        jLabel13.setIcon(new javax.swing.ImageIcon("/home/ivana/Desktop/RPL/Movie-manager-master/ImproveMovieManager/src/Gambar/rsz_rsz_2logo.png")); // NOI18N
-
-        jLabel12.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(254, 254, 254));
-        jLabel12.setText("Admin Zone");
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/rsz_rsz_2logo.png"))); // NOI18N
 
         jLabel14.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(254, 254, 254));
@@ -380,9 +374,8 @@ public class DetailFilm extends javax.swing.JFrame {
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel12)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnLogout)
@@ -402,7 +395,6 @@ public class DetailFilm extends javax.swing.JFrame {
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel12)
                             .addComponent(btnLogin)
                             .addComponent(btnLogout)
                             .addComponent(lblUsername))
@@ -410,7 +402,7 @@ public class DetailFilm extends javax.swing.JFrame {
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(12, 12, 12)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -506,9 +498,11 @@ public class DetailFilm extends javax.swing.JFrame {
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Anda berhasil Logout");
-        Logout.keluar();
-        this.dispose();
+        int confirm = JOptionPane.showConfirmDialog(null, "Apakah anda yakin?", "Confirm logout", JOptionPane.OK_CANCEL_OPTION);
+        if(confirm == 0){
+            Logout.keluar();
+            this.dispose();
+        }
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     /**
@@ -562,7 +556,6 @@ public class DetailFilm extends javax.swing.JFrame {
     private javax.swing.JLabel isiSutradara;
     private javax.swing.JLabel isiTahun;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;

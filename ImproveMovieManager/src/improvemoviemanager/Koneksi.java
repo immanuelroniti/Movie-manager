@@ -14,13 +14,15 @@ import javax.swing.JOptionPane;
  * @author Roni
  */
 public class Koneksi {
-    public static Connection connect(){
-        Connection conn = null;
-        try{
-            String url = Paths.getPathDB();
-            conn = DriverManager.getConnection(url);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+    private static Connection conn = null;
+    public static Connection getConnect(){
+        if(conn==null){
+            try{
+                String url = Paths.getPathDB();
+                conn = DriverManager.getConnection(url);
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
         }
         return conn;
     }

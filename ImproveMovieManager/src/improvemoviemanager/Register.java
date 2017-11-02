@@ -8,13 +8,13 @@ package improvemoviemanager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Roni
  */
 public class Register extends javax.swing.JFrame {
-
     /**
      * Creates new form Register
      */
@@ -86,11 +86,6 @@ public class Register extends javax.swing.JFrame {
         jLabel7.setText("Sign Up");
 
         cbKebijakan.setText("Anda setuju dengan Kebijakan kami");
-        cbKebijakan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbKebijakanActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -213,34 +208,31 @@ public class Register extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cbKebijakanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbKebijakanActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbKebijakanActionPerformed
-
     private void btnDaftarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDaftarActionPerformed
         // TODO add your handling code here:
+        
         try{
             if(txtUsername.getText().equals("")||txtPassword.getText().equals("")||txtRetypePassword.getText().equals("")){
-                System.out.println("belum lengkap");
+                JOptionPane.showMessageDialog(this, "Data belum lengkap");
             }else{
                 if(cbKebijakan.isSelected()){
                     //System.out.println("");
                     if(txtPassword.getText().equals(txtRetypePassword.getText())){
                         pengecekkanPendaftaran(txtUsername.getText(),txtPassword.getText());
                     }else{
-                        System.out.println("password dan retype tidak sama");
+                        JOptionPane.showMessageDialog(this, "Password tidak sama");
                         
                     }
                     
                 }else{
-                    System.out.println("anda belum menyetujui");
+                    JOptionPane.showMessageDialog(this, "Anda harus menyetujui kebijakan kami");
                 }
                 
             }
             
             
         }catch(Exception e){
-            
+            System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_btnDaftarActionPerformed
 
@@ -250,7 +242,7 @@ public class Register extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnLoginActionPerformed
     public void pengecekkanPendaftaran(String username,String password){
-        Connection conn = Koneksi.connect();                
+        Connection conn = Koneksi.getConnect();                
         try{
             String sql = "select username from User";
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -267,11 +259,10 @@ public class Register extends javax.swing.JFrame {
             }
             //cekking... terdapat username sama atau tidak?
             if (a==0){
-                System.out.println("nama sudah terpakai");
+                JOptionPane.showMessageDialog(this, "Username sudah ada");
             }else if(a==1){
                 insertUserToDatabase(username,password);
             }
-            System.out.println(a);
             
         }catch(Exception e){
             System.out.println(e);
@@ -280,16 +271,17 @@ public class Register extends javax.swing.JFrame {
             
     }
     public void insertUserToDatabase(String username, String password){
-        password =MD5(password);
+        password = MD5(password);
         try{
-            Connection conn = Koneksi.connect();
+            Connection conn = Koneksi.getConnect();
             String sql = "INSERT INTO User(username,password,role) VALUES(?,?,?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1,username);
             stmt.setString(2,password);
-            stmt.setInt(3,1);
-            System.out.println("berhasil terdaftar");
+            stmt.setInt(3,2);
             stmt.executeUpdate();
+            JOptionPane.showMessageDialog(this, "Berhasil terdaftar");
+            langsungMasuk(username, password);
             conn.close();
         }catch(Exception e){
             System.out.println(e);
@@ -309,6 +301,29 @@ public class Register extends javax.swing.JFrame {
         }catch(java.security.NoSuchAlgorithmException e){
         }
         return null;
+    }
+    
+    public void langsungMasuk(String username, String password){
+        try{
+            //sql
+            Connection conn = Koneksi.getConnect();
+            String query = "select * from user where username=? AND password=?";
+            PreparedStatement stmt =conn.prepareStatement(query);
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            ResultSet rs = stmt.executeQuery();
+            
+            while(rs.next()){
+                Session.setId(rs.getInt("id"));
+                Session.setUsername(rs.getString("username"));
+                Session.setRole(rs.getInt("role"));
+                Session.setStatus(true);
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "jooss");
+        }
+        new HalamanAwal().setVisible(true);
+        this.dispose();
     }
     /**
      * @param args the command line arguments

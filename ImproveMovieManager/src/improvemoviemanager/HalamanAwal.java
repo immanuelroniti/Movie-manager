@@ -6,6 +6,9 @@
 package improvemoviemanager;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -42,6 +45,8 @@ public class HalamanAwal extends javax.swing.JFrame {
             btnLogout.setVisible(true);
             if(Session.getRole()==1){
                 btnTambah.setVisible(true);
+            } else {
+                btnTambah.setVisible(false);
             }
         } else {
             btnTambah.setVisible(false);
@@ -60,30 +65,18 @@ public class HalamanAwal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         btnTambah = new javax.swing.JButton();
         btnLogin = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
         lblUsername = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(67, 67, 67));
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Daftar film"));
-        jPanel2.setAutoscrolls(true);
-        jPanel2.setSize(new java.awt.Dimension(826, 557));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 814, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 533, Short.MAX_VALUE)
-        );
-
+        jPanel1.setBackground(new java.awt.Color(67, 67, 67));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btnTambah.setText("Tambah");
@@ -107,6 +100,7 @@ public class HalamanAwal extends javax.swing.JFrame {
             }
         });
 
+        lblUsername.setForeground(new java.awt.Color(255, 255, 255));
         lblUsername.setText("Selamat datang, Guest");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -135,15 +129,30 @@ public class HalamanAwal extends javax.swing.JFrame {
                     .addComponent(lblUsername)))
         );
 
+        jPanel2.setBackground(new java.awt.Color(67, 67, 67));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 822, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 553, Short.MAX_VALUE)
+        );
+
+        jScrollPane1.setViewportView(jPanel2);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -152,8 +161,8 @@ public class HalamanAwal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
 
         pack();
@@ -173,9 +182,11 @@ public class HalamanAwal extends javax.swing.JFrame {
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Anda berhasil Logout");
-        Logout.keluar();
-        this.dispose();
+        int confirm = JOptionPane.showConfirmDialog(null, "Apakah anda yakin?", "Confirm logout", JOptionPane.OK_CANCEL_OPTION);
+        if(confirm == 0){
+            Logout.keluar();
+            this.dispose();
+        }
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     /**
@@ -186,10 +197,10 @@ public class HalamanAwal extends javax.swing.JFrame {
         String sql = "SELECT * FROM Movie";
         
         Map<Integer, JButton> btnGambar = new HashMap<Integer, JButton>();
-        jPanel2.setLayout(new GridLayout(0, 4));
+        jPanel2.setLayout(new FlowLayout(FlowLayout.LEFT));
         
         try{
-            Connection conn = Koneksi.connect();
+            Connection conn = Koneksi.getConnect();
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             
@@ -211,6 +222,7 @@ public class HalamanAwal extends javax.swing.JFrame {
                 btnGambar.put(id, new JButton(judul + " (" + tahun + ")", imgIcon){
                     {
                         setSize(145, 210);
+                        setMaximumSize(getSize());
                     }
                 });
             }
@@ -221,7 +233,9 @@ public class HalamanAwal extends javax.swing.JFrame {
         for(int key : btnGambar.keySet()){
             btnGambar.get(key).setVerticalTextPosition(SwingConstants.BOTTOM);
             btnGambar.get(key).setHorizontalTextPosition(SwingConstants.CENTER);
+            
             jPanel2.add(btnGambar.get(key));
+            
             btnGambar.get(key).addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     btnGambarActionPerformed(evt, key);
@@ -274,6 +288,7 @@ public class HalamanAwal extends javax.swing.JFrame {
     private javax.swing.JButton btnTambah;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblUsername;
     // End of variables declaration//GEN-END:variables
 }
