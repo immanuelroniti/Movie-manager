@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
  */
 public class DetailFilm extends javax.swing.JFrame {
 
-    int id;
+    int id, asal;
     String fileGambar, fileVideo;
     
     /**
@@ -109,7 +109,8 @@ public class DetailFilm extends javax.swing.JFrame {
         lblShowGambar.setIcon(imgIcon);
     }
     
-    public void showDetail(int id){
+    public void showDetail(int id, int asal){
+        this.asal = asal;
         this.id = id;
         this.setVisible(true);
         
@@ -481,8 +482,12 @@ public class DetailFilm extends javax.swing.JFrame {
 
     private void btnbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbackActionPerformed
         // TODO add your handling code here:
-        new HalamanAwal().setVisible(true);
-        this.dispose();
+        if(asal==1){
+            new HalamanAwal().setVisible(true);
+            this.dispose();
+        } else if(asal==2){
+            this.dispose();
+        }
     }//GEN-LAST:event_btnbackActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed

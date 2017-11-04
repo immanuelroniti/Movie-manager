@@ -30,11 +30,13 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="jScrollPane1" min="-2" pref="817" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="840" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="jPanel1" max="32767" attributes="0"/>
+                  <Component id="jPanel1" alignment="1" max="32767" attributes="0"/>
+                  <Component id="jPanel3" alignment="0" max="32767" attributes="0"/>
               </Group>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -44,7 +46,9 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" max="32767" attributes="0"/>
+              <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" pref="544" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -70,8 +74,8 @@
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="lblUsername" min="-2" pref="269" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                  <Component id="btnBack" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnLogout" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnLogin" min="-2" max="-2" attributes="0"/>
@@ -90,7 +94,7 @@
                       <Component id="btnLogin" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnLogout" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lblUsername" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnBack" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -129,12 +133,12 @@
             <Property name="text" type="java.lang.String" value="Selamat datang, Guest"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="btnBack">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Search"/>
+            <Property name="text" type="java.lang.String" value="Back"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBackActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
@@ -153,7 +157,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="822" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="845" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -163,6 +167,116 @@
             </DimensionLayout>
           </Layout>
         </Container>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="jPanel3">
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <Component id="txtKeyword" min="-2" pref="182" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="btnCari" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="cbFilter" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="lblTahun" min="-2" pref="53" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="txtTahun" min="-2" pref="88" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                  <Component id="lblGenre" min="-2" pref="53" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="cbGenre" min="-2" pref="96" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="txtKeyword" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnCari" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cbFilter" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblTahun" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
+                  <Component id="lblGenre" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
+                  <Component id="cbGenre" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                  <Component id="txtTahun" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JTextField" name="txtKeyword">
+        </Component>
+        <Component class="javax.swing.JButton" name="btnCari">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Cari"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCariActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="cbFilter">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Gunakan filter"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbFilterActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblTahun">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="14" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Tahun"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="txtTahun">
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblGenre">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="14" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Genre"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="cbGenre">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="23">
+                <StringItem index="0" value="Genre"/>
+                <StringItem index="1" value="Action"/>
+                <StringItem index="2" value="Adventure"/>
+                <StringItem index="3" value="Animation"/>
+                <StringItem index="4" value="Biography"/>
+                <StringItem index="5" value="Comedy"/>
+                <StringItem index="6" value="Crime"/>
+                <StringItem index="7" value="Documentary"/>
+                <StringItem index="8" value="Drama"/>
+                <StringItem index="9" value="Family"/>
+                <StringItem index="10" value="Fantasy"/>
+                <StringItem index="11" value="Film-Noir"/>
+                <StringItem index="12" value="History"/>
+                <StringItem index="13" value="Horror"/>
+                <StringItem index="14" value="Music"/>
+                <StringItem index="15" value="Musical"/>
+                <StringItem index="16" value="Mystery"/>
+                <StringItem index="17" value="Romance"/>
+                <StringItem index="18" value="Sci-Fi"/>
+                <StringItem index="19" value="Sport"/>
+                <StringItem index="20" value="Thriller"/>
+                <StringItem index="21" value="War"/>
+                <StringItem index="22" value="Western"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

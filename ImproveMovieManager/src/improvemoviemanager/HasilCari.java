@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -32,12 +33,12 @@ import javax.swing.*;
  *
  * @author yongzari
  */
-public class HalamanAwal extends javax.swing.JFrame {
+public class HasilCari extends javax.swing.JFrame {
 
     /**
      * Creates new form HalamanAwal
      */
-    public HalamanAwal() {
+    public HasilCari() {
         initComponents();
         if(Session.isStatus()){
             lblUsername.setText("Selamat datang, " + Session.getUsername());
@@ -53,7 +54,10 @@ public class HalamanAwal extends javax.swing.JFrame {
             btnLogout.setVisible(false);
             btnLogin.setVisible(true);
         }
-        showMovie();
+        lblTahun.setVisible(false);
+        lblGenre.setVisible(false);
+        txtTahun.setVisible(false);
+        cbGenre.setVisible(false);
     }
 
     /**
@@ -70,9 +74,17 @@ public class HalamanAwal extends javax.swing.JFrame {
         btnLogin = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
         lblUsername = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        txtKeyword = new javax.swing.JTextField();
+        btnCari = new javax.swing.JButton();
+        cbFilter = new javax.swing.JCheckBox();
+        lblTahun = new javax.swing.JLabel();
+        txtTahun = new javax.swing.JTextField();
+        lblGenre = new javax.swing.JLabel();
+        cbGenre = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(67, 67, 67));
@@ -104,10 +116,10 @@ public class HalamanAwal extends javax.swing.JFrame {
         lblUsername.setForeground(new java.awt.Color(255, 255, 255));
         lblUsername.setText("Selamat datang, Guest");
 
-        jButton1.setText("Search");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnBackActionPerformed(evt);
             }
         });
 
@@ -119,8 +131,8 @@ public class HalamanAwal extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addGap(5, 5, 5)
+                .addComponent(btnBack)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnLogout)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnLogin)
@@ -137,7 +149,7 @@ public class HalamanAwal extends javax.swing.JFrame {
                     .addComponent(btnLogin)
                     .addComponent(btnLogout)
                     .addComponent(lblUsername)
-                    .addComponent(jButton1)))
+                    .addComponent(btnBack)))
         );
 
         jPanel2.setBackground(new java.awt.Color(67, 67, 67));
@@ -146,7 +158,7 @@ public class HalamanAwal extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 822, Short.MAX_VALUE)
+            .addGap(0, 845, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,6 +166,60 @@ public class HalamanAwal extends javax.swing.JFrame {
         );
 
         jScrollPane1.setViewportView(jPanel2);
+
+        btnCari.setText("Cari");
+        btnCari.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCariActionPerformed(evt);
+            }
+        });
+
+        cbFilter.setText("Gunakan filter");
+        cbFilter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbFilterActionPerformed(evt);
+            }
+        });
+
+        lblTahun.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblTahun.setText("Tahun");
+
+        lblGenre.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblGenre.setText("Genre");
+
+        cbGenre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Genre", "Action", "Adventure", "Animation", "Biography", "Comedy", "Crime", "Documentary", "Drama", "Family", "Fantasy", "Film-Noir", "History", "Horror", "Music", "Musical", "Mystery", "Romance", "Sci-Fi", "Sport", "Thriller", "War", "Western" }));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(txtKeyword, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCari)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbFilter)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblTahun, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtTahun, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
+                .addComponent(lblGenre, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbGenre, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(txtKeyword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCari)
+                .addComponent(cbFilter)
+                .addComponent(lblTahun, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblGenre, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbGenre, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTahun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -163,9 +229,11 @@ public class HalamanAwal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 817, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 840, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,7 +241,9 @@ public class HalamanAwal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 544, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -201,26 +271,68 @@ public class HalamanAwal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnLogoutActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void cbFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFilterActionPerformed
         // TODO add your handling code here:
-        new HasilCari().setVisible(true);
+        if(cbFilter.isSelected()){
+            lblTahun.setVisible(true);
+            lblGenre.setVisible(true);
+            txtTahun.setVisible(true);
+            cbGenre.setVisible(true);
+        } else {
+            lblTahun.setVisible(false);
+            lblGenre.setVisible(false);
+            txtTahun.setVisible(false);
+            cbGenre.setVisible(false);
+        }
+    }//GEN-LAST:event_cbFilterActionPerformed
+
+    private void btnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCariActionPerformed
+        // TODO add your handling code here:
+        searchMovie();
+    }//GEN-LAST:event_btnCariActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        // TODO add your handling code here:
+        new HalamanAwal().setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnBackActionPerformed
 
     /**
      * @param args the command line arguments
      */
     
-    public void showMovie(){
-        String sql = "SELECT * FROM Movie";
-        
+    public void searchMovie(){
+        jPanel2.removeAll();
         Map<Integer, JButton> btnGambar = new HashMap<Integer, JButton>();
         jPanel2.setLayout(new WrapLayout());
         
+        if(txtKeyword.equals("")){
+            if(cbFilter.isSelected() == false){
+                JOptionPane.showMessageDialog(this, "Isikan keyword yang diperlukan");
+            } else if(cbFilter.isSelected() && (txtTahun.getText().equals("") || cbGenre.getSelectedIndex() == 0)){
+                JOptionPane.showMessageDialog(this, "Isikan semua keyword yang diperlukan");
+            }
+        } else if(cbFilter.isSelected() && (txtTahun.getText().equals("") || cbGenre.getSelectedIndex() == 0)){
+            JOptionPane.showMessageDialog(this, "Isikan semua keyword yang diperlukan");
+        } else {
+        
         try{
             Connection conn = Koneksi.getConnect();
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
+            String sql;
+            PreparedStatement stmt = null;
+            if(cbFilter.isSelected()){
+                sql = "SELECT * FROM Movie WHERE judul LIKE ? AND tahun = ? AND genre LIKE ?";
+                stmt = conn.prepareStatement(sql);
+                stmt.setString(1, "%"+txtKeyword.getText()+"%");
+                stmt.setInt(2, Integer.parseInt(txtTahun.getText()));
+                stmt.setString(3, "%"+Integer.toString(cbGenre.getSelectedIndex())+"%");       
+            } else{
+                sql = "SELECT * FROM Movie WHERE judul LIKE ?";
+                stmt = conn.prepareStatement(sql);
+                stmt.setString(1, "%"+txtKeyword.getText()+"%");
+            }    
+            
+            ResultSet rs = stmt.executeQuery();
             
             while(rs.next()){
                 int id = rs.getInt("id");
@@ -241,6 +353,7 @@ public class HalamanAwal extends javax.swing.JFrame {
                     {
                         setSize(145, 210);
                         setMaximumSize(getSize());
+                        
                     }
                 });
             }
@@ -248,6 +361,13 @@ public class HalamanAwal extends javax.swing.JFrame {
             System.out.println(e.getMessage());
         }
         
+        showMovie(btnGambar);
+        
+        }
+    }
+    
+    private void showMovie(Map<Integer, JButton> btnGambar){
+        SwingUtilities.updateComponentTreeUI(this);
         for(int key : btnGambar.keySet()){
             btnGambar.get(key).setVerticalTextPosition(SwingConstants.BOTTOM);
             btnGambar.get(key).setHorizontalTextPosition(SwingConstants.CENTER);
@@ -263,8 +383,7 @@ public class HalamanAwal extends javax.swing.JFrame {
     }
     
     private void btnGambarActionPerformed(java.awt.event.ActionEvent evt, int id){
-        new DetailFilm().showDetail(id, 1);
-        this.dispose();
+        new DetailFilm().showDetail(id, 2);
     }
     
     public static void main(String args[]) {
@@ -281,33 +400,42 @@ public class HalamanAwal extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(HalamanAwal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HasilCari.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(HalamanAwal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HasilCari.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(HalamanAwal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HasilCari.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(HalamanAwal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HasilCari.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new HalamanAwal().setVisible(true);
+                new HasilCari().setVisible(true);
                 
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnCari;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnTambah;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JCheckBox cbFilter;
+    private javax.swing.JComboBox<String> cbGenre;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblGenre;
+    private javax.swing.JLabel lblTahun;
     private javax.swing.JLabel lblUsername;
+    private javax.swing.JTextField txtKeyword;
+    private javax.swing.JTextField txtTahun;
     // End of variables declaration//GEN-END:variables
 }
