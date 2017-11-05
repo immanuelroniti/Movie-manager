@@ -83,7 +83,7 @@ public class Update extends javax.swing.JFrame {
         cbGenre3 = new javax.swing.JComboBox<>();
         cbRatingUsia = new javax.swing.JComboBox<>();
         btnSimpan = new java.awt.Button();
-        button1 = new java.awt.Button();
+        btnCancel = new java.awt.Button();
         jPanel1 = new javax.swing.JPanel();
         btnLogout = new javax.swing.JButton();
         lblUsername = new javax.swing.JLabel();
@@ -188,12 +188,12 @@ public class Update extends javax.swing.JFrame {
             }
         });
 
-        button1.setBackground(new java.awt.Color(199, 27, 27));
-        button1.setForeground(new java.awt.Color(0, 0, 0));
-        button1.setLabel("Cancel");
-        button1.addActionListener(new java.awt.event.ActionListener() {
+        btnCancel.setBackground(new java.awt.Color(199, 27, 27));
+        btnCancel.setForeground(new java.awt.Color(0, 0, 0));
+        btnCancel.setLabel("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button1ActionPerformed(evt);
+                btnCancelActionPerformed(evt);
             }
         });
 
@@ -254,7 +254,7 @@ public class Update extends javax.swing.JFrame {
                         .addComponent(lblTrailer, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addGap(11, 11, 11)
-                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(28, Short.MAX_VALUE))
@@ -320,7 +320,7 @@ public class Update extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnSimpan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnCancel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -615,7 +615,7 @@ public class Update extends javax.swing.JFrame {
             }
             if(result){
                 JOptionPane.showMessageDialog(jPanel2, "Perubahan berhasil disimpan");
-                new DetailFilm().showDetail(id);
+                new DetailFilm().showDetail(id, 1);
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(jPanel2, "Perubahan gagal disimpan");
@@ -623,11 +623,11 @@ public class Update extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSimpanActionPerformed
 
-    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
-        new DetailFilm().showDetail(id);
+        new DetailFilm().showDetail(id, 1);
         this.dispose();
-    }//GEN-LAST:event_button1ActionPerformed
+    }//GEN-LAST:event_btnCancelActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
@@ -674,11 +674,11 @@ public class Update extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private java.awt.Button btnCancel;
     private javax.swing.JButton btnGambar;
     private javax.swing.JButton btnLogout;
     private java.awt.Button btnSimpan;
     private javax.swing.JButton btnTrailer;
-    private java.awt.Button button1;
     private javax.swing.JComboBox<String> cbGenre1;
     private javax.swing.JComboBox<String> cbGenre2;
     private javax.swing.JComboBox<String> cbGenre3;

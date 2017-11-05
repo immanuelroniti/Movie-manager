@@ -305,64 +305,76 @@ public class HasilCari extends javax.swing.JFrame {
         jPanel2.removeAll();
         Map<Integer, JButton> btnGambar = new HashMap<Integer, JButton>();
         jPanel2.setLayout(new WrapLayout());
+        int count = 0;
         
         if(txtKeyword.equals("")){
-            if(cbFilter.isSelected() == false){
-                JOptionPane.showMessageDialog(this, "Isikan keyword yang diperlukan");
-            } else if(cbFilter.isSelected() && (txtTahun.getText().equals("") || cbGenre.getSelectedIndex() == 0)){
-                JOptionPane.showMessageDialog(this, "Isikan semua keyword yang diperlukan");
-            }
-        } else if(cbFilter.isSelected() && (txtTahun.getText().equals("") || cbGenre.getSelectedIndex() == 0)){
-            JOptionPane.showMessageDialog(this, "Isikan semua keyword yang diperlukan");
+            JOptionPane.showMessageDialog(this, "Isikan keyword yang diperlukan");
+        } else if(cbFilter.isSelected() && txtTahun.getText().equals("") && cbGenre.getSelectedIndex() == 0){
+            JOptionPane.showMessageDialog(this, "Pilih minimal salah satu filter");
         } else {
-        
-        try{
-            Connection conn = Koneksi.getConnect();
-            String sql;
-            PreparedStatement stmt = null;
-            if(cbFilter.isSelected()){
-                sql = "SELECT * FROM Movie WHERE judul LIKE ? AND tahun = ? AND genre LIKE ?";
-                stmt = conn.prepareStatement(sql);
-                stmt.setString(1, "%"+txtKeyword.getText()+"%");
-                stmt.setInt(2, Integer.parseInt(txtTahun.getText()));
-                stmt.setString(3, "%"+Integer.toString(cbGenre.getSelectedIndex())+"%");       
-            } else{
-                sql = "SELECT * FROM Movie WHERE judul LIKE ?";
-                stmt = conn.prepareStatement(sql);
-                stmt.setString(1, "%"+txtKeyword.getText()+"%");
-            }    
-            
-            ResultSet rs = stmt.executeQuery();
-            
-            while(rs.next()){
-                int id = rs.getInt("id");
-                String image = Paths.getGambarPath()+rs.getString("gambar");
-                String judul = rs.getString("judul");
-                String tahun = rs.getString("tahun");
-                
-                BufferedImage img = null;
-                try{
-                    img = ImageIO.read(new File(image));
-                } catch(IOException e){
-                    System.out.println(e.getMessage());
-                }
-                Image newImg = img.getScaledInstance(145, 210, Image.SCALE_SMOOTH);
-                ImageIcon imgIcon = new ImageIcon(newImg);
-                
-                btnGambar.put(id, new JButton(judul + " (" + tahun + ")", imgIcon){
-                    {
-                        setSize(145, 210);
-                        setMaximumSize(getSize());
-                        
+            try{
+                Connection conn = Koneksi.getConnect();
+                String sql;
+                PreparedStatement stmt = null;
+                if(cbFilter.isSelected()){
+                    if(txtTahun.getText().equals("")){
+                        sql = "SELECT * FROM Movie WHERE judul LIKE ? AND genre LIKE ?";
+                        stmt = conn.prepareStatement(sql);
+                        stmt.setString(1, "%"+txtKeyword.getText()+"%");
+                        stmt.setString(2, "%"+Integer.toString(cbGenre.getSelectedIndex())+"%");
+                    } else if(cbGenre.getSelectedIndex() == 0){
+                        sql = "SELECT * FROM Movie WHERE judul LIKE ? AND tahun = ?";
+                        stmt = conn.prepareStatement(sql);
+                        stmt.setString(1, "%"+txtKeyword.getText()+"%");
+                        stmt.setInt(2, Integer.parseInt(txtTahun.getText()));
+                    } else {
+                        sql = "SELECT * FROM Movie WHERE judul LIKE ? AND tahun = ? AND genre LIKE ?";
+                        stmt = conn.prepareStatement(sql);
+                        stmt.setString(1, "%"+txtKeyword.getText()+"%");
+                        stmt.setInt(2, Integer.parseInt(txtTahun.getText()));
+                        stmt.setString(3, "%"+Integer.toString(cbGenre.getSelectedIndex())+"%");
                     }
-                });
+                } else{
+                    sql = "SELECT * FROM Movie WHERE judul LIKE ?";
+                    stmt = conn.prepareStatement(sql);
+                    stmt.setString(1, "%"+txtKeyword.getText()+"%");
+                }    
+
+                ResultSet rs = stmt.executeQuery();
+
+                while(rs.next()){
+                    int id = rs.getInt("id");
+                    String image = Paths.getGambarPath()+rs.getString("gambar");
+                    String judul = rs.getString("judul");
+                    String tahun = rs.getString("tahun");
+
+                    BufferedImage img = null;
+                    try{
+                        img = ImageIO.read(new File(image));
+                    } catch(IOException e){
+                        System.out.println(e.getMessage());
+                    }
+                    Image newImg = img.getScaledInstance(145, 210, Image.SCALE_SMOOTH);
+                    ImageIcon imgIcon = new ImageIcon(newImg);
+
+                    btnGambar.put(id, new JButton(judul + " (" + tahun + ")", imgIcon){
+                        {
+                            setSize(145, 210);
+                            setMaximumSize(getSize());
+
+                        }
+                    });
+                    count++;
+                }
+            } catch(SQLException e){
+                System.out.println(e.getMessage());
             }
-        } catch(SQLException e){
-            System.out.println(e.getMessage());
-        }
-        
-        showMovie(btnGambar);
-        
+
+            if(count == 0){
+                JOptionPane.showMessageDialog(this, "Hasil pencarian tidak ditemukan");
+            } else {
+                showMovie(btnGambar);
+            }
         }
     }
     
