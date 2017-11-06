@@ -155,7 +155,7 @@ public class HasilCari extends javax.swing.JFrame {
         lblGenre.setForeground(new java.awt.Color(254, 254, 254));
         lblGenre.setText("Genre");
 
-        cbGenre.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        cbGenre.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
         cbGenre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Genre", "Action", "Adventure", "Animation", "Biography", "Comedy", "Crime", "Documentary", "Drama", "Family", "Fantasy", "Film-Noir", "History", "Horror", "Music", "Musical", "Mystery", "Romance", "Sci-Fi", "Sport", "Thriller", "War", "Western" }));
 
         btnCari.setText("Cari");
@@ -233,13 +233,14 @@ public class HasilCari extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTahun, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTahun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblGenre, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbGenre, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtKeyword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblTahun, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTahun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblGenre, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbGenre, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtKeyword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbFilter)
                 .addGap(18, 18, 18)
@@ -344,7 +345,7 @@ public class HasilCari extends javax.swing.JFrame {
         jPanel2.setLayout(new WrapLayout());
         int count = 0;
         
-        if(txtKeyword.equals("")){
+        if(txtKeyword.getText().equals("") && !cbFilter.isSelected()){
             JOptionPane.showMessageDialog(this, "Isikan keyword yang diperlukan");
         } else if(cbFilter.isSelected() && txtTahun.getText().equals("") && cbGenre.getSelectedIndex() == 0){
             JOptionPane.showMessageDialog(this, "Pilih minimal salah satu filter");
@@ -355,26 +356,30 @@ public class HasilCari extends javax.swing.JFrame {
                 PreparedStatement stmt = null;
                 if(cbFilter.isSelected()){
                     if(txtTahun.getText().equals("")){
-                        sql = "SELECT * FROM Movie WHERE judul LIKE ? AND genre LIKE ?";
+                        sql = "SELECT * FROM Movie WHERE (judul LIKE ? OR deskripsi LIKE ?) AND genre LIKE ?";
                         stmt = conn.prepareStatement(sql);
                         stmt.setString(1, "%"+txtKeyword.getText()+"%");
-                        stmt.setString(2, "%"+Integer.toString(cbGenre.getSelectedIndex())+"%");
-                    } else if(cbGenre.getSelectedIndex() == 0){
-                        sql = "SELECT * FROM Movie WHERE judul LIKE ? AND tahun = ?";
-                        stmt = conn.prepareStatement(sql);
-                        stmt.setString(1, "%"+txtKeyword.getText()+"%");
-                        stmt.setInt(2, Integer.parseInt(txtTahun.getText()));
-                    } else {
-                        sql = "SELECT * FROM Movie WHERE judul LIKE ? AND tahun = ? AND genre LIKE ?";
-                        stmt = conn.prepareStatement(sql);
-                        stmt.setString(1, "%"+txtKeyword.getText()+"%");
-                        stmt.setInt(2, Integer.parseInt(txtTahun.getText()));
+                        stmt.setString(2, "%"+txtKeyword.getText()+"%");
                         stmt.setString(3, "%"+Integer.toString(cbGenre.getSelectedIndex())+"%");
+                    } else if(cbGenre.getSelectedIndex() == 0){
+                        sql = "SELECT * FROM Movie WHERE (judul LIKE ? OR deskripsi LIKE ?) AND tahun = ?";
+                        stmt = conn.prepareStatement(sql);
+                        stmt.setString(1, "%"+txtKeyword.getText()+"%");
+                        stmt.setString(2, "%"+txtKeyword.getText()+"%");
+                        stmt.setInt(3, Integer.parseInt(txtTahun.getText()));
+                    } else {
+                        sql = "SELECT * FROM Movie WHERE (judul LIKE ? OR deskripsi LIKE ?) AND tahun = ? AND genre LIKE ?";
+                        stmt = conn.prepareStatement(sql);
+                        stmt.setString(1, "%"+txtKeyword.getText()+"%");
+                        stmt.setString(2, "%"+txtKeyword.getText()+"%");
+                        stmt.setInt(3, Integer.parseInt(txtTahun.getText()));
+                        stmt.setString(4, "%"+Integer.toString(cbGenre.getSelectedIndex())+"%");
                     }
                 } else{
-                    sql = "SELECT * FROM Movie WHERE judul LIKE ?";
+                    sql = "SELECT * FROM Movie WHERE judul LIKE ? OR deskripsi LIKE ?";
                     stmt = conn.prepareStatement(sql);
                     stmt.setString(1, "%"+txtKeyword.getText()+"%");
+                    stmt.setString(2, "%"+txtKeyword.getText()+"%");
                 }    
 
                 ResultSet rs = stmt.executeQuery();
