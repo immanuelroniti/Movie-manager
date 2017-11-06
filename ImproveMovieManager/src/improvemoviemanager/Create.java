@@ -301,6 +301,7 @@ public class Create extends javax.swing.JFrame {
             }
         });
 
+        lblUsername.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         lblUsername.setForeground(new java.awt.Color(255, 255, 255));
         lblUsername.setText("Selamat datang, Guest");
 
@@ -330,9 +331,9 @@ public class Create extends javax.swing.JFrame {
                                     .addComponent(jSeparator2)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(jLabel12)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(18, 18, 18)
                                         .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(btnLogout)
                                         .addGap(76, 76, 76))))
                             .addGroup(jPanel2Layout.createSequentialGroup()
