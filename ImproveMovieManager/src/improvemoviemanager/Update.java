@@ -28,8 +28,8 @@ import javax.swing.JOptionPane;
  */
 public class Update extends javax.swing.JFrame {
 
-    private String judul, genre, sutradara, penulis, produser, deskripsi, gambarLoc = null, trailerLoc = null;
-    private int id, tahun, durasi, ratingUsia;
+    private String judul, sutradara, penulis, produser, deskripsi, gambarLoc = null, trailerLoc = null;
+    private int id, tahun, durasi, ratingUsia, genre1, genre2, genre3;
     
     /**
      * Creates new form Update
@@ -436,7 +436,9 @@ public class Update extends javax.swing.JFrame {
             while(rs.next()){
                 judul = rs.getString("judul");
                 tahun = rs.getInt("tahun");
-                genre = rs.getString("genre");
+                genre1 = rs.getInt("genre1");
+                genre2 = rs.getInt("genre2");
+                genre3 = rs.getInt("genre3");
                 durasi = rs.getInt("durasi");
                 sutradara = rs.getString("sutradara");
                 penulis = rs.getString("penulis");
@@ -448,10 +450,9 @@ public class Update extends javax.swing.JFrame {
                 
                 txtJudul.setText(judul);
                 txtTahun.setText(Integer.toString(tahun));
-                String[] split = genre.split(",");
-                cbGenre1.setSelectedIndex(Integer.parseInt(split[0]));
-                cbGenre2.setSelectedIndex(Integer.parseInt(split[1]));
-                cbGenre3.setSelectedIndex(Integer.parseInt(split[2]));
+                cbGenre1.setSelectedIndex(genre1);
+                cbGenre2.setSelectedIndex(genre2);
+                cbGenre3.setSelectedIndex(genre3);
                 txtDurasi.setText(Integer.toString(durasi));
                 txtSutradara.setText(sutradara);
                 txtPenulis.setText(penulis);
@@ -467,7 +468,7 @@ public class Update extends javax.swing.JFrame {
         }
     }
     
-    public boolean edit(int id, String judul, int tahun, String genre, int durasi, String sutradara, String penulis, String produser, int ratingUsia, String deskripsi, String gambarLoc, String trailerLoc) throws Exception{
+    public boolean edit(int id, String judul, int tahun, int genre1, int genre2, int genre3, int durasi, String sutradara, String penulis, String produser, int ratingUsia, String deskripsi, String gambarLoc, String trailerLoc) throws Exception{
         
         InputStream inStream = null;
         OutputStream outStream = null;
@@ -524,23 +525,25 @@ public class Update extends javax.swing.JFrame {
             }
         }
         
-            String sql = "UPDATE Movie SET judul = ?, tahun = ?, genre = ?, durasi = ?, sutradara = ?, penulis = ?, produser = ?, rating_usia = ?, deskripsi = ?, gambar = ?, trailer = ? WHERE id = ?";
+            String sql = "UPDATE Movie SET judul = ?, tahun = ?, genre1 = ?, genre2 = ?, genre3 = ?, durasi = ?, sutradara = ?, penulis = ?, produser = ?, rating_usia = ?, deskripsi = ?, gambar = ?, trailer = ? WHERE id = ?";
         
             try {
                 Connection conn = Koneksi.getConnect();
                 PreparedStatement stmt = conn.prepareStatement(sql);
                 stmt.setString(1, judul);
                 stmt.setInt(2, tahun);
-                stmt.setString(3, genre);
-                stmt.setInt(4, durasi);
-                stmt.setString(5, sutradara);
-                stmt.setString(6, penulis);
-                stmt.setString(7, produser);
-                stmt.setInt(8, ratingUsia);
-                stmt.setString(9, deskripsi);
-                stmt.setString(10, fileImg.getName());
-                stmt.setString(11, fileVid.getName());
-                stmt.setInt(12, id);
+                stmt.setInt(3, genre1);
+                stmt.setInt(4, genre2);
+                stmt.setInt(5, genre3);
+                stmt.setInt(6, durasi);
+                stmt.setString(7, sutradara);
+                stmt.setString(8, penulis);
+                stmt.setString(9, produser);
+                stmt.setInt(10, ratingUsia);
+                stmt.setString(11, deskripsi);
+                stmt.setString(12, fileImg.getName());
+                stmt.setString(13, fileVid.getName());
+                stmt.setInt(14, id);
                 stmt.executeUpdate();
                 return true;
             } catch (SQLException e) {
@@ -605,11 +608,13 @@ public class Update extends javax.swing.JFrame {
             penulis = txtPenulis.getText();
             produser = txtProduser.getText();
             deskripsi = txtDeskripsi.getText();
-            genre = String.valueOf(cbGenre1.getSelectedIndex()) + "," + String.valueOf(cbGenre2.getSelectedIndex()) + "," +  String.valueOf(cbGenre3.getSelectedIndex());
+            genre1 = cbGenre1.getSelectedIndex();
+            genre2 = cbGenre2.getSelectedIndex();
+            genre3 = cbGenre3.getSelectedIndex();
             ratingUsia = cbRatingUsia.getSelectedIndex();
 
             try{
-                result = edit(id, judul, tahun, genre, durasi, sutradara, penulis, produser, ratingUsia, deskripsi, gambarLoc, trailerLoc);
+                result = edit(id, judul, tahun, genre1, genre2, genre3, durasi, sutradara, penulis, produser, ratingUsia, deskripsi, gambarLoc, trailerLoc);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }

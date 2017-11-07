@@ -28,8 +28,8 @@ import javax.swing.JOptionPane;
  */
 public class Create extends javax.swing.JFrame {
 
-    private String judul, genre, sutradara, penulis, produser, deskripsi, gambarLoc = null, trailerLoc = null;
-    private int tahun, durasi, ratingUsia;
+    private String judul, sutradara, penulis, produser, deskripsi, gambarLoc = null, trailerLoc = null;
+    private int tahun, durasi, ratingUsia, genre1, genre2, genre3;
     
     /**
      * Creates new form Create
@@ -69,7 +69,7 @@ public class Create extends javax.swing.JFrame {
         return false;
     }
     
-    public void insert(String judul, int tahun, String genre, int durasi, String sutradara, String penulis, String produser, int ratingUsia, String deskripsi, String gambarLoc, String trailerLoc) throws Exception{
+    public void insert(String judul, int tahun, int genre1, int genre2, int genre3, int durasi, String sutradara, String penulis, String produser, int ratingUsia, String deskripsi, String gambarLoc, String trailerLoc) throws Exception{
         
         File fileImg = new File(gambarLoc);
         String newImageLoc = Paths.getGambarPath()+fileImg.getName();
@@ -107,22 +107,24 @@ public class Create extends javax.swing.JFrame {
                 System.out.println(e.getMessage());
             }
         
-            String sql = "INSERT INTO Movie(judul, tahun, genre, durasi, sutradara, penulis, produser, rating_usia, deskripsi, gambar, trailer) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO Movie(judul, tahun, genre1, genre2, genre3, durasi, sutradara, penulis, produser, rating_usia, deskripsi, gambar, trailer) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             
             Connection conn = Koneksi.getConnect();
             try {
                 PreparedStatement stmt = conn.prepareStatement(sql);
                 stmt.setString(1, judul);
                 stmt.setInt(2, tahun);
-                stmt.setString(3, genre);
-                stmt.setInt(4, durasi);
-                stmt.setString(5, sutradara);
-                stmt.setString(6, penulis);
-                stmt.setString(7, produser);
-                stmt.setInt(8, ratingUsia);
-                stmt.setString(9, deskripsi);
-                stmt.setString(10, fileImg.getName());
-                stmt.setString(11, fileVid.getName());
+                stmt.setInt(3, genre1);
+                stmt.setInt(4, genre2);
+                stmt.setInt(5, genre3);
+                stmt.setInt(6, durasi);
+                stmt.setString(7, sutradara);
+                stmt.setString(8, penulis);
+                stmt.setString(9, produser);
+                stmt.setInt(10, ratingUsia);
+                stmt.setString(11, deskripsi);
+                stmt.setString(12, fileImg.getName());
+                stmt.setString(13, fileVid.getName());
                 stmt.executeUpdate();
                 JOptionPane.showMessageDialog(jPanel2, "Film berhasil ditambahkan");
                 new HalamanAwal().setVisible(true);
@@ -500,7 +502,9 @@ public class Create extends javax.swing.JFrame {
             penulis = txtPenulis.getText();
             produser = txtProduser.getText();
             deskripsi = txtDeskripsi.getText();
-            genre = String.valueOf(cbGenre1.getSelectedIndex()) + "," + String.valueOf(cbGenre2.getSelectedIndex()) + "," +  String.valueOf(cbGenre3.getSelectedIndex());
+            genre1 = cbGenre1.getSelectedIndex();
+            genre2 = cbGenre2.getSelectedIndex();
+            genre3 = cbGenre3.getSelectedIndex();
             ratingUsia = cbRatingUsia.getSelectedIndex();
 
             try{
@@ -510,7 +514,7 @@ public class Create extends javax.swing.JFrame {
             }
             if(result){
                 try{
-                    insert(judul, tahun, genre, durasi, sutradara, penulis, produser, ratingUsia, deskripsi, gambarLoc, trailerLoc);
+                    insert(judul, tahun, genre1, genre2, genre3, durasi, sutradara, penulis, produser, ratingUsia, deskripsi, gambarLoc, trailerLoc);
                 } catch(Exception e){
                     System.out.println(e.getMessage());
                 }

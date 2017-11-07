@@ -356,11 +356,13 @@ public class HasilCari extends javax.swing.JFrame {
                 PreparedStatement stmt = null;
                 if(cbFilter.isSelected()){
                     if(txtTahun.getText().equals("")){
-                        sql = "SELECT * FROM Movie WHERE (judul LIKE ? OR deskripsi LIKE ?) AND genre LIKE ?";
+                        sql = "SELECT * FROM Movie WHERE (judul LIKE ? OR deskripsi LIKE ?) AND (genre1 = ? OR genre2 = ? OR genre3 = ?)";
                         stmt = conn.prepareStatement(sql);
                         stmt.setString(1, "%"+txtKeyword.getText()+"%");
                         stmt.setString(2, "%"+txtKeyword.getText()+"%");
-                        stmt.setString(3, "%"+Integer.toString(cbGenre.getSelectedIndex())+"%");
+                        stmt.setInt(3, cbGenre.getSelectedIndex());
+                        stmt.setInt(4, cbGenre.getSelectedIndex());
+                        stmt.setInt(5, cbGenre.getSelectedIndex());
                     } else if(cbGenre.getSelectedIndex() == 0){
                         sql = "SELECT * FROM Movie WHERE (judul LIKE ? OR deskripsi LIKE ?) AND tahun = ?";
                         stmt = conn.prepareStatement(sql);
@@ -368,12 +370,14 @@ public class HasilCari extends javax.swing.JFrame {
                         stmt.setString(2, "%"+txtKeyword.getText()+"%");
                         stmt.setInt(3, Integer.parseInt(txtTahun.getText()));
                     } else {
-                        sql = "SELECT * FROM Movie WHERE (judul LIKE ? OR deskripsi LIKE ?) AND tahun = ? AND genre LIKE ?";
+                        sql = "SELECT * FROM Movie WHERE (judul LIKE ? OR deskripsi LIKE ?) AND tahun = ? AND (genre1 = ? OR genre2 = ? OR genre3 = ?)";
                         stmt = conn.prepareStatement(sql);
                         stmt.setString(1, "%"+txtKeyword.getText()+"%");
                         stmt.setString(2, "%"+txtKeyword.getText()+"%");
                         stmt.setInt(3, Integer.parseInt(txtTahun.getText()));
-                        stmt.setString(4, "%"+Integer.toString(cbGenre.getSelectedIndex())+"%");
+                        stmt.setInt(4, cbGenre.getSelectedIndex());
+                        stmt.setInt(5, cbGenre.getSelectedIndex());
+                        stmt.setInt(6, cbGenre.getSelectedIndex());
                     }
                 } else{
                     sql = "SELECT * FROM Movie WHERE judul LIKE ? OR deskripsi LIKE ?";
@@ -413,6 +417,7 @@ public class HasilCari extends javax.swing.JFrame {
             }
 
             if(count == 0){
+                SwingUtilities.updateComponentTreeUI(this);
                 JOptionPane.showMessageDialog(this, "Hasil pencarian tidak ditemukan");
             } else {
                 showMovie(btnGambar);

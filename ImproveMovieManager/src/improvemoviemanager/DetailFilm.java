@@ -51,12 +51,10 @@ public class DetailFilm extends javax.swing.JFrame {
         }
     }
     
-    public String getGenre(String genre){
+    public String getGenre(int genre1, int genre2, int genre3){
         String completeGenre = "";
-        String[] split = genre.split(",");
         String[] complete = new String[3];
         int count = 0;
-        int genre1 = Integer.parseInt(split[0]), genre2 = Integer.parseInt(split[1]), genre3 = Integer.parseInt(split[2]);
         String sql = "SELECT * FROM Genre WHERE id = ? OR id = ? OR id = ?";
         try{
             Connection conn = Koneksi.getConnect();
@@ -125,7 +123,7 @@ public class DetailFilm extends javax.swing.JFrame {
             while(rs.next()){
                 isiJudul.setText(rs.getString("judul"));
                 isiTahun.setText(rs.getString("tahun"));
-                String genre = getGenre(rs.getString("genre"));
+                String genre = getGenre(rs.getInt("genre1"), rs.getInt("genre2"), rs.getInt("genre3"));
                 isiGenre.setText(genre);
                 isiDurasi.setText(Integer.toString(rs.getInt("durasi")) + " minutes");
                 isiSutradara.setText(rs.getString("sutradara"));
