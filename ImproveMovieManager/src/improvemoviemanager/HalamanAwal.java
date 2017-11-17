@@ -74,6 +74,7 @@ public class HalamanAwal extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel14 = new javax.swing.JLabel();
+        btnTambahGenre = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
 
@@ -81,7 +82,6 @@ public class HalamanAwal extends javax.swing.JFrame {
         setBackground(new java.awt.Color(67, 67, 67));
 
         jPanel1.setBackground(new java.awt.Color(67, 67, 67));
-        jPanel1.setBorder(null);
 
         btnTambah.setText("Tambah");
         btnTambah.addActionListener(new java.awt.event.ActionListener() {
@@ -121,6 +121,13 @@ public class HalamanAwal extends javax.swing.JFrame {
         jLabel14.setForeground(new java.awt.Color(254, 254, 254));
         jLabel14.setText("Home");
 
+        btnTambahGenre.setText("addGenre");
+        btnTambahGenre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTambahGenreActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -132,9 +139,12 @@ public class HalamanAwal extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnTambah, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnTambahGenre)
+                        .addGap(29, 29, 29)
+                        .addComponent(btnTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnLogin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(56, 56, 56)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,7 +170,8 @@ public class HalamanAwal extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnTambah)
-                            .addComponent(jButton1)))
+                            .addComponent(jButton1)
+                            .addComponent(btnTambahGenre)))
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,7 +182,6 @@ public class HalamanAwal extends javax.swing.JFrame {
         );
 
         jPanel2.setBackground(new java.awt.Color(67, 67, 67));
-        jPanel2.setBorder(null);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -231,6 +241,12 @@ public class HalamanAwal extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void btnTambahGenreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahGenreActionPerformed
+        // TODO add your handling code here:
+        new TambahGenre().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnTambahGenreActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -271,7 +287,7 @@ public class HalamanAwal extends javax.swing.JFrame {
         } catch(SQLException e){
             System.out.println(e.getMessage());
         }
-        
+        //printing
         for(int key : btnGambar.keySet()){
             btnGambar.get(key).setVerticalTextPosition(SwingConstants.BOTTOM);
             btnGambar.get(key).setHorizontalTextPosition(SwingConstants.CENTER);
@@ -328,6 +344,7 @@ public class HalamanAwal extends javax.swing.JFrame {
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnTambah;
+    private javax.swing.JButton btnTambahGenre;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
