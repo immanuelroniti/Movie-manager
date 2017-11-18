@@ -13,6 +13,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -25,6 +27,7 @@ public class DetailFilm extends javax.swing.JFrame {
 
     int id, asal;
     String fileGambar, fileVideo;
+    boolean isEditable = false;
     
     /**
      * Creates new form DetailFilm
@@ -32,6 +35,7 @@ public class DetailFilm extends javax.swing.JFrame {
     
     public DetailFilm() {
         initComponents();
+        btnRate.setVisible(false);
         if(Session.isStatus()){
             lblUsername.setText("Selamat datang, " + Session.getUsername());
             btnLogout.setVisible(true);
@@ -39,16 +43,21 @@ public class DetailFilm extends javax.swing.JFrame {
             if(Session.getRole()==1){
                 btnEdit.setVisible(true);
                 btnDelete.setVisible(true);
+                toggleRating.setVisible(false);
             } else {
                 btnEdit.setVisible(false);
                 btnDelete.setVisible(false);
+                toggleRating.setVisible(true);
             }
         } else {
             btnEdit.setVisible(false);
             btnDelete.setVisible(false);
             btnLogin.setVisible(true);
             btnLogout.setVisible(false);
+            toggleRating.setVisible(false);
         }
+        
+
     }
     
     public String getGenre(int id){
@@ -198,6 +207,14 @@ public class DetailFilm extends javax.swing.JFrame {
         btnLogin = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
         lblUsername = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        star1 = new javax.swing.JButton();
+        star2 = new javax.swing.JButton();
+        star3 = new javax.swing.JButton();
+        star4 = new javax.swing.JButton();
+        star5 = new javax.swing.JButton();
+        toggleRating = new javax.swing.JToggleButton();
+        btnRate = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -319,6 +336,64 @@ public class DetailFilm extends javax.swing.JFrame {
         lblUsername.setForeground(new java.awt.Color(255, 255, 255));
         lblUsername.setText("Selamat datang, Guest");
 
+        jLabel10.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(254, 254, 254));
+        jLabel10.setText("Rating");
+
+        star1.setBackground(new java.awt.Color(67, 67, 67));
+        star1.setForeground(new java.awt.Color(67, 67, 67));
+        star1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/rsz_stuffedstar.png"))); // NOI18N
+        star1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                star1ActionPerformed(evt);
+            }
+        });
+
+        star2.setBackground(new java.awt.Color(67, 67, 67));
+        star2.setForeground(new java.awt.Color(67, 67, 67));
+        star2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/rsz_stuffedstar.png"))); // NOI18N
+        star2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                star2ActionPerformed(evt);
+            }
+        });
+
+        star3.setBackground(new java.awt.Color(67, 67, 67));
+        star3.setForeground(new java.awt.Color(67, 67, 67));
+        star3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/rsz_stuffedstar.png"))); // NOI18N
+        star3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                star3ActionPerformed(evt);
+            }
+        });
+
+        star4.setBackground(new java.awt.Color(67, 67, 67));
+        star4.setForeground(new java.awt.Color(67, 67, 67));
+        star4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/rsz_stuffedstar.png"))); // NOI18N
+        star4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                star4ActionPerformed(evt);
+            }
+        });
+
+        star5.setBackground(new java.awt.Color(67, 67, 67));
+        star5.setForeground(new java.awt.Color(67, 67, 67));
+        star5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/rsz_stuffedstar.png"))); // NOI18N
+        star5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                star5ActionPerformed(evt);
+            }
+        });
+
+        toggleRating.setText("Beri Rating");
+        toggleRating.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                toggleRatingActionPerformed(evt);
+            }
+        });
+
+        btnRate.setText("Simpan");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -329,26 +404,6 @@ public class DetailFilm extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(4, 4, 4)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addGap(69, 69, 69)
-                                        .addComponent(isiJudul, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel9)
-                                    .addComponent(isiDeskripsi, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel8)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(isiRatingUsia, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(117, 117, 117)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -361,7 +416,46 @@ public class DetailFilm extends javax.swing.JFrame {
                                             .addComponent(isiPenulis, javax.swing.GroupLayout.PREFERRED_SIZE, 529, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(isiProduser, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(0, 0, Short.MAX_VALUE)))
-                                .addGap(7, 7, 7)))
+                                .addGap(7, 7, 7))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(4, 4, 4)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel2)
+                                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addComponent(jLabel1)
+                                                .addGap(69, 69, 69)
+                                                .addComponent(isiJudul, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(jLabel4)
+                                            .addComponent(jLabel3)
+                                            .addComponent(jLabel5)
+                                            .addComponent(jLabel6)
+                                            .addComponent(jLabel7)
+                                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabel8)
+                                                    .addComponent(jLabel10))
+                                                .addGap(18, 18, 18)
+                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(isiRatingUsia, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                                        .addComponent(star1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(star2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(star3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(star4, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(star5, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                            .addComponent(toggleRating)
+                                                            .addComponent(btnRate)))))))
+                                    .addComponent(jLabel9)
+                                    .addComponent(isiDeskripsi, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(btnDelete)
@@ -449,16 +543,32 @@ public class DetailFilm extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(isiRatingUsia, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel8))
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel9))
+                                    .addComponent(jLabel8)))
                             .addComponent(isiProduser, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel10)
+                                    .addComponent(star1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(star2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(star3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(star4, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(star5, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                                .addComponent(jLabel9))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(toggleRating)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnRate)
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(isiDeskripsi, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(lblShowGambar, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 15, Short.MAX_VALUE))
+                        .addComponent(lblShowGambar, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -515,6 +625,149 @@ public class DetailFilm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnLogoutActionPerformed
 
+    private void toggleRatingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toggleRatingActionPerformed
+        try {
+            BufferedImage img1 = null, img2 = null;
+            img1 = ImageIO.read(new File("src/Gambar/rsz_hollowstar.png"));
+            img2 = ImageIO.read(new File("src/Gambar/rsz_stuffedstar.png"));
+        
+            Image hollowStar = img1;
+            Image stuffedStar = img2;
+            if(toggleRating.isSelected()){
+                toggleRating.setText("Batal");
+                isEditable = true; 
+                btnRate.setVisible(true);
+                star1.setIcon(new ImageIcon(hollowStar));
+                star2.setIcon(new ImageIcon(hollowStar));
+                star3.setIcon(new ImageIcon(hollowStar));
+                star4.setIcon(new ImageIcon(hollowStar));
+                star5.setIcon(new ImageIcon(hollowStar));
+            } else {
+                toggleRating.setText("Beri Rating");
+                isEditable = false; 
+                btnRate.setVisible(false);
+                star1.setIcon(new ImageIcon(stuffedStar));
+                star2.setIcon(new ImageIcon(stuffedStar));
+                star3.setIcon(new ImageIcon(stuffedStar));
+                star4.setIcon(new ImageIcon(stuffedStar));
+                star5.setIcon(new ImageIcon(stuffedStar));
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(DetailFilm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_toggleRatingActionPerformed
+
+    private void star1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_star1ActionPerformed
+        // TODO add your handling code here:
+        if(isEditable){
+            try {
+                BufferedImage img1 = null, img2 = null;
+                img1 = ImageIO.read(new File("src/Gambar/rsz_hollowstar.png"));
+                img2 = ImageIO.read(new File("src/Gambar/rsz_stuffedstar.png"));
+
+                Image hollowStar = img1;
+                Image stuffedStar = img2;
+                star1.setIcon(new ImageIcon(stuffedStar));
+                star2.setIcon(new ImageIcon(hollowStar));
+                star3.setIcon(new ImageIcon(hollowStar));
+                star4.setIcon(new ImageIcon(hollowStar));
+                star5.setIcon(new ImageIcon(hollowStar));
+
+            } catch (IOException ex) {
+                Logger.getLogger(DetailFilm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_star1ActionPerformed
+
+    private void star2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_star2ActionPerformed
+        // TODO add your handling code here:
+        if(isEditable){
+            try {
+                BufferedImage img1 = null, img2 = null;
+                img1 = ImageIO.read(new File("src/Gambar/rsz_hollowstar.png"));
+                img2 = ImageIO.read(new File("src/Gambar/rsz_stuffedstar.png"));
+
+                Image hollowStar = img1;
+                Image stuffedStar = img2;
+                star1.setIcon(new ImageIcon(stuffedStar));
+                star2.setIcon(new ImageIcon(stuffedStar));
+                star3.setIcon(new ImageIcon(hollowStar));
+                star4.setIcon(new ImageIcon(hollowStar));
+                star5.setIcon(new ImageIcon(hollowStar));
+
+            } catch (IOException ex) {
+                Logger.getLogger(DetailFilm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_star2ActionPerformed
+
+    private void star3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_star3ActionPerformed
+        // TODO add your handling code here:
+        if(isEditable){
+            try {
+                BufferedImage img1 = null, img2 = null;
+                img1 = ImageIO.read(new File("src/Gambar/rsz_hollowstar.png"));
+                img2 = ImageIO.read(new File("src/Gambar/rsz_stuffedstar.png"));
+
+                Image hollowStar = img1;
+                Image stuffedStar = img2;
+                star1.setIcon(new ImageIcon(stuffedStar));
+                star2.setIcon(new ImageIcon(stuffedStar));
+                star3.setIcon(new ImageIcon(stuffedStar));
+                star4.setIcon(new ImageIcon(hollowStar));
+                star5.setIcon(new ImageIcon(hollowStar));
+
+            } catch (IOException ex) {
+                Logger.getLogger(DetailFilm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_star3ActionPerformed
+
+    private void star4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_star4ActionPerformed
+        // TODO add your handling code here:
+        if(isEditable){
+            try {
+                BufferedImage img1 = null, img2 = null;
+                img1 = ImageIO.read(new File("src/Gambar/rsz_hollowstar.png"));
+                img2 = ImageIO.read(new File("src/Gambar/rsz_stuffedstar.png"));
+
+                Image hollowStar = img1;
+                Image stuffedStar = img2;
+                star1.setIcon(new ImageIcon(stuffedStar));
+                star2.setIcon(new ImageIcon(stuffedStar));
+                star3.setIcon(new ImageIcon(stuffedStar));
+                star4.setIcon(new ImageIcon(stuffedStar));
+                star5.setIcon(new ImageIcon(hollowStar));
+
+            } catch (IOException ex) {
+                Logger.getLogger(DetailFilm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_star4ActionPerformed
+
+    private void star5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_star5ActionPerformed
+        // TODO add your handling code here:
+        if(isEditable){
+            try {
+                BufferedImage img1 = null, img2 = null;
+                img1 = ImageIO.read(new File("src/Gambar/rsz_hollowstar.png"));
+                img2 = ImageIO.read(new File("src/Gambar/rsz_stuffedstar.png"));
+
+                Image hollowStar = img1;
+                Image stuffedStar = img2;
+                star1.setIcon(new ImageIcon(stuffedStar));
+                star2.setIcon(new ImageIcon(stuffedStar));
+                star3.setIcon(new ImageIcon(stuffedStar));
+                star4.setIcon(new ImageIcon(stuffedStar));
+                star5.setIcon(new ImageIcon(stuffedStar));
+
+            } catch (IOException ex) {
+                Logger.getLogger(DetailFilm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_star5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -555,6 +808,7 @@ public class DetailFilm extends javax.swing.JFrame {
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnLogout;
+    private javax.swing.JButton btnRate;
     private javax.swing.JButton btnback;
     private javax.swing.JLabel isiDeskripsi;
     private javax.swing.JLabel isiDurasi;
@@ -566,6 +820,7 @@ public class DetailFilm extends javax.swing.JFrame {
     private javax.swing.JLabel isiSutradara;
     private javax.swing.JLabel isiTahun;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
@@ -581,5 +836,11 @@ public class DetailFilm extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblShowGambar;
     private javax.swing.JLabel lblUsername;
+    private javax.swing.JButton star1;
+    private javax.swing.JButton star2;
+    private javax.swing.JButton star3;
+    private javax.swing.JButton star4;
+    private javax.swing.JButton star5;
+    private javax.swing.JToggleButton toggleRating;
     // End of variables declaration//GEN-END:variables
 }
