@@ -46,9 +46,6 @@
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="43" green="43" red="43" type="rgb"/>
         </Property>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="null"/>
-        </Property>
       </Properties>
 
       <Layout>
@@ -62,9 +59,13 @@
                       <Component id="jLabel14" min="-2" pref="81" max="-2" attributes="0"/>
                       <Component id="lblUsername" min="-2" pref="269" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="133" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="btnTambah" alignment="1" min="-2" pref="89" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="btnTambahGenre" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                          <Component id="btnTambah" min="-2" pref="89" max="-2" attributes="0"/>
+                      </Group>
                       <Component id="btnLogin" alignment="1" min="-2" pref="89" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
@@ -98,6 +99,7 @@
                               <Component id="jLabel14" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
                               <Component id="btnTambah" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnTambahGenre" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Component id="jLabel13" min="-2" pref="70" max="-2" attributes="0"/>
@@ -178,6 +180,14 @@
             <Property name="text" type="java.lang.String" value="Home"/>
           </Properties>
         </Component>
+        <Component class="javax.swing.JButton" name="btnTambahGenre">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="addGenre"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTambahGenreActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -188,9 +198,6 @@
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="43" green="43" red="43" type="rgb"/>
-            </Property>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="null"/>
             </Property>
           </Properties>
 
