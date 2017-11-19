@@ -5,6 +5,8 @@
  */
 package improvemoviemanager;
 
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -17,10 +19,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.imageio.ImageIO;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -28,8 +34,11 @@ import javax.swing.JOptionPane;
  */
 public class Update extends javax.swing.JFrame {
 
-    private String judul, sutradara, penulis, produser, deskripsi, gambarLoc = null, trailerLoc = null;
+    private String judul, sutradara, penulis, produser, deskripsi, gambarLoc = null, trailerLoc = null, genre1Name, genre2Name, genre3Name;
     private int id, tahun, durasi, ratingUsia, genre1, genre2, genre3;
+    private List<JTextField> listSutradara = new ArrayList<JTextField>();
+    private List<JTextField> listPenulis = new ArrayList<JTextField>();
+    private List<JTextField> listProduser = new ArrayList<JTextField>();
     
     /**
      * Creates new form Update
@@ -42,6 +51,32 @@ public class Update extends javax.swing.JFrame {
         } else {
             btnLogout.setVisible(false);
         }
+        setGenre();
+    }
+    
+    public void setGenre(){
+        List<String> genre1 = new ArrayList<String>();
+        List<String> genre2 = new ArrayList<String>();
+        List<String> genre3 = new ArrayList<String>();
+        genre1.add("Genre 1");
+        genre2.add("Genre 2");
+        genre3.add("Genre 3");
+        String sql = "SELECT * FROM Genre";
+        Connection conn = Koneksi.getConnect();
+        try{
+           PreparedStatement stmt = conn.prepareStatement(sql);
+           ResultSet rs = stmt.executeQuery();
+           while(rs.next()){
+               genre1.add(rs.getString("genre"));
+               genre2.add(rs.getString("genre"));
+               genre3.add(rs.getString("genre"));
+           }
+        } catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        cbGenre1.setModel(new DefaultComboBoxModel(genre1.toArray()));
+        cbGenre2.setModel(new DefaultComboBoxModel(genre2.toArray()));
+        cbGenre3.setModel(new DefaultComboBoxModel(genre3.toArray()));
     }
 
     /**
@@ -67,9 +102,6 @@ public class Update extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         txtTahun = new javax.swing.JTextField();
         txtDurasi = new javax.swing.JTextField();
-        txtSutradara = new javax.swing.JTextField();
-        txtPenulis = new javax.swing.JTextField();
-        txtProduser = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDeskripsi = new javax.swing.JTextArea();
         btnGambar = new javax.swing.JButton();
@@ -84,6 +116,19 @@ public class Update extends javax.swing.JFrame {
         cbRatingUsia = new javax.swing.JComboBox<>();
         btnSimpan = new java.awt.Button();
         btnCancel = new java.awt.Button();
+        jLabel15 = new javax.swing.JLabel();
+        btnTambahSutradara = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        panelPenulis = new javax.swing.JPanel();
+        txtPenulis = new javax.swing.JTextField();
+        btnTambahPenulis = new javax.swing.JButton();
+        btnTambahProduser = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        panelSutradara = new javax.swing.JPanel();
+        txtSutradara = new javax.swing.JTextField();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        panelProduser = new javax.swing.JPanel();
+        txtProduser = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         btnLogout = new javax.swing.JButton();
         lblUsername = new javax.swing.JLabel();
@@ -114,6 +159,7 @@ public class Update extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(254, 254, 254));
         jLabel4.setText("Durasi");
 
+        jLabel5.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(254, 254, 254));
         jLabel5.setText("Sutradara");
 
@@ -197,12 +243,104 @@ public class Update extends javax.swing.JFrame {
             }
         });
 
+        jLabel15.setForeground(new java.awt.Color(254, 254, 254));
+        jLabel15.setText("minutes");
+
+        btnTambahSutradara.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/rsz_1rsz_add-2.png"))); // NOI18N
+        btnTambahSutradara.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTambahSutradaraActionPerformed(evt);
+            }
+        });
+
+        txtPenulis.setMinimumSize(new java.awt.Dimension(160, 26));
+        txtPenulis.setPreferredSize(new java.awt.Dimension(160, 26));
+        txtPenulis.setSize(new java.awt.Dimension(160, 26));
+
+        javax.swing.GroupLayout panelPenulisLayout = new javax.swing.GroupLayout(panelPenulis);
+        panelPenulis.setLayout(panelPenulisLayout);
+        panelPenulisLayout.setHorizontalGroup(
+            panelPenulisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPenulisLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtPenulis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(112, Short.MAX_VALUE))
+        );
+        panelPenulisLayout.setVerticalGroup(
+            panelPenulisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPenulisLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtPenulis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(68, Short.MAX_VALUE))
+        );
+
+        jScrollPane3.setViewportView(panelPenulis);
+
+        btnTambahPenulis.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/rsz_1rsz_add-2.png"))); // NOI18N
+        btnTambahPenulis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTambahPenulisActionPerformed(evt);
+            }
+        });
+
+        btnTambahProduser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/rsz_1rsz_add-2.png"))); // NOI18N
+        btnTambahProduser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTambahProduserActionPerformed(evt);
+            }
+        });
+
+        txtSutradara.setMinimumSize(new java.awt.Dimension(160, 26));
+        txtSutradara.setPreferredSize(new java.awt.Dimension(160, 26));
+        txtSutradara.setSize(new java.awt.Dimension(160, 26));
+
+        javax.swing.GroupLayout panelSutradaraLayout = new javax.swing.GroupLayout(panelSutradara);
+        panelSutradara.setLayout(panelSutradaraLayout);
+        panelSutradaraLayout.setHorizontalGroup(
+            panelSutradaraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelSutradaraLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtSutradara, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(55, Short.MAX_VALUE))
+        );
+        panelSutradaraLayout.setVerticalGroup(
+            panelSutradaraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelSutradaraLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtSutradara, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(68, Short.MAX_VALUE))
+        );
+
+        jScrollPane2.setViewportView(panelSutradara);
+
+        txtProduser.setMinimumSize(new java.awt.Dimension(160, 26));
+        txtProduser.setPreferredSize(new java.awt.Dimension(160, 26));
+
+        javax.swing.GroupLayout panelProduserLayout = new javax.swing.GroupLayout(panelProduser);
+        panelProduser.setLayout(panelProduserLayout);
+        panelProduserLayout.setHorizontalGroup(
+            panelProduserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelProduserLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtProduser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(112, Short.MAX_VALUE))
+        );
+        panelProduserLayout.setVerticalGroup(
+            panelProduserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelProduserLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtProduser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(68, Short.MAX_VALUE))
+        );
+
+        jScrollPane4.setViewportView(panelProduser);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -210,100 +348,82 @@ public class Update extends javax.swing.JFrame {
                             .addComponent(jLabel3))
                         .addGap(73, 73, 73)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(txtJudul, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtTahun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(cbGenre1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cbGenre2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cbGenre3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(txtJudul, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtTahun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(cbGenre3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel5)
                             .addComponent(jLabel6)
                             .addComponent(jLabel7)
                             .addComponent(jLabel8)
-                            .addComponent(jLabel9))
-                        .addGap(35, 35, 35)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel5))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtSutradara, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtDurasi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPenulis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtProduser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbRatingUsia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(31, 31, 31)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(lblGambar, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel10)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btnGambar))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                            .addGap(63, 63, 63)
-                            .addComponent(lblShowGambar, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel11)
-                            .addGap(27, 27, 27)
-                            .addComponent(btnTrailer))
-                        .addComponent(lblTrailer, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(35, 35, 35)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cbRatingUsia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(txtDurasi, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel15)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(btnTambahPenulis)
+                                            .addComponent(btnTambahProduser)
+                                            .addComponent(btnTambahSutradara))
+                                        .addGap(3, 3, 3)))))
+                        .addGap(15, 15, 15)))
+                .addGap(144, 144, 144)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblGambar, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jLabel10)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnGambar))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                    .addGap(63, 63, 63)
+                                    .addComponent(lblShowGambar, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jLabel11)
+                                    .addGap(27, 27, 27)
+                                    .addComponent(btnTrailer))
+                                .addComponent(lblTrailer, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(95, 95, 95))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(28, Short.MAX_VALUE))
+                        .addGap(67, 67, 67)
+                        .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtDurasi, txtJudul, txtPenulis, txtProduser, txtSutradara, txtTahun});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtJudul, txtTahun});
 
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(txtJudul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(txtTahun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(cbGenre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbGenre2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbGenre3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(txtDurasi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(txtSutradara, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(txtPenulis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(txtProduser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(cbRatingUsia, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
@@ -320,8 +440,51 @@ public class Update extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnSimpan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCancel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnCancel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(txtJudul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(txtTahun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(cbGenre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbGenre2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbGenre3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(txtDurasi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15))
+                        .addGap(17, 17, 17)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnTambahSutradara)
+                            .addComponent(jLabel5)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnTambahPenulis)
+                            .addComponent(jLabel6)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(btnTambahProduser)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(cbRatingUsia, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9))))
+                .addContainerGap())
         );
 
         jPanel1.setBackground(new java.awt.Color(67, 67, 67));
@@ -388,7 +551,7 @@ public class Update extends javax.swing.JFrame {
                         .addComponent(jLabel14)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 12, Short.MAX_VALUE))
+                .addGap(0, 6, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -402,8 +565,9 @@ public class Update extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -421,6 +585,42 @@ public class Update extends javax.swing.JFrame {
         lblShowGambar.setIcon(imgIcon);
     }
     
+    public int getIdGenre(String genre){
+        int id = 0;
+        String sql = "SELECT id FROM Genre where genre = ?";
+        Connection conn = Koneksi.getConnect();
+        try{
+           PreparedStatement stmt = conn.prepareStatement(sql);
+           stmt.setString(1, genre);
+           ResultSet rs = stmt.executeQuery();
+           while(rs.next()){
+               id = rs.getInt("id");
+           }
+        } catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        
+        return id;
+    }
+    
+    public String getGenreName(int id){
+        String name = "";
+        String sql = "SELECT genre FROM Genre where id = ?";
+        Connection conn = Koneksi.getConnect();
+        try{
+           PreparedStatement stmt = conn.prepareStatement(sql);
+           stmt.setInt(1, id);
+           ResultSet rs = stmt.executeQuery();
+           while(rs.next()){
+               name = rs.getString("genre");
+           }
+        } catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        
+        return name;
+    }
+    
     public void showDetail(int id){
         this.id = id;
         this.setVisible(true);
@@ -436,13 +636,61 @@ public class Update extends javax.swing.JFrame {
             while(rs.next()){
                 judul = rs.getString("judul");
                 tahun = rs.getInt("tahun");
-                genre1 = rs.getInt("genre1");
-                genre2 = rs.getInt("genre2");
-                genre3 = rs.getInt("genre3");
+                genre1Name = getGenreName(rs.getInt("genre1"));
+                genre2Name = getGenreName(rs.getInt("genre2"));
+                genre3Name = getGenreName(rs.getInt("genre3"));
                 durasi = rs.getInt("durasi");
-                sutradara = rs.getString("sutradara");
-                penulis = rs.getString("penulis");
-                produser = rs.getString("produser");
+             
+                String[] tempSutradara = rs.getString("sutradara").split(" & ");
+                String[] tempPenulis = rs.getString("penulis").split(" & ");
+                String[] tempProduser = rs.getString("produser").split(" & ");
+                
+                if(tempSutradara.length != 0){
+                    sutradara = tempSutradara[0];
+                    for(int i = 1;i<tempSutradara.length;i++){
+                        JTextField text = new JTextField();
+                        text.setPreferredSize(new Dimension(160, 26));
+                        text.setText(tempSutradara[i]);
+                        panelSutradara.setLayout(new FlowLayout(FlowLayout.LEFT));
+                        panelSutradara.add(text);
+                        panelSutradara.revalidate();
+
+                        listSutradara.add(text);
+                    }
+                } else {
+                    sutradara = rs.getString("sutradara");
+                }
+                if(tempPenulis.length != 0){
+                    penulis = tempPenulis[0];
+                    for(int i = 1;i<tempPenulis.length;i++){
+                        JTextField text = new JTextField();
+                        text.setPreferredSize(new Dimension(160, 26));
+                        text.setText(tempPenulis[i]);
+                        panelPenulis.setLayout(new FlowLayout(FlowLayout.LEFT));
+                        panelPenulis.add(text);
+                        panelPenulis.revalidate();
+
+                        listPenulis.add(text);
+                    }
+                } else {
+                    penulis = rs.getString("penulis");
+                }
+                if(tempProduser.length != 0){
+                    produser = tempProduser[0];
+                    for(int i = 1;i<tempProduser.length;i++){
+                        JTextField text = new JTextField();
+                        text.setPreferredSize(new Dimension(160, 26));
+                        text.setText(tempProduser[i]);
+                        panelProduser.setLayout(new FlowLayout(FlowLayout.LEFT));
+                        panelProduser.add(text);
+                        panelProduser.revalidate();
+
+                        listProduser.add(text);
+                    }
+                } else {
+                    produser = rs.getString("produser");
+                }
+                
                 ratingUsia = rs.getInt("rating_usia");
                 deskripsi = rs.getString("deskripsi");
                 gambarLoc = Paths.getGambarPath()+rs.getString("gambar");
@@ -450,9 +698,9 @@ public class Update extends javax.swing.JFrame {
                 
                 txtJudul.setText(judul);
                 txtTahun.setText(Integer.toString(tahun));
-                cbGenre1.setSelectedIndex(genre1);
-                cbGenre2.setSelectedIndex(genre2);
-                cbGenre3.setSelectedIndex(genre3);
+                cbGenre1.setSelectedItem(genre1Name);
+                cbGenre2.setSelectedItem(genre2Name);
+                cbGenre3.setSelectedItem(genre3Name);
                 txtDurasi.setText(Integer.toString(durasi));
                 txtSutradara.setText(sutradara);
                 txtPenulis.setText(penulis);
@@ -552,25 +800,110 @@ public class Update extends javax.swing.JFrame {
             return false;
     }
     
-    private void btnGambarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGambarActionPerformed
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
-        JFileChooser fc = new JFileChooser();
-        String ext, temp;
-        fc.addChoosableFileFilter(new OpenFileFilter("jpeg", ".jpeg"));
-        fc.addChoosableFileFilter(new OpenFileFilter("jpg", ".jpg"));
-        int result = fc.showOpenDialog(jPanel2);
-        if (result == JFileChooser.APPROVE_OPTION){
-            temp = fc.getSelectedFile().getAbsolutePath();
-            ext = temp.substring(temp.lastIndexOf(".")+1, temp.length());
-            if(ext.equals("jpg") || ext.equals("jpeg") || ext.equals("JPG") || ext.equals("JPEG")){
-                gambarLoc = temp;
-                lblGambar.setText("File path: " + gambarLoc);
-                showImg(gambarLoc);
+        int confirm = JOptionPane.showConfirmDialog(null, "Apakah anda yakin?", "Confirm logout", JOptionPane.OK_CANCEL_OPTION);
+        if(confirm == 0){
+            Logout.keluar();
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnLogoutActionPerformed
+
+    private void btnTambahProduserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahProduserActionPerformed
+        // TODO add your handling code here:
+        JTextField text = new JTextField();
+        text.setPreferredSize(new Dimension(160, 26));
+        panelProduser.setLayout(new FlowLayout(FlowLayout.LEFT));
+        panelProduser.add(text);
+        panelProduser.revalidate();
+
+        listProduser.add(text);
+    }//GEN-LAST:event_btnTambahProduserActionPerformed
+
+    private void btnTambahPenulisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahPenulisActionPerformed
+        // TODO add your handling code here:
+        JTextField text = new JTextField();
+        text.setPreferredSize(new Dimension(160, 26));
+        panelPenulis.setLayout(new FlowLayout(FlowLayout.LEFT));
+        panelPenulis.add(text);
+        panelPenulis.revalidate();
+
+        listPenulis.add(text);
+    }//GEN-LAST:event_btnTambahPenulisActionPerformed
+
+    private void btnTambahSutradaraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahSutradaraActionPerformed
+        // TODO add your handling code here:
+        JTextField text = new JTextField();
+        text.setPreferredSize(new Dimension(160, 26));
+        panelSutradara.setLayout(new FlowLayout(FlowLayout.LEFT));
+        panelSutradara.add(text);
+        panelSutradara.revalidate();
+
+        listSutradara.add(text);
+    }//GEN-LAST:event_btnTambahSutradaraActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        // TODO add your handling code here:
+        new DetailFilm().showDetail(id, 1);
+        this.dispose();
+    }//GEN-LAST:event_btnCancelActionPerformed
+
+    private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
+        // TODO add your handling code here:
+        if(txtJudul.equals("") || txtTahun.getText().equals("") || txtDurasi.getText().equals("") || txtSutradara.equals("") || txtPenulis.equals("") || txtProduser.equals("") || txtDeskripsi.equals("") || cbGenre1.getSelectedIndex() == 0 || cbGenre2.getSelectedIndex() == 0 || cbGenre3.getSelectedIndex() == 0 || cbRatingUsia.getSelectedIndex() == 0 || gambarLoc == null || trailerLoc == null){
+            JOptionPane.showMessageDialog(jPanel2, "Data film belum lengkap!");
+        } else {
+            boolean result = false;
+            judul = txtJudul.getText();
+            tahun = Integer.parseInt(txtTahun.getText());
+            durasi = Integer.parseInt(txtDurasi.getText());
+            
+            sutradara = txtSutradara.getText();
+            penulis = txtPenulis.getText();
+            produser = txtProduser.getText();
+            
+            if(!listSutradara.isEmpty()){
+                for(JTextField text:listSutradara){
+                    if(!text.getText().equals("")){
+                        sutradara = sutradara + " & " +text.getText();
+                    }
+                }
+            }
+            if(!listPenulis.isEmpty()){
+                for(JTextField text:listPenulis){
+                    if(!text.getText().equals("")){
+                        penulis = penulis + " & " +text.getText();
+                    }
+                }
+            }
+            if(!listProduser.isEmpty()){
+                for(JTextField text:listProduser){
+                    if(!text.getText().equals("")){
+                        produser = produser + " & " +text.getText();
+                    }
+                }
+            }
+            
+            deskripsi = txtDeskripsi.getText();
+            genre1 = getIdGenre((String) cbGenre1.getSelectedItem());
+            genre2 = getIdGenre((String) cbGenre2.getSelectedItem());
+            genre3 = getIdGenre((String) cbGenre3.getSelectedItem());
+            ratingUsia = cbRatingUsia.getSelectedIndex();
+
+            try{
+                result = edit(id, judul, tahun, genre1, genre2, genre3, durasi, sutradara, penulis, produser, ratingUsia, deskripsi, gambarLoc, trailerLoc);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            if(result){
+                JOptionPane.showMessageDialog(jPanel2, "Perubahan berhasil disimpan");
+                new DetailFilm().showDetail(id, 1);
+                this.dispose();
             } else {
-                JOptionPane.showMessageDialog(jPanel2, "Gambar harus berjenis JPEG/JPG");
+                JOptionPane.showMessageDialog(jPanel2, "Perubahan gagal disimpan");
             }
         }
-    }//GEN-LAST:event_btnGambarActionPerformed
+    }//GEN-LAST:event_btnSimpanActionPerformed
 
     private void btnTrailerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTrailerActionPerformed
         // TODO add your handling code here:
@@ -595,53 +928,25 @@ public class Update extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnTrailerActionPerformed
 
-    private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
+    private void btnGambarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGambarActionPerformed
         // TODO add your handling code here:
-        if(txtJudul.equals("") || txtTahun.getText().equals("") || txtDurasi.getText().equals("") || txtSutradara.equals("") || txtPenulis.equals("") || txtProduser.equals("") || txtDeskripsi.equals("") || cbGenre1.getSelectedIndex() == 0 || cbGenre2.getSelectedIndex() == 0 || cbGenre3.getSelectedIndex() == 0 || cbRatingUsia.getSelectedIndex() == 0 || gambarLoc == null || trailerLoc == null){
-            JOptionPane.showMessageDialog(jPanel2, "Data film belum lengkap!");
-        } else {
-            boolean result = false;
-            judul = txtJudul.getText();
-            tahun = Integer.parseInt(txtTahun.getText());
-            durasi = Integer.parseInt(txtDurasi.getText());
-            sutradara = txtSutradara.getText();
-            penulis = txtPenulis.getText();
-            produser = txtProduser.getText();
-            deskripsi = txtDeskripsi.getText();
-            genre1 = cbGenre1.getSelectedIndex();
-            genre2 = cbGenre2.getSelectedIndex();
-            genre3 = cbGenre3.getSelectedIndex();
-            ratingUsia = cbRatingUsia.getSelectedIndex();
-
-            try{
-                result = edit(id, judul, tahun, genre1, genre2, genre3, durasi, sutradara, penulis, produser, ratingUsia, deskripsi, gambarLoc, trailerLoc);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-            if(result){
-                JOptionPane.showMessageDialog(jPanel2, "Perubahan berhasil disimpan");
-                new DetailFilm().showDetail(id, 1);
-                this.dispose();
+        JFileChooser fc = new JFileChooser();
+        String ext, temp;
+        fc.addChoosableFileFilter(new OpenFileFilter("jpeg", ".jpeg"));
+        fc.addChoosableFileFilter(new OpenFileFilter("jpg", ".jpg"));
+        int result = fc.showOpenDialog(jPanel2);
+        if (result == JFileChooser.APPROVE_OPTION){
+            temp = fc.getSelectedFile().getAbsolutePath();
+            ext = temp.substring(temp.lastIndexOf(".")+1, temp.length());
+            if(ext.equals("jpg") || ext.equals("jpeg") || ext.equals("JPG") || ext.equals("JPEG")){
+                gambarLoc = temp;
+                lblGambar.setText("File path: " + gambarLoc);
+                showImg(gambarLoc);
             } else {
-                JOptionPane.showMessageDialog(jPanel2, "Perubahan gagal disimpan");
+                JOptionPane.showMessageDialog(jPanel2, "Gambar harus berjenis JPEG/JPG");
             }
         }
-    }//GEN-LAST:event_btnSimpanActionPerformed
-
-    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        // TODO add your handling code here:
-        new DetailFilm().showDetail(id, 1);
-        this.dispose();
-    }//GEN-LAST:event_btnCancelActionPerformed
-
-    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-        // TODO add your handling code here:
-        int confirm = JOptionPane.showConfirmDialog(null, "Apakah anda yakin?", "Confirm logout", JOptionPane.OK_CANCEL_OPTION);
-        if(confirm == 0){
-            Logout.keluar();
-            this.dispose();
-        }
-    }//GEN-LAST:event_btnLogoutActionPerformed
+    }//GEN-LAST:event_btnGambarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -683,6 +988,9 @@ public class Update extends javax.swing.JFrame {
     private javax.swing.JButton btnGambar;
     private javax.swing.JButton btnLogout;
     private java.awt.Button btnSimpan;
+    private javax.swing.JButton btnTambahPenulis;
+    private javax.swing.JButton btnTambahProduser;
+    private javax.swing.JButton btnTambahSutradara;
     private javax.swing.JButton btnTrailer;
     private javax.swing.JComboBox<String> cbGenre1;
     private javax.swing.JComboBox<String> cbGenre2;
@@ -694,6 +1002,7 @@ public class Update extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -705,12 +1014,18 @@ public class Update extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblGambar;
     private javax.swing.JLabel lblShowGambar;
     private javax.swing.JLabel lblTrailer;
     private javax.swing.JLabel lblUsername;
+    private javax.swing.JPanel panelPenulis;
+    private javax.swing.JPanel panelProduser;
+    private javax.swing.JPanel panelSutradara;
     private javax.swing.JTextArea txtDeskripsi;
     private javax.swing.JTextField txtDurasi;
     private javax.swing.JTextField txtJudul;

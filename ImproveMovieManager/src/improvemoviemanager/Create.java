@@ -5,6 +5,8 @@
  */
 package improvemoviemanager;
 
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -17,10 +19,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.imageio.ImageIO;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -30,6 +36,9 @@ public class Create extends javax.swing.JFrame {
 
     private String judul, sutradara, penulis, produser, deskripsi, gambarLoc = null, trailerLoc = null;
     private int tahun, durasi, ratingUsia, genre1, genre2, genre3;
+    private List<JTextField> listSutradara = new ArrayList<JTextField>();
+    private List<JTextField> listPenulis = new ArrayList<JTextField>();
+    private List<JTextField> listProduser = new ArrayList<JTextField>();
     
     /**
      * Creates new form Create
@@ -42,6 +51,32 @@ public class Create extends javax.swing.JFrame {
         } else {
             btnLogout.setVisible(false);
         }
+        setGenre();
+    }
+    
+    public void setGenre(){
+        List<String> genre1 = new ArrayList<String>();
+        List<String> genre2 = new ArrayList<String>();
+        List<String> genre3 = new ArrayList<String>();
+        genre1.add("Genre 1");
+        genre2.add("Genre 2");
+        genre3.add("Genre 3");
+        String sql = "SELECT * FROM Genre";
+        Connection conn = Koneksi.getConnect();
+        try{
+           PreparedStatement stmt = conn.prepareStatement(sql);
+           ResultSet rs = stmt.executeQuery();
+           while(rs.next()){
+               genre1.add(rs.getString("genre"));
+               genre2.add(rs.getString("genre"));
+               genre3.add(rs.getString("genre"));
+           }
+        } catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        cbGenre1.setModel(new DefaultComboBoxModel(genre1.toArray()));
+        cbGenre2.setModel(new DefaultComboBoxModel(genre2.toArray()));
+        cbGenre3.setModel(new DefaultComboBoxModel(genre3.toArray()));
     }
     
     public boolean insertCheck(String judul, int tahun, int durasi){
@@ -107,7 +142,7 @@ public class Create extends javax.swing.JFrame {
                 System.out.println(e.getMessage());
             }
         
-            String sql = "INSERT INTO Movie(judul, tahun, genre1, genre2, genre3, durasi, sutradara, penulis, produser, rating_usia, deskripsi, gambar, trailer) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO Movie(judul, tahun, genre1, genre2, genre3, durasi, sutradara, penulis, produser, rating_usia, deskripsi, gambar, trailer, avg_star, total_star, total_user) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, 0)";
             
             Connection conn = Koneksi.getConnect();
             try {
@@ -158,9 +193,6 @@ public class Create extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         txtTahun = new javax.swing.JTextField();
         txtDurasi = new javax.swing.JTextField();
-        txtSutradara = new javax.swing.JTextField();
-        txtPenulis = new javax.swing.JTextField();
-        txtProduser = new javax.swing.JTextField();
         btnGambar = new javax.swing.JButton();
         btnTrailer = new javax.swing.JButton();
         lblGambar = new javax.swing.JLabel();
@@ -172,7 +204,7 @@ public class Create extends javax.swing.JFrame {
         cbGenre3 = new javax.swing.JComboBox<>();
         cbRatingUsia = new javax.swing.JComboBox<>();
         btnTambah = new java.awt.Button();
-        button1 = new java.awt.Button();
+        btnCancel = new java.awt.Button();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -182,6 +214,19 @@ public class Create extends javax.swing.JFrame {
         lblUsername = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtDeskripsi = new javax.swing.JTextArea();
+        jLabel15 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        panelSutradara = new javax.swing.JPanel();
+        txtSutradara = new javax.swing.JTextField();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        panelPenulis = new javax.swing.JPanel();
+        txtPenulis = new javax.swing.JTextField();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        panelProduser = new javax.swing.JPanel();
+        txtProduser = new javax.swing.JTextField();
+        btnTambahSutradara = new javax.swing.JButton();
+        btnTambahProduser = new javax.swing.JButton();
+        btnTambahPenulis = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -258,12 +303,6 @@ public class Create extends javax.swing.JFrame {
         lblShowGambar.setToolTipText("");
         lblShowGambar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        cbGenre1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Genre 1", "Action", "Adventure", "Animation", "Biography", "Comedy", "Crime", "Documentary", "Drama", "Family", "Fantasy", "Film-Noir", "History", "Horror", "Music", "Musical", "Mystery", "Romance", "Sci-Fi", "Sport", "Thriller", "War", "Western" }));
-
-        cbGenre2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Genre 2", "Action", "Adventure", "Animation", "Biography", "Comedy", "Crime", "Documentary", "Drama", "Family", "Fantasy", "Film-Noir", "History", "Horror", "Music", "Musical", "Mystery", "Romance", "Sci-Fi", "Sport", "Thriller", "War", "Western" }));
-
-        cbGenre3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Genre 3", "Action", "Adventure", "Animation", "Biography", "Comedy", "Crime", "Documentary", "Drama", "Family", "Fantasy", "Film-Noir", "History", "Horror", "Music", "Musical", "Mystery", "Romance", "Sci-Fi", "Sport", "Thriller", "War", "Western" }));
-
         cbRatingUsia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MPAA Age Rating", "G", "PG", "PG-13", "R", "NC-17" }));
 
         btnTambah.setBackground(new java.awt.Color(13, 1, 180));
@@ -276,13 +315,13 @@ public class Create extends javax.swing.JFrame {
             }
         });
 
-        button1.setBackground(new java.awt.Color(174, 28, 28));
-        button1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        button1.setForeground(new java.awt.Color(0, 0, 0));
-        button1.setLabel("Cancel");
-        button1.addActionListener(new java.awt.event.ActionListener() {
+        btnCancel.setBackground(new java.awt.Color(174, 28, 28));
+        btnCancel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnCancel.setForeground(new java.awt.Color(0, 0, 0));
+        btnCancel.setLabel("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button1ActionPerformed(evt);
+                btnCancelActionPerformed(evt);
             }
         });
 
@@ -312,6 +351,98 @@ public class Create extends javax.swing.JFrame {
         txtDeskripsi.setRows(5);
         txtDeskripsi.setWrapStyleWord(true);
         jScrollPane2.setViewportView(txtDeskripsi);
+
+        jLabel15.setForeground(new java.awt.Color(254, 254, 254));
+        jLabel15.setText("minutes");
+
+        txtSutradara.setMinimumSize(new java.awt.Dimension(160, 26));
+        txtSutradara.setPreferredSize(new java.awt.Dimension(160, 26));
+        txtSutradara.setSize(new java.awt.Dimension(160, 26));
+
+        javax.swing.GroupLayout panelSutradaraLayout = new javax.swing.GroupLayout(panelSutradara);
+        panelSutradara.setLayout(panelSutradaraLayout);
+        panelSutradaraLayout.setHorizontalGroup(
+            panelSutradaraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelSutradaraLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtSutradara, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(55, Short.MAX_VALUE))
+        );
+        panelSutradaraLayout.setVerticalGroup(
+            panelSutradaraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelSutradaraLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtSutradara, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(68, Short.MAX_VALUE))
+        );
+
+        jScrollPane1.setViewportView(panelSutradara);
+
+        txtPenulis.setMinimumSize(new java.awt.Dimension(160, 26));
+        txtPenulis.setPreferredSize(new java.awt.Dimension(160, 26));
+        txtPenulis.setSize(new java.awt.Dimension(160, 26));
+
+        javax.swing.GroupLayout panelPenulisLayout = new javax.swing.GroupLayout(panelPenulis);
+        panelPenulis.setLayout(panelPenulisLayout);
+        panelPenulisLayout.setHorizontalGroup(
+            panelPenulisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPenulisLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtPenulis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(112, Short.MAX_VALUE))
+        );
+        panelPenulisLayout.setVerticalGroup(
+            panelPenulisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPenulisLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtPenulis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(68, Short.MAX_VALUE))
+        );
+
+        jScrollPane3.setViewportView(panelPenulis);
+
+        txtProduser.setMinimumSize(new java.awt.Dimension(160, 26));
+        txtProduser.setPreferredSize(new java.awt.Dimension(160, 26));
+
+        javax.swing.GroupLayout panelProduserLayout = new javax.swing.GroupLayout(panelProduser);
+        panelProduser.setLayout(panelProduserLayout);
+        panelProduserLayout.setHorizontalGroup(
+            panelProduserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelProduserLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtProduser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(112, Short.MAX_VALUE))
+        );
+        panelProduserLayout.setVerticalGroup(
+            panelProduserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelProduserLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtProduser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(68, Short.MAX_VALUE))
+        );
+
+        jScrollPane4.setViewportView(panelProduser);
+
+        btnTambahSutradara.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/rsz_1rsz_add-2.png"))); // NOI18N
+        btnTambahSutradara.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTambahSutradaraActionPerformed(evt);
+            }
+        });
+
+        btnTambahProduser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/rsz_1rsz_add-2.png"))); // NOI18N
+        btnTambahProduser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTambahProduserActionPerformed(evt);
+            }
+        });
+
+        btnTambahPenulis.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/rsz_1rsz_add-2.png"))); // NOI18N
+        btnTambahPenulis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTambahPenulisActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -354,38 +485,51 @@ public class Create extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(cbRatingUsia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtProduser)
-                                            .addComponent(txtPenulis)
-                                            .addComponent(txtSutradara)
-                                            .addComponent(txtDurasi)
                                             .addComponent(txtTahun)
+                                            .addComponent(txtJudul)
+                                            .addComponent(jScrollPane2)
                                             .addGroup(jPanel2Layout.createSequentialGroup()
                                                 .addComponent(cbGenre1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(cbGenre2, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(cbGenre3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(txtJudul)
-                                            .addComponent(jScrollPane2)))
+                                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addComponent(txtDurasi, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jLabel15))
+                                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                                    .addComponent(jScrollPane1)
+                                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                                                .addGap(9, 9, 9)
+                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(btnTambahSutradara)
+                                                    .addComponent(btnTambahProduser)
+                                                    .addComponent(btnTambahPenulis)))))
                                     .addComponent(jLabel3))
-                                .addGap(18, 18, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblTrailer, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addComponent(jLabel10)
+                                                .addGap(25, 25, 25)
+                                                .addComponent(btnGambar))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                                .addComponent(jLabel11)
+                                                .addGap(37, 37, 37)
+                                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(lblShowGambar, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(btnTrailer)))
+                                            .addComponent(lblTrailer, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lblGambar, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(97, 97, 97))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                        .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(61, 61, 61)
-                                        .addComponent(btnTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel11)
-                                        .addGap(37, 37, 37)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblShowGambar, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(btnTrailer)))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel10)
-                                        .addGap(25, 25, 25)
-                                        .addComponent(btnGambar))
-                                    .addComponent(lblGambar, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                        .addComponent(btnTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                 .addContainerGap())
         );
 
@@ -415,43 +559,7 @@ public class Create extends javax.swing.JFrame {
                     .addComponent(jLabel10)
                     .addComponent(btnGambar))
                 .addGap(12, 12, 12)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtTahun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(cbGenre2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbGenre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbGenre3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(txtDurasi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtSutradara, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtPenulis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtProduser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(cbRatingUsia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addGap(146, 146, 146))
-                            .addComponent(jScrollPane2)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(lblGambar)
                         .addGap(18, 18, 18)
@@ -465,15 +573,56 @@ public class Create extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnTambah, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnCancel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtTahun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(cbGenre2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbGenre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbGenre3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(txtDurasi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(btnTambahSutradara)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(btnTambahPenulis)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(btnTambahProduser)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(cbRatingUsia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel9)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 744, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -483,12 +632,40 @@ public class Create extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
+        int confirm = JOptionPane.showConfirmDialog(null, "Apakah anda yakin?", "Confirm logout", JOptionPane.OK_CANCEL_OPTION);
+        if(confirm == 0){
+            Logout.keluar();
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnLogoutActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        // TODO add your handling code here:
+        
         new HalamanAwal().setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_button1ActionPerformed
+    }//GEN-LAST:event_btnCancelActionPerformed
 
+    public int getIdGenre(String genre){
+        int id = 0;
+        String sql = "SELECT id FROM Genre where genre = ?";
+        Connection conn = Koneksi.getConnect();
+        try{
+           PreparedStatement stmt = conn.prepareStatement(sql);
+           stmt.setString(1, genre);
+           ResultSet rs = stmt.executeQuery();
+           while(rs.next()){
+               id = rs.getInt("id");
+           }
+        } catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        
+        return id;
+    }
+    
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
         // TODO add your handling code here:
         if(txtJudul.equals("") || txtTahun.getText().equals("") || txtDurasi.getText().equals("") || txtSutradara.equals("") || txtPenulis.equals("") || txtProduser.equals("") || txtDeskripsi.equals("") || cbGenre1.getSelectedIndex() == 0 || cbGenre2.getSelectedIndex() == 0 || cbGenre3.getSelectedIndex() == 0 || cbRatingUsia.getSelectedIndex() == 0 || gambarLoc == null || trailerLoc == null){
@@ -498,13 +675,37 @@ public class Create extends javax.swing.JFrame {
             judul = txtJudul.getText();
             tahun = Integer.parseInt(txtTahun.getText());
             durasi = Integer.parseInt(txtDurasi.getText());
+            
             sutradara = txtSutradara.getText();
             penulis = txtPenulis.getText();
             produser = txtProduser.getText();
+            
+            if(!listSutradara.isEmpty()){
+                for(JTextField text:listSutradara){
+                    if(!text.getText().equals("")){
+                        sutradara = sutradara + " & " +text.getText();
+                    }
+                }
+            }
+            if(!listPenulis.isEmpty()){
+                for(JTextField text:listPenulis){
+                    if(!text.getText().equals("")){
+                        penulis = penulis + " & " +text.getText();
+                    }
+                }
+            }
+            if(!listProduser.isEmpty()){
+                for(JTextField text:listProduser){
+                    if(!text.getText().equals("")){
+                        produser = produser + " & " +text.getText();
+                    }
+                }
+            }
+            
             deskripsi = txtDeskripsi.getText();
-            genre1 = cbGenre1.getSelectedIndex();
-            genre2 = cbGenre2.getSelectedIndex();
-            genre3 = cbGenre3.getSelectedIndex();
+            genre1 = getIdGenre((String) cbGenre1.getSelectedItem());
+            genre2 = getIdGenre((String) cbGenre2.getSelectedItem());
+            genre3 = getIdGenre((String) cbGenre3.getSelectedItem());
             ratingUsia = cbRatingUsia.getSelectedIndex();
 
             try{
@@ -567,14 +768,38 @@ public class Create extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnGambarActionPerformed
 
-    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+    private void btnTambahSutradaraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahSutradaraActionPerformed
         // TODO add your handling code here:
-        int confirm = JOptionPane.showConfirmDialog(null, "Apakah anda yakin?", "Confirm logout", JOptionPane.OK_CANCEL_OPTION);
-        if(confirm == 0){
-            Logout.keluar();
-            this.dispose();
-        }
-    }//GEN-LAST:event_btnLogoutActionPerformed
+        JTextField text = new JTextField();
+        text.setPreferredSize(new Dimension(160, 26));
+        panelSutradara.setLayout(new FlowLayout(FlowLayout.LEFT));
+        panelSutradara.add(text);
+        panelSutradara.revalidate();
+        
+        listSutradara.add(text);
+    }//GEN-LAST:event_btnTambahSutradaraActionPerformed
+
+    private void btnTambahPenulisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahPenulisActionPerformed
+        // TODO add your handling code here:
+        JTextField text = new JTextField();
+        text.setPreferredSize(new Dimension(160, 26));
+        panelPenulis.setLayout(new FlowLayout(FlowLayout.LEFT));
+        panelPenulis.add(text);
+        panelPenulis.revalidate();
+        
+        listPenulis.add(text);
+    }//GEN-LAST:event_btnTambahPenulisActionPerformed
+
+    private void btnTambahProduserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahProduserActionPerformed
+        // TODO add your handling code here:
+        JTextField text = new JTextField();
+        text.setPreferredSize(new Dimension(160, 26));
+        panelProduser.setLayout(new FlowLayout(FlowLayout.LEFT));
+        panelProduser.add(text);
+        panelProduser.revalidate();
+        
+        listProduser.add(text);
+    }//GEN-LAST:event_btnTambahProduserActionPerformed
     
     public void showImg(String imageLoc){
         BufferedImage img = null;
@@ -624,11 +849,14 @@ public class Create extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private java.awt.Button btnCancel;
     private javax.swing.JButton btnGambar;
     private javax.swing.JButton btnLogout;
     private java.awt.Button btnTambah;
+    private javax.swing.JButton btnTambahPenulis;
+    private javax.swing.JButton btnTambahProduser;
+    private javax.swing.JButton btnTambahSutradara;
     private javax.swing.JButton btnTrailer;
-    private java.awt.Button button1;
     private javax.swing.JComboBox<String> cbGenre1;
     private javax.swing.JComboBox<String> cbGenre2;
     private javax.swing.JComboBox<String> cbGenre3;
@@ -639,6 +867,7 @@ public class Create extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -649,13 +878,19 @@ public class Create extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblGambar;
     private javax.swing.JLabel lblShowGambar;
     private javax.swing.JLabel lblTrailer;
     private javax.swing.JLabel lblUsername;
+    private javax.swing.JPanel panelPenulis;
+    private javax.swing.JPanel panelProduser;
+    private javax.swing.JPanel panelSutradara;
     private javax.swing.JTextArea txtDeskripsi;
     private javax.swing.JTextField txtDurasi;
     private javax.swing.JTextField txtJudul;
