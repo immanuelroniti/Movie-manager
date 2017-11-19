@@ -282,7 +282,6 @@ public class Register extends javax.swing.JFrame {
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(this, "Berhasil terdaftar");
             langsungMasuk(username, password);
-            conn.close();
         }catch(Exception e){
             System.out.println(e);
         }

@@ -70,6 +70,5 @@ public class Session {
     public static void setRole(int aRole) {
         role = aRole;
     }
-    
-    
+
 }

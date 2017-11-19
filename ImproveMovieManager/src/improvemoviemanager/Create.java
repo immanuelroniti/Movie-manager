@@ -142,7 +142,7 @@ public class Create extends javax.swing.JFrame {
                 System.out.println(e.getMessage());
             }
         
-            String sql = "INSERT INTO Movie(judul, tahun, genre1, genre2, genre3, durasi, sutradara, penulis, produser, rating_usia, deskripsi, gambar, trailer) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO Movie(judul, tahun, genre1, genre2, genre3, durasi, sutradara, penulis, produser, rating_usia, deskripsi, gambar, trailer, avg_star, total_star, total_user) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, 0)";
             
             Connection conn = Koneksi.getConnect();
             try {

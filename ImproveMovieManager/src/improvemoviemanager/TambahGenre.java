@@ -48,8 +48,14 @@ public class TambahGenre extends javax.swing.JFrame {
         
         if(isDelete){
             toggleDelete.setSelected(true);
+            txtNewGenre.setEditable(false);
+            btnTambahGenre.setEnabled(false);
+            btnEditGenre.setEnabled(false);
         } else{
             toggleDelete.setSelected(false);
+            txtNewGenre.setEditable(true);
+            btnTambahGenre.setEnabled(true);
+            btnEditGenre.setEnabled(true);
         }
         txtEditGenre.setEditable(false);
         showAllGenre();
