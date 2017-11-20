@@ -34,7 +34,7 @@ import javax.swing.JTextField;
  */
 public class Update extends javax.swing.JFrame {
 
-    private String judul, sutradara, penulis, produser, deskripsi, gambarLoc = null, trailerLoc = null, genre1Name, genre2Name, genre3Name;
+    private String judul, sutradara, penulis, produser, deskripsi, oldGambarLoc = null, oldTrailerLoc = null, gambarLoc = null, trailerLoc = null, genre1Name, genre2Name, genre3Name;
     private int id, tahun, durasi, ratingUsia, genre1, genre2, genre3;
     private List<JTextField> listSutradara = new ArrayList<JTextField>();
     private List<JTextField> listPenulis = new ArrayList<JTextField>();
@@ -695,6 +695,8 @@ public class Update extends javax.swing.JFrame {
                 deskripsi = rs.getString("deskripsi");
                 gambarLoc = Paths.getGambarPath()+rs.getString("gambar");
                 trailerLoc = Paths.getVideoPath()+rs.getString("trailer");
+                oldGambarLoc = gambarLoc;
+                oldTrailerLoc = trailerLoc;
                 
                 txtJudul.setText(judul);
                 txtTahun.setText(Integer.toString(tahun));
@@ -727,9 +729,9 @@ public class Update extends javax.swing.JFrame {
         //ini yang beda
         String newImageLoc = Paths.getGambarPath()+fileImg.getName();
         File newFileImg = new File(newImageLoc);
-        if(gambarLoc.equals(newImageLoc)){
-            newImageLoc = gambarLoc;
-        } else{
+        if(!oldGambarLoc.equals(newImageLoc)){
+            File imgDel = new File(oldGambarLoc);
+            imgDel.delete();
             try{
                 byte[] buffer = new byte[1024];
                 int length;
@@ -752,9 +754,9 @@ public class Update extends javax.swing.JFrame {
         //ini juga beda
         String newTrailerLoc = Paths.getVideoPath()+fileVid.getName();
         File newFileVid = new File(newTrailerLoc);
-        if(trailerLoc.equals(newTrailerLoc)){
-            newTrailerLoc = trailerLoc;
-        } else{
+        if(!oldTrailerLoc.equals(newTrailerLoc)){
+            File vidDel = new File(oldTrailerLoc);
+            vidDel.delete();
             try{
                 byte[] buffer = new byte[1024];
                 int length;
@@ -773,31 +775,31 @@ public class Update extends javax.swing.JFrame {
             }
         }
         
-            String sql = "UPDATE Movie SET judul = ?, tahun = ?, genre1 = ?, genre2 = ?, genre3 = ?, durasi = ?, sutradara = ?, penulis = ?, produser = ?, rating_usia = ?, deskripsi = ?, gambar = ?, trailer = ? WHERE id = ?";
-        
-            try {
-                Connection conn = Koneksi.getConnect();
-                PreparedStatement stmt = conn.prepareStatement(sql);
-                stmt.setString(1, judul);
-                stmt.setInt(2, tahun);
-                stmt.setInt(3, genre1);
-                stmt.setInt(4, genre2);
-                stmt.setInt(5, genre3);
-                stmt.setInt(6, durasi);
-                stmt.setString(7, sutradara);
-                stmt.setString(8, penulis);
-                stmt.setString(9, produser);
-                stmt.setInt(10, ratingUsia);
-                stmt.setString(11, deskripsi);
-                stmt.setString(12, fileImg.getName());
-                stmt.setString(13, fileVid.getName());
-                stmt.setInt(14, id);
-                stmt.executeUpdate();
-                return true;
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
-            return false;
+        String sql = "UPDATE Movie SET judul = ?, tahun = ?, genre1 = ?, genre2 = ?, genre3 = ?, durasi = ?, sutradara = ?, penulis = ?, produser = ?, rating_usia = ?, deskripsi = ?, gambar = ?, trailer = ? WHERE id = ?";
+
+        try {
+            Connection conn = Koneksi.getConnect();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, judul);
+            stmt.setInt(2, tahun);
+            stmt.setInt(3, genre1);
+            stmt.setInt(4, genre2);
+            stmt.setInt(5, genre3);
+            stmt.setInt(6, durasi);
+            stmt.setString(7, sutradara);
+            stmt.setString(8, penulis);
+            stmt.setString(9, produser);
+            stmt.setInt(10, ratingUsia);
+            stmt.setString(11, deskripsi);
+            stmt.setString(12, fileImg.getName());
+            stmt.setString(13, fileVid.getName());
+            stmt.setInt(14, id);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
     
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed

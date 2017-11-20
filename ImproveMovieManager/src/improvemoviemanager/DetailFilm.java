@@ -38,7 +38,7 @@ public class DetailFilm extends javax.swing.JFrame {
         initComponents();
         btnPlay.setVisible(false);
         btnRate.setVisible(false);
-        toggleRating.setVisible(false);
+        
         if(Session.isStatus()){
             lblUsername.setText("Selamat datang, " + Session.getUsername());
             btnLogout.setVisible(true);
@@ -53,6 +53,7 @@ public class DetailFilm extends javax.swing.JFrame {
                 toggleRating.setVisible(true);
             }
         } else {
+            toggleRating.setVisible(false);
             btnEdit.setVisible(false);
             btnDelete.setVisible(false);
             btnLogin.setVisible(true);
@@ -252,10 +253,10 @@ public class DetailFilm extends javax.swing.JFrame {
             }
         }
 
-        if(count!=0){
-            toggleRating.setVisible(false);
-        } else {
+        if(count == 0 && Session.getRole() == 2){
             toggleRating.setVisible(true);
+        } else {
+            toggleRating.setVisible(false);
         }
     }
     
