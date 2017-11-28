@@ -33,7 +33,7 @@ import javax.swing.*;
  * @author yongzari
  */
 public class HalamanAwal extends javax.swing.JFrame {
-
+    
     /**
      * Creates new form HalamanAwal
      */

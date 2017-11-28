@@ -258,7 +258,6 @@ public class Update extends javax.swing.JFrame {
 
         txtPenulis.setMinimumSize(new java.awt.Dimension(160, 26));
         txtPenulis.setPreferredSize(new java.awt.Dimension(160, 26));
-        txtPenulis.setSize(new java.awt.Dimension(160, 26));
 
         javax.swing.GroupLayout panelPenulisLayout = new javax.swing.GroupLayout(panelPenulis);
         panelPenulis.setLayout(panelPenulisLayout);
@@ -295,7 +294,6 @@ public class Update extends javax.swing.JFrame {
 
         txtSutradara.setMinimumSize(new java.awt.Dimension(160, 26));
         txtSutradara.setPreferredSize(new java.awt.Dimension(160, 26));
-        txtSutradara.setSize(new java.awt.Dimension(160, 26));
 
         javax.swing.GroupLayout panelSutradaraLayout = new javax.swing.GroupLayout(panelSutradara);
         panelSutradara.setLayout(panelSutradaraLayout);
@@ -569,8 +567,7 @@ public class Update extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
