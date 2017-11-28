@@ -5,6 +5,7 @@
  */
 package improvemoviemanager;
 
+import java.awt.Desktop;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -27,7 +28,7 @@ public class DetailFilm extends javax.swing.JFrame {
 
     int id, asal, star = 0, totalUser = 0;
     float avgStar = 0, totalStar = 0;
-    String fileGambar, fileVideo, starGiver;
+    String fileGambar, fileVideo, starGiver, reviewGiver, title;
     boolean isEditable = false;
     
     /**
@@ -36,9 +37,8 @@ public class DetailFilm extends javax.swing.JFrame {
     
     public DetailFilm() {
         initComponents();
-        btnPlay.setVisible(false);
         btnRate.setVisible(false);
-        
+        btnAddReview.setVisible(false);
         if(Session.isStatus()){
             lblUsername.setText("Selamat datang, " + Session.getUsername());
             btnLogout.setVisible(true);
@@ -220,7 +220,8 @@ public class DetailFilm extends javax.swing.JFrame {
             ResultSet rs = stmt.executeQuery();
             
             while(rs.next()){
-                isiJudul.setText(rs.getString("judul"));
+                title = rs.getString("judul");
+                isiJudul.setText(title);
                 isiTahun.setText(rs.getString("tahun"));
                 String genre = getGenre(rs.getInt("genre1")) + ", " + getGenre(rs.getInt("genre2")) + ", " + getGenre(rs.getInt("genre3"));
                 isiGenre.setText(genre);
@@ -238,6 +239,7 @@ public class DetailFilm extends javax.swing.JFrame {
                 totalStar = rs.getFloat("total_star");
                 totalUser = rs.getInt("total_user");
                 starGiver = rs.getString("star_giver");
+                reviewGiver = rs.getString("review_giver");
                 showStar();
                 lblStar.setText(Float.toString(avgStar) + " Stars from " + Integer.toString(totalUser) + " user(s)");
             }
@@ -246,17 +248,31 @@ public class DetailFilm extends javax.swing.JFrame {
         }
         
         String[] tempStarGiver = starGiver.split(",");
-        int count = 0;
+        int count1 = 0;
         for(int i=0;i<tempStarGiver.length;i++){
             if(Integer.parseInt(tempStarGiver[i])==Session.getId()){
-                count++;
+                count1++;
             }
         }
 
-        if(count == 0 && Session.getRole() == 2){
+        if(count1 == 0 && Session.getRole() == 2){
             toggleRating.setVisible(true);
         } else {
             toggleRating.setVisible(false);
+        }
+        
+        String[] tempReviewGiver = reviewGiver.split(",");
+        int count2 = 0;
+        for(int i=0;i<tempReviewGiver.length;i++){
+            if(Integer.parseInt(tempReviewGiver[i])==Session.getId()){
+                count2++;
+            }
+        }
+
+        if(count2 == 0 && Session.getRole() == 2){
+            btnAddReview.setVisible(true);
+        } else {
+            btnAddReview.setVisible(false);
         }
     }
     
@@ -332,6 +348,8 @@ public class DetailFilm extends javax.swing.JFrame {
         btnRate = new javax.swing.JButton();
         lblStar = new javax.swing.JLabel();
         btnPlay = new javax.swing.JButton();
+        btnReview = new javax.swing.JButton();
+        btnAddReview = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -527,6 +545,20 @@ public class DetailFilm extends javax.swing.JFrame {
             }
         });
 
+        btnReview.setText("Lihat Review");
+        btnReview.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReviewActionPerformed(evt);
+            }
+        });
+
+        btnAddReview.setText("Tulis Review");
+        btnAddReview.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddReviewActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -590,8 +622,13 @@ public class DetailFilm extends javax.swing.JFrame {
                                                             .addComponent(toggleRating)
                                                             .addComponent(btnRate)))))))
                                     .addComponent(jLabel9)
-                                    .addComponent(isiDeskripsi, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(isiDeskripsi, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(btnReview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(btnAddReview))))
+                                .addGap(69, 69, 69)))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(btnDelete)
@@ -602,7 +639,7 @@ public class DetailFilm extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(5, 5, 5)
                                 .addComponent(lblShowGambar, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnPlay))
+                            .addComponent(btnPlay, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap())
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -626,9 +663,7 @@ public class DetailFilm extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -637,8 +672,11 @@ public class DetailFilm extends javax.swing.JFrame {
                             .addComponent(lblUsername, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addGap(6, 6, 6)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(6, 6, 6)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -694,15 +732,20 @@ public class DetailFilm extends javax.swing.JFrame {
                                     .addComponent(star5, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblStar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                                 .addComponent(jLabel9))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(toggleRating)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnRate)
                                 .addGap(0, 0, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(isiDeskripsi, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(isiDeskripsi, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(btnReview)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnAddReview))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(lblShowGambar, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -722,195 +765,26 @@ public class DetailFilm extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+    private void btnReviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReviewActionPerformed
         // TODO add your handling code here:
-        new Update().showDetail(id);
-        this.dispose();
-    }//GEN-LAST:event_btnEditActionPerformed
+        new ReviewList().showReview(id, title);
+    }//GEN-LAST:event_btnReviewActionPerformed
 
-    private void btnbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbackActionPerformed
-        // TODO add your handling code here:
-        if(asal==1){
-            new HalamanAwal().setVisible(true);
-            this.dispose();
-        } else if(asal==2){
-            this.dispose();
-        }
-    }//GEN-LAST:event_btnbackActionPerformed
-
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
-        deleteMovie();
-    }//GEN-LAST:event_btnDeleteActionPerformed
-
-    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        // TODO add your handling code here:
-        new LoginUI().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnLoginActionPerformed
-
-    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-        // TODO add your handling code here:
-        int confirm = JOptionPane.showConfirmDialog(null, "Apakah anda yakin?", "Confirm logout", JOptionPane.OK_CANCEL_OPTION);
-        if(confirm == 0){
-            Logout.keluar();
-            this.dispose();
-        }
-    }//GEN-LAST:event_btnLogoutActionPerformed
-
-    private void toggleRatingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toggleRatingActionPerformed
+    private void btnPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlayActionPerformed
         try {
-            BufferedImage img1 = null, img2 = null;
-            img1 = ImageIO.read(new File("src/Gambar/rsz_hollowstar.png"));
-            img2 = ImageIO.read(new File("src/Gambar/rsz_stuffedstar.png"));
-        
-            Image hollowStar = img1;
-            Image stuffedStar = img2;
-            if(toggleRating.isSelected()){
-                toggleRating.setText("Batal");
-                isEditable = true; 
-                btnRate.setVisible(true);
-                star1.setIcon(new ImageIcon(hollowStar));
-                star2.setIcon(new ImageIcon(hollowStar));
-                star3.setIcon(new ImageIcon(hollowStar));
-                star4.setIcon(new ImageIcon(hollowStar));
-                star5.setIcon(new ImageIcon(hollowStar));
-                
-            } else {
-                toggleRating.setText("Beri Rating");
-                isEditable = false; 
-                btnRate.setVisible(false);
-                showStar();
-            }
+            // TODO add your handling code here:
+            Desktop.getDesktop().open(new File(fileVideo));
         } catch (IOException ex) {
             Logger.getLogger(DetailFilm.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-    }//GEN-LAST:event_toggleRatingActionPerformed
+    }//GEN-LAST:event_btnPlayActionPerformed
 
-    private void star1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_star1ActionPerformed
-        // TODO add your handling code here:
-        if(isEditable){
-            try {
-                BufferedImage img1 = null, img2 = null;
-                img1 = ImageIO.read(new File("src/Gambar/rsz_hollowstar.png"));
-                img2 = ImageIO.read(new File("src/Gambar/rsz_stuffedstar.png"));
-
-                Image hollowStar = img1;
-                Image stuffedStar = img2;
-                star1.setIcon(new ImageIcon(stuffedStar));
-                star2.setIcon(new ImageIcon(hollowStar));
-                star3.setIcon(new ImageIcon(hollowStar));
-                star4.setIcon(new ImageIcon(hollowStar));
-                star5.setIcon(new ImageIcon(hollowStar));
-                
-            } catch (IOException ex) {
-                Logger.getLogger(DetailFilm.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            star = 1;
-        }
-    }//GEN-LAST:event_star1ActionPerformed
-
-    private void star2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_star2ActionPerformed
-        // TODO add your handling code here:
-        if(isEditable){
-            try {
-                BufferedImage img1 = null, img2 = null;
-                img1 = ImageIO.read(new File("src/Gambar/rsz_hollowstar.png"));
-                img2 = ImageIO.read(new File("src/Gambar/rsz_stuffedstar.png"));
-
-                Image hollowStar = img1;
-                Image stuffedStar = img2;
-                star1.setIcon(new ImageIcon(stuffedStar));
-                star2.setIcon(new ImageIcon(stuffedStar));
-                star3.setIcon(new ImageIcon(hollowStar));
-                star4.setIcon(new ImageIcon(hollowStar));
-                star5.setIcon(new ImageIcon(hollowStar));
-                
-            } catch (IOException ex) {
-                Logger.getLogger(DetailFilm.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            star = 2;
-        }
-    }//GEN-LAST:event_star2ActionPerformed
-
-    private void star3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_star3ActionPerformed
-        // TODO add your handling code here:
-        if(isEditable){
-            try {
-                BufferedImage img1 = null, img2 = null;
-                img1 = ImageIO.read(new File("src/Gambar/rsz_hollowstar.png"));
-                img2 = ImageIO.read(new File("src/Gambar/rsz_stuffedstar.png"));
-
-                Image hollowStar = img1;
-                Image stuffedStar = img2;
-                star1.setIcon(new ImageIcon(stuffedStar));
-                star2.setIcon(new ImageIcon(stuffedStar));
-                star3.setIcon(new ImageIcon(stuffedStar));
-                star4.setIcon(new ImageIcon(hollowStar));
-                star5.setIcon(new ImageIcon(hollowStar));
-                
-            } catch (IOException ex) {
-                Logger.getLogger(DetailFilm.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            star = 3;
-        }
-    }//GEN-LAST:event_star3ActionPerformed
-
-    private void star4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_star4ActionPerformed
-        // TODO add your handling code here:
-        if(isEditable){
-            try {
-                BufferedImage img1 = null, img2 = null;
-                img1 = ImageIO.read(new File("src/Gambar/rsz_hollowstar.png"));
-                img2 = ImageIO.read(new File("src/Gambar/rsz_stuffedstar.png"));
-
-                Image hollowStar = img1;
-                Image stuffedStar = img2;
-                star1.setIcon(new ImageIcon(stuffedStar));
-                star2.setIcon(new ImageIcon(stuffedStar));
-                star3.setIcon(new ImageIcon(stuffedStar));
-                star4.setIcon(new ImageIcon(stuffedStar));
-                star5.setIcon(new ImageIcon(hollowStar));
-                
-            } catch (IOException ex) {
-                Logger.getLogger(DetailFilm.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            star = 4;
-        }
-    }//GEN-LAST:event_star4ActionPerformed
-
-    private void star5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_star5ActionPerformed
-        // TODO add your handling code here:
-        if(isEditable){
-            try {
-                BufferedImage img1 = null, img2 = null;
-                img1 = ImageIO.read(new File("src/Gambar/rsz_hollowstar.png"));
-                img2 = ImageIO.read(new File("src/Gambar/rsz_stuffedstar.png"));
-
-                Image hollowStar = img1;
-                Image stuffedStar = img2;
-                star1.setIcon(new ImageIcon(stuffedStar));
-                star2.setIcon(new ImageIcon(stuffedStar));
-                star3.setIcon(new ImageIcon(stuffedStar));
-                star4.setIcon(new ImageIcon(stuffedStar));
-                star5.setIcon(new ImageIcon(stuffedStar));
-                
-            } catch (IOException ex) {
-                Logger.getLogger(DetailFilm.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            star = 5;
-        }
-    }//GEN-LAST:event_star5ActionPerformed
-    
     private void btnRateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRateActionPerformed
         // TODO add your handling code here:
         totalStar = totalStar+star;
@@ -936,11 +810,193 @@ public class DetailFilm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnRateActionPerformed
 
-    private void btnPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlayActionPerformed
-        // TODO add your handling code here:
-        new PlayVideo().play(fileVideo);
-    }//GEN-LAST:event_btnPlayActionPerformed
+    private void toggleRatingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toggleRatingActionPerformed
+        try {
+            BufferedImage img1 = null, img2 = null;
+            img1 = ImageIO.read(new File("src/Gambar/rsz_hollowstar.png"));
+            img2 = ImageIO.read(new File("src/Gambar/rsz_stuffedstar.png"));
 
+            Image hollowStar = img1;
+            Image stuffedStar = img2;
+            if(toggleRating.isSelected()){
+                toggleRating.setText("Batal");
+                isEditable = true;
+                btnRate.setVisible(true);
+                star1.setIcon(new ImageIcon(hollowStar));
+                star2.setIcon(new ImageIcon(hollowStar));
+                star3.setIcon(new ImageIcon(hollowStar));
+                star4.setIcon(new ImageIcon(hollowStar));
+                star5.setIcon(new ImageIcon(hollowStar));
+
+            } else {
+                toggleRating.setText("Beri Rating");
+                isEditable = false;
+                btnRate.setVisible(false);
+                showStar();
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(DetailFilm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_toggleRatingActionPerformed
+
+    private void star5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_star5ActionPerformed
+        // TODO add your handling code here:
+        if(isEditable){
+            try {
+                BufferedImage img1 = null, img2 = null;
+                img1 = ImageIO.read(new File("src/Gambar/rsz_hollowstar.png"));
+                img2 = ImageIO.read(new File("src/Gambar/rsz_stuffedstar.png"));
+
+                Image hollowStar = img1;
+                Image stuffedStar = img2;
+                star1.setIcon(new ImageIcon(stuffedStar));
+                star2.setIcon(new ImageIcon(stuffedStar));
+                star3.setIcon(new ImageIcon(stuffedStar));
+                star4.setIcon(new ImageIcon(stuffedStar));
+                star5.setIcon(new ImageIcon(stuffedStar));
+
+            } catch (IOException ex) {
+                Logger.getLogger(DetailFilm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            star = 5;
+        }
+    }//GEN-LAST:event_star5ActionPerformed
+
+    private void star4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_star4ActionPerformed
+        // TODO add your handling code here:
+        if(isEditable){
+            try {
+                BufferedImage img1 = null, img2 = null;
+                img1 = ImageIO.read(new File("src/Gambar/rsz_hollowstar.png"));
+                img2 = ImageIO.read(new File("src/Gambar/rsz_stuffedstar.png"));
+
+                Image hollowStar = img1;
+                Image stuffedStar = img2;
+                star1.setIcon(new ImageIcon(stuffedStar));
+                star2.setIcon(new ImageIcon(stuffedStar));
+                star3.setIcon(new ImageIcon(stuffedStar));
+                star4.setIcon(new ImageIcon(stuffedStar));
+                star5.setIcon(new ImageIcon(hollowStar));
+
+            } catch (IOException ex) {
+                Logger.getLogger(DetailFilm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            star = 4;
+        }
+    }//GEN-LAST:event_star4ActionPerformed
+
+    private void star3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_star3ActionPerformed
+        // TODO add your handling code here:
+        if(isEditable){
+            try {
+                BufferedImage img1 = null, img2 = null;
+                img1 = ImageIO.read(new File("src/Gambar/rsz_hollowstar.png"));
+                img2 = ImageIO.read(new File("src/Gambar/rsz_stuffedstar.png"));
+
+                Image hollowStar = img1;
+                Image stuffedStar = img2;
+                star1.setIcon(new ImageIcon(stuffedStar));
+                star2.setIcon(new ImageIcon(stuffedStar));
+                star3.setIcon(new ImageIcon(stuffedStar));
+                star4.setIcon(new ImageIcon(hollowStar));
+                star5.setIcon(new ImageIcon(hollowStar));
+
+            } catch (IOException ex) {
+                Logger.getLogger(DetailFilm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            star = 3;
+        }
+    }//GEN-LAST:event_star3ActionPerformed
+
+    private void star2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_star2ActionPerformed
+        // TODO add your handling code here:
+        if(isEditable){
+            try {
+                BufferedImage img1 = null, img2 = null;
+                img1 = ImageIO.read(new File("src/Gambar/rsz_hollowstar.png"));
+                img2 = ImageIO.read(new File("src/Gambar/rsz_stuffedstar.png"));
+
+                Image hollowStar = img1;
+                Image stuffedStar = img2;
+                star1.setIcon(new ImageIcon(stuffedStar));
+                star2.setIcon(new ImageIcon(stuffedStar));
+                star3.setIcon(new ImageIcon(hollowStar));
+                star4.setIcon(new ImageIcon(hollowStar));
+                star5.setIcon(new ImageIcon(hollowStar));
+
+            } catch (IOException ex) {
+                Logger.getLogger(DetailFilm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            star = 2;
+        }
+    }//GEN-LAST:event_star2ActionPerformed
+
+    private void star1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_star1ActionPerformed
+        // TODO add your handling code here:
+        if(isEditable){
+            try {
+                BufferedImage img1 = null, img2 = null;
+                img1 = ImageIO.read(new File("src/Gambar/rsz_hollowstar.png"));
+                img2 = ImageIO.read(new File("src/Gambar/rsz_stuffedstar.png"));
+
+                Image hollowStar = img1;
+                Image stuffedStar = img2;
+                star1.setIcon(new ImageIcon(stuffedStar));
+                star2.setIcon(new ImageIcon(hollowStar));
+                star3.setIcon(new ImageIcon(hollowStar));
+                star4.setIcon(new ImageIcon(hollowStar));
+                star5.setIcon(new ImageIcon(hollowStar));
+
+            } catch (IOException ex) {
+                Logger.getLogger(DetailFilm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            star = 1;
+        }
+    }//GEN-LAST:event_star1ActionPerformed
+
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        // TODO add your handling code here:
+        int confirm = JOptionPane.showConfirmDialog(null, "Apakah anda yakin?", "Confirm logout", JOptionPane.OK_CANCEL_OPTION);
+        if(confirm == 0){
+            Logout.keluar();
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnLogoutActionPerformed
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        // TODO add your handling code here:
+        new LoginUI().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+        deleteMovie();
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        // TODO add your handling code here:
+        new Update().showDetail(id);
+        this.dispose();
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbackActionPerformed
+        // TODO add your handling code here:
+        if(asal==1){
+            new HalamanAwal().setVisible(true);
+            this.dispose();
+        } else if(asal==2){
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnbackActionPerformed
+
+    private void btnAddReviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddReviewActionPerformed
+        // TODO add your handling code here:
+        new TulisReview(id).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnAddReviewActionPerformed
+    
     /**
      * @param args the command line arguments
      */
@@ -977,12 +1033,14 @@ public class DetailFilm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddReview;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnPlay;
     private javax.swing.JButton btnRate;
+    private javax.swing.JButton btnReview;
     private javax.swing.JButton btnback;
     private javax.swing.JLabel isiDeskripsi;
     private javax.swing.JLabel isiDurasi;

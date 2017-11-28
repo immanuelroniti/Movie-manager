@@ -71,6 +71,9 @@ public class TambahGenre extends javax.swing.JFrame {
             ResultSet rs = stmt.executeQuery(sql);
             
             while(rs.next()){
+                if(rs.getInt("id")==0){
+                    continue;
+                }
                 int id = rs.getInt("id");                
                 String genre = rs.getString("genre");                
                 btnGenre.put(id, new JButton(genre){
@@ -141,9 +144,66 @@ public class TambahGenre extends javax.swing.JFrame {
         tempID = id;
     }
     
+    public void deleteGenreInMovie(int id, int index){
+        String sql;
+        if(index==1){
+            sql = "UPDATE Movie SET genre1 = 0 WHERE id = ?";
+            Connection conn = Koneksi.getConnect();
+            try {
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                stmt.setInt(1, id);   
+                stmt.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }else if(index==2){
+            sql = "UPDATE Movie SET genre2 = 0 WHERE id = ?";
+            Connection conn = Koneksi.getConnect();
+            try {
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                stmt.setInt(1, id);   
+                stmt.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }else if(index==3){
+            sql = "UPDATE Movie SET genre3 = 0 WHERE id = ?";
+            Connection conn = Koneksi.getConnect();
+            try {
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                stmt.setInt(1, id);   
+                stmt.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+    
+    public void checkMovieGenre(int id){
+        String sql = "SELECT * FROM Movie";
+        try{
+            Connection conn = Koneksi.getConnect();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            
+            while(rs.next()){
+                if(rs.getInt("genre1")==id){
+                    deleteGenreInMovie(rs.getInt("id"), 1);
+                }else if(rs.getInt("genre2")==id){
+                    deleteGenreInMovie(rs.getInt("id"), 2);
+                }else if(rs.getInt("genre3")==id){
+                    deleteGenreInMovie(rs.getInt("id"), 3);
+                }
+            }
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
+    
     private void btnGenreActionPerformedDelete(java.awt.event.ActionEvent evt, int id){
         int confirm = JOptionPane.showConfirmDialog(jPanel2, "Apakah anda yakin?", "Confirm delete", JOptionPane.OK_CANCEL_OPTION);
         if(confirm == 0){
+            checkMovieGenre(id);
             String sql = "DELETE FROM Genre WHERE id = ?";
             try{
                 Connection conn = Koneksi.getConnect();
@@ -162,7 +222,7 @@ public class TambahGenre extends javax.swing.JFrame {
     
     //cek apakah genre sudah ada, true belum, false sudah
     public boolean checkGenre(String genre){
-        String sql = "SELECT * FROM Genre WHERE genre = ? ";
+        String sql = "SELECT * FROM Genre WHERE genre = ?";
         int count = 0;
         Connection conn = Koneksi.getConnect();
         try{

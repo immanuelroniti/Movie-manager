@@ -67,6 +67,9 @@ public class Update extends javax.swing.JFrame {
            PreparedStatement stmt = conn.prepareStatement(sql);
            ResultSet rs = stmt.executeQuery();
            while(rs.next()){
+               if(rs.getInt("id")==0){
+                    continue;
+                }
                genre1.add(rs.getString("genre"));
                genre2.add(rs.getString("genre"));
                genre3.add(rs.getString("genre"));
