@@ -39,6 +39,7 @@ public class DetailFilm extends javax.swing.JFrame {
         initComponents();
         btnRate.setVisible(false);
         btnAddReview.setVisible(false);
+        btnEditReview.setVisible(false);
         if(Session.isStatus()){
             lblUsername.setText("Selamat datang, " + Session.getUsername());
             btnLogout.setVisible(true);
@@ -271,8 +272,11 @@ public class DetailFilm extends javax.swing.JFrame {
 
         if(count2 == 0 && Session.getRole() == 2){
             btnAddReview.setVisible(true);
-        } else {
+        } else if(count2 == 1 && Session.getRole() == 2){
+            btnEditReview.setVisible(true);
+        }else {
             btnAddReview.setVisible(false);
+            btnEditReview.setVisible(false);
         }
     }
     
@@ -350,6 +354,7 @@ public class DetailFilm extends javax.swing.JFrame {
         btnPlay = new javax.swing.JButton();
         btnReview = new javax.swing.JButton();
         btnAddReview = new javax.swing.JButton();
+        btnEditReview = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -559,6 +564,13 @@ public class DetailFilm extends javax.swing.JFrame {
             }
         });
 
+        btnEditReview.setText("Edit Review");
+        btnEditReview.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditReviewActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -580,7 +592,7 @@ public class DetailFilm extends javax.swing.JFrame {
                                             .addComponent(isiSutradara, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(isiPenulis, javax.swing.GroupLayout.PREFERRED_SIZE, 529, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(isiProduser, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 23, Short.MAX_VALUE)))
+                                        .addGap(0, 25, Short.MAX_VALUE)))
                                 .addGap(7, 7, 7))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -627,7 +639,8 @@ public class DetailFilm extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(btnReview, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
-                                            .addComponent(btnAddReview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                            .addComponent(btnAddReview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(btnEditReview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -743,7 +756,9 @@ public class DetailFilm extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(btnReview)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnAddReview))))
+                                .addComponent(btnAddReview)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnEditReview))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(lblShowGambar, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -989,9 +1004,15 @@ public class DetailFilm extends javax.swing.JFrame {
 
     private void btnAddReviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddReviewActionPerformed
         // TODO add your handling code here:
-        new TulisReview(id).setVisible(true);
+        new TulisReview(id, false).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAddReviewActionPerformed
+
+    private void btnEditReviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditReviewActionPerformed
+        // TODO add your handling code here:
+        new TulisReview(id, true).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnEditReviewActionPerformed
     
     /**
      * @param args the command line arguments
@@ -1032,6 +1053,7 @@ public class DetailFilm extends javax.swing.JFrame {
     private javax.swing.JButton btnAddReview;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnEditReview;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnPlay;
