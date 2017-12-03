@@ -26,7 +26,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.imageio.ImageIO;
-import de.muntjak.tinylookandfeel.*;
 import javax.swing.*;
 
 /**
@@ -39,7 +38,13 @@ public class HalamanAwal extends javax.swing.JFrame {
      * Creates new form HalamanAwal
      */
     public HalamanAwal() {
+        try {
+            UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         initComponents();
+        
         if(Session.isStatus()){
             lblUsername.setText("Selamat datang, " + Session.getUsername());
             btnLogin.setVisible(false);
@@ -287,7 +292,6 @@ public class HalamanAwal extends javax.swing.JFrame {
                 btnGambar.put(id, new JButton(judul + " (" + tahun + ")", imgIcon){
                     {
                         setSize(145, 210);
-                        setMaximumSize(getSize());
                     }
                 });
             }
@@ -321,13 +325,9 @@ public class HalamanAwal extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            
-            //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            //UIManager.setLookAndFeel(new TinyLookAndFeel());
-            
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 System.out.println(info.getClassName());
-                if ("Windows".equals(info.getName())) {
+                if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -347,9 +347,9 @@ public class HalamanAwal extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new HalamanAwal().setVisible(true);
-                
             }
         });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

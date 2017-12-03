@@ -210,14 +210,6 @@ public class LoginUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
-        // TODO add your handling code here:
-
-        String username = txtUsername.getText();
-        String password = txtPassword.getText();
-        pengecekkanDatabase(username,password);
-    }//GEN-LAST:event_button1ActionPerformed
     
     public void pengecekkanDatabase(String username,String password){
         Connection conn = Koneksi.getConnect();                
@@ -288,17 +280,25 @@ public class LoginUI extends javax.swing.JFrame {
         }    
     }
     
-    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
-        // TODO add your handling code here:
-        new Register().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_button2ActionPerformed
-
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
         // TODO add your handling code here:
         new HalamanAwal().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnHomeActionPerformed
+
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+        // TODO add your handling code here:
+
+        String username = txtUsername.getText();
+        String password = txtPassword.getText();
+        pengecekkanDatabase(username,password);
+    }//GEN-LAST:event_button1ActionPerformed
+
+    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
+        // TODO add your handling code here:
+        new Register().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_button2ActionPerformed
     
     public String MD5(String md5) {
         try {
