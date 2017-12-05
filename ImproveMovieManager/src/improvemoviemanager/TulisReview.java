@@ -26,8 +26,8 @@ public class TulisReview extends javax.swing.JFrame {
     public TulisReview(int id, boolean isEditable) {
         initComponents();
         setLayout(new BorderLayout());
-       add(jPanel5,"South");
-       jPanel2.setLayout(null);
+        add(jPanel5,"South");
+        jPanel2.setLayout(null);
         idMovie = id;
         this.isEditable = isEditable;
         if(this.isEditable){
@@ -37,7 +37,6 @@ public class TulisReview extends javax.swing.JFrame {
         } else{
             btnDeleteReview.setVisible(false);
         }
-        setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
     }
 
     public void showReview(){
@@ -190,7 +189,6 @@ public class TulisReview extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtContent = new javax.swing.JTextArea();
         jPanel1 = new javax.swing.JPanel();
-        lblUsername = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         lblReviewTitle = new javax.swing.JLabel();
@@ -212,11 +210,6 @@ public class TulisReview extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(67, 67, 67));
 
-        lblUsername.setBackground(new java.awt.Color(254, 254, 254));
-        lblUsername.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
-        lblUsername.setForeground(new java.awt.Color(254, 254, 254));
-        lblUsername.setText("Alert");
-
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/rsz_rsz_2logo.png"))); // NOI18N
 
         lblReviewTitle.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
@@ -233,10 +226,8 @@ public class TulisReview extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblReviewTitle, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblUsername, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(293, Short.MAX_VALUE))
+                        .addComponent(lblReviewTitle)
+                        .addContainerGap(483, Short.MAX_VALUE))
                     .addComponent(jSeparator1)))
         );
         jPanel1Layout.setVerticalGroup(
@@ -248,8 +239,7 @@ public class TulisReview extends javax.swing.JFrame {
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(17, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblUsername, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
                         .addComponent(lblReviewTitle)
@@ -377,7 +367,6 @@ public class TulisReview extends javax.swing.JFrame {
 
     private void btnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatalActionPerformed
         // TODO add your handling code here:
-        new DetailFilm().showDetail(idMovie, 1);
         this.dispose();
     }//GEN-LAST:event_btnBatalActionPerformed
 
@@ -445,7 +434,6 @@ public class TulisReview extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblReviewTitle;
-    private javax.swing.JLabel lblUsername;
     private javax.swing.JTextArea txtContent;
     // End of variables declaration//GEN-END:variables
 }

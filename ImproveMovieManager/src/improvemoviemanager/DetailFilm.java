@@ -1006,13 +1006,11 @@ public class DetailFilm extends javax.swing.JFrame {
     private void btnAddReviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddReviewActionPerformed
         // TODO add your handling code here:
         new TulisReview(id, false).setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_btnAddReviewActionPerformed
 
     private void btnEditReviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditReviewActionPerformed
         // TODO add your handling code here:
         new TulisReview(id, true).setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_btnEditReviewActionPerformed
     
     /**
