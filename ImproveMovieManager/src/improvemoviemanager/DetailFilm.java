@@ -60,6 +60,7 @@ public class DetailFilm extends javax.swing.JFrame {
             btnLogin.setVisible(true);
             btnLogout.setVisible(false);
         }
+        setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
 
     }
     

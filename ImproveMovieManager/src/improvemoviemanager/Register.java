@@ -26,6 +26,7 @@ public class Register extends javax.swing.JFrame {
        setLayout(new BorderLayout());
        add(jPanel1,"North");
        jPanel2.setLayout(null);
+       setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
     }
 
     /**

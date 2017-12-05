@@ -22,10 +22,9 @@ public class LoginUI extends javax.swing.JFrame {
      * Creates new form LoginUI
      */
     public LoginUI() {
-        
-        
        // con = Koneksi.connect();
         initComponents();
+        setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
     }
 
     /**

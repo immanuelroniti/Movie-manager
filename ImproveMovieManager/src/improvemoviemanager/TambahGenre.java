@@ -59,6 +59,7 @@ public class TambahGenre extends javax.swing.JFrame {
         }
         txtEditGenre.setEditable(false);
         showAllGenre();
+        setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
     }
     
     public void showAllGenre(){
