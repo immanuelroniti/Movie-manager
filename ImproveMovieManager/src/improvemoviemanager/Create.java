@@ -52,6 +52,7 @@ public class Create extends javax.swing.JFrame {
             btnLogout.setVisible(false);
         }
         setGenre();
+        setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
     }
     
     public void setGenre(){

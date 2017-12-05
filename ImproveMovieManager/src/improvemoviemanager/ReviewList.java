@@ -41,6 +41,7 @@ public class ReviewList extends javax.swing.JFrame {
         if(Session.isStatus()){
             lblUsername.setText("Selamat datang, " + Session.getUsername());
         }
+        setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
     }
 
     public String getUsername(int id){

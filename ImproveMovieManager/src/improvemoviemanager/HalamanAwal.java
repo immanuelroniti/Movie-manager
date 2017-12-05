@@ -63,6 +63,7 @@ public class HalamanAwal extends javax.swing.JFrame {
             btnLogin.setVisible(true);
         }
         showMovie();
+        setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
     }
 
     /**

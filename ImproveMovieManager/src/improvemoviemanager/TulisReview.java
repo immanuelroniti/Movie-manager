@@ -37,6 +37,7 @@ public class TulisReview extends javax.swing.JFrame {
         } else{
             btnDeleteReview.setVisible(false);
         }
+        setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
     }
 
     public void showReview(){

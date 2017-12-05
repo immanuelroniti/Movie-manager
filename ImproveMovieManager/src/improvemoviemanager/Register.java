@@ -26,6 +26,7 @@ public class Register extends javax.swing.JFrame {
        setLayout(new BorderLayout());
        add(jPanel1,"North");
        jPanel2.setLayout(null);
+       setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
     }
 
     /**
@@ -135,6 +136,8 @@ public class Register extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(67, 67, 67));
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/rsz_rsz_2logo.png"))); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(254, 254, 254));
