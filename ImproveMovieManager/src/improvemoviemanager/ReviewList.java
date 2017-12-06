@@ -116,6 +116,7 @@ public class ReviewList extends javax.swing.JFrame {
         btnBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(67, 67, 67));
         jPanel1.setForeground(new java.awt.Color(254, 254, 254));

@@ -141,6 +141,7 @@ public class Update extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(67, 67, 67));
         jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));

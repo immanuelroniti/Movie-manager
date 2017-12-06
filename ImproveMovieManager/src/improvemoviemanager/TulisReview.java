@@ -207,6 +207,7 @@ public class TulisReview extends javax.swing.JFrame {
         btnSimpan = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         txtContent.setColumns(20);
         txtContent.setLineWrap(true);
