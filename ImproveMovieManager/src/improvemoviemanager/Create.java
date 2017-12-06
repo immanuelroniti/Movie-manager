@@ -25,6 +25,7 @@ import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -39,20 +40,19 @@ public class Create extends javax.swing.JFrame {
     private List<JTextField> listSutradara = new ArrayList<JTextField>();
     private List<JTextField> listPenulis = new ArrayList<JTextField>();
     private List<JTextField> listProduser = new ArrayList<JTextField>();
+    private JFrame back;
     
     /**
      * Creates new form Create
      */
-    public Create() {
+    public Create(JFrame back) {
         initComponents();
         if(Session.isStatus()){
             lblUsername.setText("Selamat datang, " + Session.getUsername());
-            btnLogout.setVisible(true);
-        } else {
-            btnLogout.setVisible(false);
+            
         }
         setGenre();
-        setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+        this.back = back;
     }
     
     public void setGenre(){
@@ -146,7 +146,7 @@ public class Create extends javax.swing.JFrame {
                 System.out.println(e.getMessage());
             }
         
-            String sql = "INSERT INTO Movie(judul, tahun, genre1, genre2, genre3, durasi, sutradara, penulis, produser, rating_usia, deskripsi, gambar, trailer, avg_star, total_star, total_user) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, 0)";
+            String sql = "INSERT INTO Movie(judul, tahun, genre1, genre2, genre3, durasi, sutradara, penulis, produser, rating_usia, deskripsi, gambar, trailer, avg_star, total_star, total_user, star_giver, review_giver) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, 0, '0', '0')";
             
             Connection conn = Koneksi.getConnect();
             try {
@@ -168,6 +168,7 @@ public class Create extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(jPanel2, "Film berhasil ditambahkan");
                 new HalamanAwal().setVisible(true);
                 this.dispose();
+                this.back.dispose();
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
@@ -214,7 +215,6 @@ public class Create extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        btnLogout = new javax.swing.JButton();
         lblUsername = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtDeskripsi = new javax.swing.JTextArea();
@@ -339,13 +339,6 @@ public class Create extends javax.swing.JFrame {
         jLabel14.setForeground(new java.awt.Color(254, 254, 254));
         jLabel14.setText("Tambah Film");
 
-        btnLogout.setText("Logout");
-        btnLogout.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLogoutActionPerformed(evt);
-            }
-        });
-
         lblUsername.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         lblUsername.setForeground(new java.awt.Color(255, 255, 255));
         lblUsername.setText("Selamat datang, Guest");
@@ -468,9 +461,7 @@ public class Create extends javax.swing.JFrame {
                                         .addComponent(jLabel12)
                                         .addGap(18, 18, 18)
                                         .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnLogout)
-                                        .addGap(76, 76, 76))))
+                                        .addGap(76, 310, Short.MAX_VALUE))))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -545,7 +536,6 @@ public class Create extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel12)
-                            .addComponent(btnLogout)
                             .addComponent(lblUsername))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -560,7 +550,7 @@ public class Create extends javax.swing.JFrame {
                     .addComponent(txtJudul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
                     .addComponent(btnGambar))
-                .addGap(12, 12, 12)
+                .addGap(0, 0, 0)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(lblGambar)
@@ -577,11 +567,11 @@ public class Create extends javax.swing.JFrame {
                             .addComponent(btnTambah, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnCancel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 17, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtTahun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(cbGenre2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -632,19 +622,9 @@ public class Create extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-        // TODO add your handling code here:
-        int confirm = JOptionPane.showConfirmDialog(null, "Apakah anda yakin?", "Confirm logout", JOptionPane.OK_CANCEL_OPTION);
-        if(confirm == 0){
-            Logout.keluar();
-            this.dispose();
-        }
-    }//GEN-LAST:event_btnLogoutActionPerformed
-
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
-        
-        new HalamanAwal().setVisible(true);
+        this.back.setEnabled(true);
         this.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
@@ -843,7 +823,7 @@ public class Create extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Create().setVisible(true);
+                new Create(null).setVisible(true);
             }
         });
     }
@@ -851,7 +831,6 @@ public class Create extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Button btnCancel;
     private javax.swing.JButton btnGambar;
-    private javax.swing.JButton btnLogout;
     private java.awt.Button btnTambah;
     private javax.swing.JButton btnTambahPenulis;
     private javax.swing.JButton btnTambahProduser;

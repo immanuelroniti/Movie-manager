@@ -295,8 +295,8 @@ public class LoginUI extends javax.swing.JFrame {
 
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
         // TODO add your handling code here:
-        new Register().setVisible(true);
-        this.dispose();
+        new Register(this).setVisible(true);
+        this.setEnabled(false);
     }//GEN-LAST:event_button2ActionPerformed
     
     public String MD5(String md5) {

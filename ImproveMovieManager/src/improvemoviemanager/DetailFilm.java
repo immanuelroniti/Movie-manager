@@ -989,8 +989,8 @@ public class DetailFilm extends javax.swing.JFrame {
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
-        new Update().showDetail(id);
-        this.dispose();
+        new Update(this).showDetail(id);
+        this.setEnabled(false);
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnbackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbackActionPerformed
@@ -1005,12 +1005,14 @@ public class DetailFilm extends javax.swing.JFrame {
 
     private void btnAddReviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddReviewActionPerformed
         // TODO add your handling code here:
-        new TulisReview(id, false).setVisible(true);
+        new TulisReview(id, false, this).setVisible(true);
+        this.setEnabled(false);
     }//GEN-LAST:event_btnAddReviewActionPerformed
 
     private void btnEditReviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditReviewActionPerformed
         // TODO add your handling code here:
-        new TulisReview(id, true).setVisible(true);
+        new TulisReview(id, true, this).setVisible(true);
+        this.setEnabled(false);
     }//GEN-LAST:event_btnEditReviewActionPerformed
     
     /**

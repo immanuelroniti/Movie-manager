@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,10 +21,11 @@ public class TulisReview extends javax.swing.JFrame {
     private String text, reviewer;
     private int idUser = Session.getId(), idMovie;
     private boolean isEditable = false;
+    private JFrame back;
     /**
      * Creates new form TulisReview
      */
-    public TulisReview(int id, boolean isEditable) {
+    public TulisReview(int id, boolean isEditable, JFrame back) {
         initComponents();
         setLayout(new BorderLayout());
         add(jPanel5,"South");
@@ -37,6 +39,7 @@ public class TulisReview extends javax.swing.JFrame {
         } else{
             btnDeleteReview.setVisible(false);
         }
+        this.back = back;
     }
 
     public void showReview(){
@@ -96,6 +99,7 @@ public class TulisReview extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Review berhasil ditambahkan!");
             new DetailFilm().showDetail(idMovie, 1);
             this.dispose();
+            this.back.dispose();
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }
@@ -113,6 +117,7 @@ public class TulisReview extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Review berhasil diedit!");
             new DetailFilm().showDetail(idMovie, 1);
             this.dispose();
+            this.back.dispose();
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }
@@ -171,6 +176,7 @@ public class TulisReview extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Review berhasil dihapus!");
                 new DetailFilm().showDetail(idMovie, 1);
                 this.dispose();
+                this.back.dispose();
             }catch(Exception e){
                 System.out.println(e.getMessage());
             }
@@ -313,12 +319,13 @@ public class TulisReview extends javax.swing.JFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(256, Short.MAX_VALUE)
                 .addComponent(btnDeleteReview)
                 .addGap(124, 124, 124)
                 .addComponent(btnBatal)
-                .addGap(18, 18, 18)
-                .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(47, 47, 47)
+                .addComponent(btnSimpan)
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -367,6 +374,7 @@ public class TulisReview extends javax.swing.JFrame {
 
     private void btnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatalActionPerformed
         // TODO add your handling code here:
+        this.back.setEnabled(true);
         this.dispose();
     }//GEN-LAST:event_btnBatalActionPerformed
 
@@ -416,7 +424,7 @@ public class TulisReview extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TulisReview(0, false).setVisible(true);
+                new TulisReview(0, false, null).setVisible(true);
             }
         });
     }

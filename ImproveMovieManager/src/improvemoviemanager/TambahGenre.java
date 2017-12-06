@@ -19,6 +19,7 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
@@ -31,19 +32,17 @@ public class TambahGenre extends javax.swing.JFrame {
     private int tempID;
     Map<Integer, JButton> btnGenre = new HashMap<Integer, JButton>();
     private boolean isDelete = false;
+    private JFrame back;
     
     /**
      * Creates new form TambahGenre
      */
-    public TambahGenre(boolean isDelete) {
+    public TambahGenre(boolean isDelete, JFrame back) {
         initComponents();
         this.isDelete = isDelete;
         
         if(Session.isStatus()){
             lblUsername.setText("Selamat datang, " + Session.getUsername());
-            btnLogout.setVisible(true);
-        } else {
-            btnLogout.setVisible(false);
         }
         
         if(isDelete){
@@ -59,7 +58,7 @@ public class TambahGenre extends javax.swing.JFrame {
         }
         txtEditGenre.setEditable(false);
         showAllGenre();
-        setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+        this.back = back;
     }
     
     public void showAllGenre(){
@@ -213,7 +212,7 @@ public class TambahGenre extends javax.swing.JFrame {
                 stmt.executeUpdate();
             
                 JOptionPane.showMessageDialog(null, "Genre berhasil dihapus");
-                new TambahGenre(true).setVisible(true);
+                new TambahGenre(true, this.back).setVisible(true);
                 this.dispose();
             }catch(Exception e){
                 System.out.println(e.getMessage());
@@ -253,7 +252,7 @@ public class TambahGenre extends javax.swing.JFrame {
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(jPanel2,newGenre + " berhasil ditambahkan");
             txtNewGenre.setText("");
-            new TambahGenre(false).setVisible(true);
+            new TambahGenre(false, this.back).setVisible(true);
             this.dispose();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -270,7 +269,7 @@ public class TambahGenre extends javax.swing.JFrame {
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(jPanel2,"Genre berhasil diedit"); 
             txtEditGenre.setText("");
-            new TambahGenre(false).setVisible(true);
+            new TambahGenre(false, this.back).setVisible(true);
             this.dispose();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -292,7 +291,6 @@ public class TambahGenre extends javax.swing.JFrame {
         lblUsername = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
         toggleDelete = new javax.swing.JToggleButton();
-        btnLogout = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
@@ -342,13 +340,6 @@ public class TambahGenre extends javax.swing.JFrame {
             }
         });
 
-        btnLogout.setText("Logout");
-        btnLogout.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLogoutActionPerformed(evt);
-            }
-        });
-
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Gambar/rsz_rsz_2logo.png"))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
@@ -372,10 +363,9 @@ public class TambahGenre extends javax.swing.JFrame {
                                 .addComponent(toggleDelete))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 287, Short.MAX_VALUE)
                                 .addComponent(btnBack)
-                                .addGap(28, 28, 28)
-                                .addComponent(btnLogout)))
+                                .addGap(116, 116, 116)))
                         .addContainerGap())
                     .addComponent(jSeparator1)))
         );
@@ -389,10 +379,8 @@ public class TambahGenre extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btnBack)
-                                .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(lblUsername, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnBack)
+                            .addComponent(lblUsername, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -401,8 +389,7 @@ public class TambahGenre extends javax.swing.JFrame {
                                 .addComponent(toggleDelete))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel2)))
-                        .addGap(0, 0, 0))))
+                                .addComponent(jLabel2))))))
         );
 
         jPanel3.setBackground(new java.awt.Color(67, 67, 67));
@@ -525,26 +512,18 @@ public class TambahGenre extends javax.swing.JFrame {
         // TODO add your handling code here:
         new HalamanAwal().setVisible(true);
         this.dispose();
+        this.back.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
-
-    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-        // TODO add your handling code here:
-        int confirm = JOptionPane.showConfirmDialog(null, "Apakah anda yakin?", "Confirm logout", JOptionPane.OK_CANCEL_OPTION);
-        if(confirm == 0){
-            Logout.keluar();
-            this.dispose();
-        }
-    }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void toggleDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toggleDeleteActionPerformed
         // TODO add your handling code here:
         if(toggleDelete.isSelected()){
             isDelete = true;
-            new TambahGenre(true).setVisible(true);
+            new TambahGenre(true,this.back).setVisible(true);
             this.dispose();
         } else {
             isDelete = false;
-            new TambahGenre(false).setVisible(true);
+            new TambahGenre(false,this.back).setVisible(true);
             this.dispose();
         }
     }//GEN-LAST:event_toggleDeleteActionPerformed
@@ -579,7 +558,7 @@ public class TambahGenre extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TambahGenre(false).setVisible(true);
+                new TambahGenre(false, null).setVisible(true);
             }
         });
     }
@@ -587,7 +566,6 @@ public class TambahGenre extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnEditGenre;
-    private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnTambahGenre;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;

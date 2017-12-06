@@ -25,6 +25,7 @@ import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -39,20 +40,18 @@ public class Update extends javax.swing.JFrame {
     private List<JTextField> listSutradara = new ArrayList<JTextField>();
     private List<JTextField> listPenulis = new ArrayList<JTextField>();
     private List<JTextField> listProduser = new ArrayList<JTextField>();
-    
+    private JFrame back;
     /**
      * Creates new form Update
      */
-    public Update() {
+    public Update(JFrame back) {
         initComponents();
         if(Session.isStatus()){
             lblUsername.setText("Selamat datang, " + Session.getUsername());
-            btnLogout.setVisible(true);
-        } else {
-            btnLogout.setVisible(false);
+            
         }
         setGenre();
-        setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+        this.back = back;
     }
     
     public void setGenre(){
@@ -134,7 +133,6 @@ public class Update extends javax.swing.JFrame {
         panelProduser = new javax.swing.JPanel();
         txtProduser = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
-        btnLogout = new javax.swing.JButton();
         lblUsername = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
@@ -492,13 +490,6 @@ public class Update extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(67, 67, 67));
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-        btnLogout.setText("Logout");
-        btnLogout.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLogoutActionPerformed(evt);
-            }
-        });
-
         lblUsername.setForeground(new java.awt.Color(254, 254, 254));
         lblUsername.setText("Selamat datang, Guest");
 
@@ -523,15 +514,11 @@ public class Update extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel14)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jLabel14)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel12)
                                 .addGap(62, 62, 62)
-                                .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnLogout)))
+                                .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())
                     .addComponent(jSeparator2)))
             .addComponent(jSeparator1)
@@ -545,9 +532,8 @@ public class Update extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel12)
-                            .addComponent(lblUsername)
-                            .addComponent(btnLogout))
-                        .addGap(3, 3, 3)
+                            .addComponent(lblUsername))
+                        .addGap(8, 8, 8)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel14)))
@@ -803,15 +789,6 @@ public class Update extends javax.swing.JFrame {
         return false;
     }
     
-    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-        // TODO add your handling code here:
-        int confirm = JOptionPane.showConfirmDialog(null, "Apakah anda yakin?", "Confirm logout", JOptionPane.OK_CANCEL_OPTION);
-        if(confirm == 0){
-            Logout.keluar();
-            this.dispose();
-        }
-    }//GEN-LAST:event_btnLogoutActionPerformed
-
     private void btnTambahProduserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahProduserActionPerformed
         // TODO add your handling code here:
         JTextField text = new JTextField();
@@ -847,7 +824,7 @@ public class Update extends javax.swing.JFrame {
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         // TODO add your handling code here:
-        new DetailFilm().showDetail(id, 1);
+        this.back.setEnabled(true);
         this.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
@@ -902,6 +879,7 @@ public class Update extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(jPanel2, "Perubahan berhasil disimpan");
                 new DetailFilm().showDetail(id, 1);
                 this.dispose();
+                this.back.dispose();
             } else {
                 JOptionPane.showMessageDialog(jPanel2, "Perubahan gagal disimpan");
             }
@@ -981,7 +959,7 @@ public class Update extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Update().setVisible(true);
+                new Update(null).setVisible(true);
             }
         });
     }
@@ -989,7 +967,6 @@ public class Update extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Button btnCancel;
     private javax.swing.JButton btnGambar;
-    private javax.swing.JButton btnLogout;
     private java.awt.Button btnSimpan;
     private javax.swing.JButton btnTambahPenulis;
     private javax.swing.JButton btnTambahProduser;

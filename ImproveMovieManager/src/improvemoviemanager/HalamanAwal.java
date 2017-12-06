@@ -229,8 +229,8 @@ public class HalamanAwal extends javax.swing.JFrame {
 
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
         // TODO add your handling code here:
-        new Create().setVisible(true);
-        this.dispose();
+        new Create(this).setVisible(true);
+        this.setEnabled(false);
     }//GEN-LAST:event_btnTambahActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
@@ -256,8 +256,8 @@ public class HalamanAwal extends javax.swing.JFrame {
 
     private void btnTambahGenreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahGenreActionPerformed
         // TODO add your handling code here:
-        new TambahGenre(false).setVisible(true);
-        this.dispose();
+        new TambahGenre(false, this).setVisible(true);
+        this.setEnabled(false);
     }//GEN-LAST:event_btnTambahGenreActionPerformed
 
     /**
